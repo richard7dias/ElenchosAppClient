@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { MainComponentsModule } from './main-components/main-components.module';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { LoadingService } from './loading.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MainComponentsModule,
     MatProgressBarModule
   ],
-  providers: [],
+  providers: [
+    LoadingService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
