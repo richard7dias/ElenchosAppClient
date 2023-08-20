@@ -1,17 +1,13 @@
-<mat-toolbar>
-    <button mat-icon-button (click)="toggleLoading()">
-        <mat-icon>menu</mat-icon>
-    </button>
-    <span>Elenchos</span>
-    <span class="spacer"></span>
-    <button mat-icon-button>
-        <mat-icon>account_circle</mat-icon>
-    </button>
-
-    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item>Item 1</button>
-        <button mat-menu-item>Item 2</button>
-    </mat-menu>
-
-</mat-toolbar>
+<div id="container">
+    <mat-toolbar>
+        <span>Elenchos</span>
+        <span class="spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>Conta</button>
+            <button mat-menu-item>Sair</button>
+        </mat-menu>
+    </mat-toolbar>
+</div>

@@ -1,0 +1,13 @@
+#container {
+    width: 48px;
+    height: 90vh;
+    background-color: #387876;
+}
+
+button {
+    margin-top: 10px;
+}
+
+mat-icon {
+    color: white;
+}

@@ -1,4 +1,6 @@
-<mat-progress-bar mode="indeterminate" *ngIf="getLoadingBar()"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate" *ngIf="loadingBarVisible"></mat-progress-bar>
 <app-top-bar></app-top-bar>
-<app-left-bar></app-left-bar>
-<router-outlet></router-outlet>
+<main>
+    <app-left-bar></app-left-bar>
+    <router-outlet></router-outlet>
+</main>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { LoadingService } from './loading.service';
 
 @Component({
@@ -7,12 +8,8 @@ import { LoadingService } from './loading.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-  constructor(private loadingService: LoadingService) { }
-
   title = 'elenchos';
+  loadingBarVisible: boolean = false;
 
-  getLoadingBar() {
-    this.loadingService.getLoadingBar();
-  }
+  constructor(public loadingService: LoadingService) { }
 }
