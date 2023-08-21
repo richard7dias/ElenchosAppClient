@@ -9,21 +9,21 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { InvestComponent } from './invest/invest.component';
 import { BudgetComponent } from './budget/budget.component';
 import { TravelBudgetComponent } from './travel-budget/travel-budget.component';
-import { FinancialToolsComponent } from './financial-tools/financial-tools.component';
+import { FinancialToolsModule } from './financial-tools/financial-tools.module';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     InvestComponent,
     BudgetComponent,
-    TravelBudgetComponent,
-    FinancialToolsComponent
+    TravelBudgetComponent
   ],
   imports: [
     CommonModule,
     MatTabsModule,
     MatButtonToggleModule,
-    MatIconModule
+    MatIconModule,
+    FinancialToolsModule
   ]
 })
 export class PagesModule { }

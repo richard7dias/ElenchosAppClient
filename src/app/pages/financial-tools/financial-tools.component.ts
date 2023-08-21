@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./financial-tools.component.css']
 })
 export class FinancialToolsComponent {
-
+  
 }

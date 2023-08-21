@@ -1,10 +1,9 @@
-mat-tab-group {
-    width: 100vw;
-    height: 90vh;
-    background-color: #e2e2e2;
-    color: #387876;
+main {
+    padding: 20px;
+    width: 96.23vw;
+    height: 83.5vh;
 }
 
-mat-tab {
-    background-color: white;
+button {
+    margin-right: 10px;
 }

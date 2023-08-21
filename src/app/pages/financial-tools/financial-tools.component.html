@@ -1,5 +1,8 @@
-<mat-tab-group mat-stretch-tabs="true" mat-align-tabs="center" animationDuration="0ms">
-    <mat-tab label="Combustível">Content 1</mat-tab>
-    <mat-tab label="Moeda">Content 2</mat-tab>
-    <mat-tab label="Regra de três">Content 3</mat-tab>
-</mat-tab-group>
+<main>
+    <nav>
+        <button mat-stroked-button routerLink="fuel">Combustível</button>
+        <button mat-stroked-button routerLink="coin">Moeda</button>
+        <button mat-stroked-button routerLink="rule-of-three">Regra de três</button>
+    </nav>
+    <router-outlet></router-outlet>
+</main>
