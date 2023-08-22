@@ -10,10 +10,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatInputModule } from '@angular/material/input';
 
+
 import { CoinComponent } from './coin/coin.component';
 import { FuelComponent } from './fuel/fuel.component';
 import { RuleOfThreeComponent } from './rule-of-three/rule-of-three.component';
 import { FinancialToolsComponent } from './financial-tools.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { FinancialToolsComponent } from './financial-tools.component';
     MatButtonModule,
     RouterModule,
     MatButtonToggleModule,
-    MatInputModule
+    MatInputModule,
+    MatTabsModule
   ],
   exports: [
     CoinComponent,

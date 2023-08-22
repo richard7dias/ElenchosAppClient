@@ -7,7 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { MainComponentsModule } from './main-components/main-components.module';
-import { LoadingService } from './loading.service';
+import { LoadingService } from './core/login/loading.service';
+import { AuthGuard } from './core/auth/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LoadingService } from './loading.service';
     MatProgressBarModule
   ],
   providers: [
-    LoadingService
+    LoadingService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

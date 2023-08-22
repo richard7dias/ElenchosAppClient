@@ -8,6 +8,9 @@ import { FinancialToolsComponent } from './pages/financial-tools/financial-tools
 import { FuelComponent } from './pages/financial-tools/fuel/fuel.component';
 import { CoinComponent } from './pages/financial-tools/coin/coin.component';
 import { RuleOfThreeComponent } from './pages/financial-tools/rule-of-three/rule-of-three.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { LoginSettingsComponent } from './pages/login-settings/login-settings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -15,6 +18,7 @@ const routes: Routes = [
   { path: 'budget', component: BudgetComponent },
   { path: 'invest', component: InvestComponent },
   { path: 'travel', component: TravelBudgetComponent },
+  { path: 'tools', redirectTo: 'tools/fuel', pathMatch: 'full' },
   {
     path: 'tools', component: FinancialToolsComponent,
     children: [
@@ -22,7 +26,11 @@ const routes: Routes = [
       { path: 'coin', component: CoinComponent },
       { path: 'rule-of-three', component: RuleOfThreeComponent }
     ]
-  }
+  },
+  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'login-settings', component: LoginSettingsComponent },
+
 ];
 
 @NgModule({
