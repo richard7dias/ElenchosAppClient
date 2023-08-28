@@ -1,1 +1,34 @@
-<p>rule-of-three works!</p>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Regra de três</mat-card-title>
+        <mat-card-subtitle>Preencha com os dados necessários:</mat-card-subtitle>
+    </mat-card-header>
+
+    <form>
+        <div id="linha1">
+            <mat-form-field>
+                <mat-label>Primeiro número</mat-label>
+                <input matInput type="number" name="number1" [(ngModel)]="number1" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Segundo número</mat-label>
+                <input matInput type="number" name="number2" [(ngModel)]="number2" required>
+            </mat-form-field>
+        </div>
+
+        <div id="linha2">
+            <mat-form-field>
+                <mat-label>Terceiro número</mat-label>
+                <input matInput type="number" name="number3" [(ngModel)]="number3" required>
+            </mat-form-field>
+            <div id="result">
+                <p>Resultado: {{result}}</p>
+            </div>
+        </div>
+    </form>
+
+    <mat-card-actions align="end">
+        <button mat-raised-button (click)="calculate()">CALCULAR</button>
+        
+    </mat-card-actions>
+</mat-card>

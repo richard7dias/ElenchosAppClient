@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { MainComponentsModule } from './main-components/main-components.module';
-import { LoadingService } from './core/login/loading.service';
 import { AuthGuard } from './core/auth/auth-guard.service';
+import { ErrorsService } from './core/alerts/error.service';
 
 @NgModule({
   declarations: [
@@ -19,11 +20,12 @@ import { AuthGuard } from './core/auth/auth-guard.service';
     AppRoutingModule,
     PagesModule,
     MainComponentsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSnackBarModule
   ],
   providers: [
-    LoadingService,
-    AuthGuard
+    AuthGuard,
+    ErrorsService
   ],
   bootstrap: [AppComponent]
 })

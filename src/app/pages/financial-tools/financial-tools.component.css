@@ -3,3 +3,7 @@ main {
     width: 96.23vw;
     height: 83.5vh;
 }
+
+button {
+    margin-right: 5px;
+}

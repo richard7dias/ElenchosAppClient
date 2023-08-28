@@ -5,7 +5,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InvestComponent } from './invest/invest.component';

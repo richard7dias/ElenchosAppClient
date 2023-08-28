@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoadingService } from './core/login/loading.service';
+import { LoadingService } from './core/loading/loading.service';
 
 
 
