@@ -9,7 +9,8 @@ import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { MainComponentsModule } from './main-components/main-components.module';
 import { AuthGuard } from './core/auth/auth-guard.service';
-import { ErrorsService } from './core/alerts/error.service';
+import { AlertService } from './core/alert/alert.service';
+import { NumberService } from './core/formatting/number.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ErrorsService } from './core/alerts/error.service';
   ],
   providers: [
     AuthGuard,
-    ErrorsService
+    AlertService,
+    NumberService
   ],
   bootstrap: [AppComponent]
 })

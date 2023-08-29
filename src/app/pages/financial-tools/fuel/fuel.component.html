@@ -7,16 +7,16 @@
     <form>
         <mat-form-field id="km-l">
             <mat-label>Economia do carro (Km/L)</mat-label>
-            <input matInput type="number" name="economy" [(ngModel)]="economy">
+            <input matInput type="number" name="economy" [(ngModel)]="economy" required>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Valor Combustível</mat-label>
             <span matPrefix>R$ &nbsp;</span>
-            <input matInput type="number" name="fuel" [(ngModel)]="fuel">
+            <input matInput type="number" name="fuel" [(ngModel)]="fuel" required>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Km a percorrer</mat-label>
-            <input matInput type="number" name="km" [(ngModel)]="km">
+            <input matInput type="number" name="km" [(ngModel)]="km" required>
         </mat-form-field>
     </form>
 

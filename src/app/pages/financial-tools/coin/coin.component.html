@@ -1,1 +1,43 @@
-<p>coin works!</p>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Câmbio</mat-card-title>
+        <mat-card-subtitle>Fazer outra parte para adicionar moedas, e neesa parte aqui pegar as cotaçções cadastradas Preencha com os dados necessários:</mat-card-subtitle>
+    </mat-card-header>
+
+    <form>
+        <mat-form-field>
+            <mat-label>Moeda atual</mat-label>
+            <input type="text" aria-label="Number" matInput [formControl]="myControl1" [matAutocomplete]="auto1"
+                required>
+            <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions1 | async" [value]="option">
+                    {{option}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>$ Valor</mat-label>
+            <input matInput type="number" name="fuel" [(ngModel)]="firstCoin" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Converter para</mat-label>
+            <input type="text" aria-label="Number" matInput [formControl]="myControl2" [matAutocomplete]="auto2"
+                required>
+            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions2 | async" [value]="option">
+                    {{option}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <div id="result">
+            <p>Resultado: {{result}}</p>
+        </div>
+    </form>
+
+    <mat-card-actions align="end">
+        <button mat-raised-button (click)="calculate()">CALCULAR</button>
+    </mat-card-actions>
+</mat-card>
