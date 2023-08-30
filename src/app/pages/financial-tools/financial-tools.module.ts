@@ -10,20 +10,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
 
-import { CoinComponent } from './coin/coin.component';
+import { ExchangeComponent } from './exchange/exchange.component';
 import { FuelComponent } from './fuel/fuel.component';
 import { RuleOfThreeComponent } from './rule-of-three/rule-of-three.component';
 import { FinancialToolsComponent } from './financial-tools.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { NewQuotationModalComponent } from './exchange/new-quotation-modal/new-quotation-modal.component';
 
 @NgModule({
   declarations: [
-    CoinComponent,
+    ExchangeComponent,
     FuelComponent,
     RuleOfThreeComponent,
-    FinancialToolsComponent
+    FinancialToolsComponent,
+    NewQuotationModalComponent
   ],
   imports: [
     CommonModule,
@@ -37,11 +39,11 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatInputModule,
     MatTabsModule,
     MatSelectModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   exports: [
-    CoinComponent,
+    ExchangeComponent,
     FuelComponent,
     RuleOfThreeComponent
   ]

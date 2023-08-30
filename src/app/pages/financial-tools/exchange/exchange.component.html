@@ -1,0 +1,40 @@
+<mat-card>
+    <mat-card-header>
+        <div>
+            <mat-card-title>Câmbio</mat-card-title>
+            <mat-card-subtitle>Preencha com os dados necessários:</mat-card-subtitle>
+        </div>
+        <div>
+            <button mat-button (click)="openModal()">Nova cotação</button>
+        </div>
+    </mat-card-header>
+
+    <form>
+        <mat-form-field>
+            <mat-label>Moeda atual</mat-label>
+            <mat-select [(ngModel)]="firstCoin" name="firstCoin" required>
+                <mat-option *ngFor="let coin of coins" [value]="coin">{{coin}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Valor atual</mat-label>
+            <input matInput type="number" [(ngModel)]="inputValue" name="inputValue" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Converter para</mat-label>
+            <mat-select [(ngModel)]="secondCoin" name="secondCoin" required>
+                <mat-option *ngFor="let coin of coins" [value]="coin">{{coin}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div id="result">
+            <p>Resultado: {{result}}</p>
+        </div>
+    </form>
+
+    <mat-card-actions align="end">
+        <button mat-raised-button (click)="calculate()">CALCULAR</button>
+    </mat-card-actions>
+</mat-card>
