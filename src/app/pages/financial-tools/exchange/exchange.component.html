@@ -1,11 +1,14 @@
 <mat-card>
     <mat-card-header>
-        <div>
+        <div id="titles">
             <mat-card-title>Câmbio</mat-card-title>
             <mat-card-subtitle>Preencha com os dados necessários:</mat-card-subtitle>
         </div>
-        <div>
-            <button mat-button (click)="openModal()">Nova cotação</button>
+        <div id="new-quotation">
+            <button mat-button (click)="openModal()">
+                <mat-icon>add_box</mat-icon>
+                Nova cotação
+            </button>
         </div>
     </mat-card-header>
 
