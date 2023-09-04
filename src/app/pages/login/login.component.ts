@@ -45,7 +45,6 @@ export class LoginComponent {
           }
         },
         (response) => {
-          console.log(response)
           this.alert.openSnackBar(response.error.message, 'Fechar', 6);
         });
     } else {

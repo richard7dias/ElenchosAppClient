@@ -40,7 +40,6 @@ export class ConfirmWindowComponent {
         );
         this.user.setInternalUser(null);
         this.router.navigate(['/login']);
-        console.log(this.user.getInternalUser());
       }
     });
   }

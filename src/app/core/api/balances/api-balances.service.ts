@@ -17,7 +17,6 @@ export class ApiBalancesService {
   ) { }
 
   getBalances() {
-    console.log(this.apiUrl.apiUrl);
     return this.http.get(`${this.apiUrl.apiUrl}/balances/${this.idOwner}`);
   }
 

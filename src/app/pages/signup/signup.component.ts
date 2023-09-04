@@ -52,13 +52,10 @@ export class SignupComponent {
             this.authenticator.setInternalUser(newUser);
             this.router.navigate(['/dashboard']);
             this.alert.openSnackBar(response.body.message, 'Fechar', 7);
-
-            console.log(response);
           }
         },
         (response) => {
           this.alert.openSnackBar(response.error, 'Fechar', 7);
-          console.log(response);
         }
       );
     } else {
