@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AlertService } from 'src/app/core/alert/alert.service';
 
 @Component({
   selector: 'app-new-quotation-modal',
@@ -13,7 +14,10 @@ export class NewQuotationModalComponent {
   quotationValue!: number;
   check!: string;
 
-  constructor(public modalRef: MatDialogRef<NewQuotationModalComponent>) { }
+  constructor(
+    public modalRef: MatDialogRef<NewQuotationModalComponent>,
+    private alert: AlertService
+  ) { }
 
   ngDoCheck() {
     if (this.quoteFrom && this.quoteFor && this.quotationValue) {
@@ -22,16 +26,21 @@ export class NewQuotationModalComponent {
   }
 
   submitForm() {
-    const newQuotation = {
-      idOwner: 'pegar o id aqui',
-      check: this.check,
-      quotationValue: this.quotationValue,
-      quoteFor: this.quoteFor,
-      quoteFrom: this.quoteFrom
+    if (this.quoteFrom && this.quoteFor && this.quotationValue) {
+      const newQuotation = {
+        idOwner: 'pegar o id aqui',
+        check: this.check,
+        quotationValue: this.quotationValue,
+        quoteFor: this.quoteFor,
+        quoteFrom: this.quoteFrom
+      }
+
+      //implementar aqui a lógica para salvar na api com o guid do usuário logado
+
+      this.modalRef.close(true);
+      this.alert.openSnackBar('Cotação adicionada com sucesso!', 'Ok', 5);
+    } else {
+      this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.', 'Fechar', 8);
     }
-
-    //implementar aqui a lógica para salvar na api com o guid do usuário logado
-
-    this.modalRef.close(true);
   }
 }

@@ -11,25 +11,21 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Valor Combustível</mat-label>
-            <span matPrefix>R$ &nbsp;</span>
+            <span matPrefix> R$ &nbsp;</span>
             <input matInput type="number" name="fuel" [(ngModel)]="fuel" required>
         </mat-form-field>
-        <mat-form-field>
-            <mat-label>Km a percorrer</mat-label>
-            <input matInput type="number" name="km" [(ngModel)]="km" required>
-        </mat-form-field>
+
+        <div id="secondLine">
+            <mat-form-field>
+                <mat-label>Km a percorrer</mat-label>
+                <input matInput type="number" name="km" [(ngModel)]="km" required>
+            </mat-form-field>
+
+            {{result}}
+        </div>
     </form>
 
     <mat-card-actions align="end">
         <button mat-raised-button (click)="calculate()">CALCULAR</button>
     </mat-card-actions>
-</mat-card>
-
-<mat-card *ngIf="resultResolved" id="card-result">
-    <mat-card-content>{{result}}</mat-card-content>
-    <div id="button-close-container">
-        <button mat-mini-fab color="warn" aria-label="Example mini fab with a heart icon" (click)="closeResult()">
-            <mat-icon>close</mat-icon>
-        </button>
-    </div>
 </mat-card>

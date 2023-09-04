@@ -1,34 +1,39 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
+import { AuthenticatorService } from '../../authenticator/authenticator.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiBalancesService {
 
+  idOwner: string = "93dd577d-7ae1-4670-8b20-ac4782a330a1";
+
   constructor(
     private http: HttpClient,
-    private apiUrl: ApiService
+    private apiUrl: ApiService,
+    private internalUser: AuthenticatorService
   ) { }
 
   getBalances() {
-    return this.http.get(`${this.apiUrl}/balances`);
+    console.log(this.apiUrl.apiUrl);
+    return this.http.get(`${this.apiUrl.apiUrl}/balances/${this.idOwner}`);
   }
 
   getBalance(account: string) {
-    return this.http.get(`${this.apiUrl}/balances/${account}`);
+    return this.http.get(`${this.apiUrl.apiUrl}/balances/${account}`);
   }
 
   postBalance(body: any[]) {
-    this.http.post(`${this.apiUrl}/balances`, body);
+    this.http.post(`${this.apiUrl.apiUrl}/balances`, body);
   }
 
   patchBalance(account: string, body: any[]) {
-    this.http.patch(`${this.apiUrl}/balances/${account}`, body);
+    this.http.patch(`${this.apiUrl.apiUrl}/balances/${account}`, body);
   }
 
   deleteBalance(account: string) {
-    this.http.delete(`${this.apiUrl}/balances/${account}`);
+    this.http.delete(`${this.apiUrl.apiUrl}/balances/${account}`);
   }
 }

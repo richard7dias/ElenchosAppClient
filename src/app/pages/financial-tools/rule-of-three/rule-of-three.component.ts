@@ -8,7 +8,10 @@ import { NumberService } from 'src/app/core/formatting/number.service';
   styleUrls: ['./rule-of-three.component.css']
 })
 export class RuleOfThreeComponent {
-  constructor(private _errors: AlertService, private numberFormat: NumberService) { }
+  constructor(
+    private alert: AlertService,
+    private numberFormat: NumberService
+  ) { }
 
   number1!: number;
   number2!: number;
@@ -19,7 +22,7 @@ export class RuleOfThreeComponent {
     let calculate = (this.number3 * this.number2) / this.number1;
 
     if (isNaN(calculate)) {
-      this._errors.openSnackBar('Erro! Digite todos os campos de forma correta.', 'Fechar', 8);
+      this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.', 'Fechar', 8);
       this.result = 0;
     } else {
       this.result = this.numberFormat.inPortToDuo(calculate);

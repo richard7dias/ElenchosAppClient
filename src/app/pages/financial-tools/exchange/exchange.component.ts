@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewQuotationModalComponent } from './new-quotation-modal/new-quotation-modal.component';
+import { AlertService } from 'src/app/core/alert/alert.service';
 
 @Component({
   selector: 'app-exchange',
@@ -15,18 +16,24 @@ export class ExchangeComponent {
   secondCoin!: number;
   result: string | number = 0;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    private alert: AlertService
+  ) { }
 
   openModal() {
-    const modalRef = this.dialog.open(NewQuotationModalComponent);
+    const modalRef = this.dialog.open(NewQuotationModalComponent, {
+      enterAnimationDuration: "200ms",
+      exitAnimationDuration: "200ms",
+    });
 
     modalRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-
   calculate(): void {
 
+    this.alert.openSnackBar('Tem que fazer o cáculo depois que a api estiver top', 'Fechar', 6);
   }
 }

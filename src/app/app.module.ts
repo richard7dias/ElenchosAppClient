@@ -9,9 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { MainComponentsModule } from './main-components/main-components.module';
-import { AuthGuard } from './core/auth/auth-guard.service';
+import { AuthGuard } from './core/auth-guard/auth-guard.service';
 import { AlertService } from './core/alert/alert.service';
 import { NumberService } from './core/formatting/number.service';
+import { AuthenticatorService } from './core/authenticator/authenticator.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { NumberService } from './core/formatting/number.service';
   ],
   providers: [
     AuthGuard,
+    AuthenticatorService,
     AlertService,
     NumberService
   ],

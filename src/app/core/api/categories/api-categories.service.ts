@@ -13,22 +13,22 @@ export class ApiCategoriesService {
   ) { }
 
   getCategories() {
-    return this.http.get(`${this.apiUrl}/categories`);
+    return this.http.get(`${this.apiUrl.apiUrl}/categories`);
   }
 
   getCategory(name: string) {
-    return this.http.get(`${this.apiUrl}/categories/${name}`);
+    return this.http.get(`${this.apiUrl.apiUrl}/categories/${name}`);
   }
 
   postCategory(body: any[]) {
-    this.http.post(`${this.apiUrl}/categories`, body);
+    this.http.post(`${this.apiUrl.apiUrl}/categories`, body);
   }
 
   patchCategory(name: string, body: any[]) {
-    this.http.patch(`${this.apiUrl}/categories/${name}`, body);
+    this.http.patch(`${this.apiUrl.apiUrl}/categories/${name}`, body);
   }
 
   deleteCategory(name: string) {
-    this.http.delete(`${this.apiUrl}/categories/${name}`);
+    this.http.delete(`${this.apiUrl.apiUrl}/categories/${name}`);
   }
 }

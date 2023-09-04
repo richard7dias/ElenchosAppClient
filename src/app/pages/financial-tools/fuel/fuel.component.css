@@ -1,7 +1,7 @@
 mat-card {
     margin: auto;
     margin-top: 20px;
-    width: 730px;
+    width: 510px;
 }
 
 form {
@@ -10,15 +10,7 @@ form {
 
 mat-form-field {
     margin-right: 10px;
-}
-
-#km-l{
-    width: 220px;
-}
-
-#card-result {
-    display: flex;
-    flex-direction: row;
+    width: 230px;
 }
 
 mat-card-content {
@@ -28,9 +20,6 @@ mat-card-content {
     padding: 15px;
 }
 
-#button-close-container {
-    width: 20%;
-    display: flex;
-    justify-content: end;
-    margin: 15px;
+#secondLine {
+    margin-top: -5px;
 }

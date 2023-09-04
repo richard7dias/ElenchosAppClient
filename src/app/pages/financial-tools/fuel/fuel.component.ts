@@ -15,21 +15,19 @@ export class FuelComponent {
   resultNumber!: number;
   resultResolved: boolean = false;
 
-  constructor(private alert: AlertService, private money: NumberService) { }
+  constructor(
+    private alert: AlertService,
+    private money: NumberService,
+  ) { }
 
   calculate(): void {
     this.resultNumber = (this.km / this.economy) * this.fuel;
 
     if (isNaN(this.resultNumber) || this.resultNumber == 0) {
       this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.', 'Fechar', 8);
-      this.closeResult();
     } else {
       this.result = `Você gastará R$ ${this.money.inRealBRL(this.resultNumber)}.`;
-      this.resultResolved = true;
     }
   }
 
-  closeResult(): void {
-    this.resultResolved = false;
-  }
 }

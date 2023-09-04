@@ -1,1 +1,100 @@
-<p>signup works!</p>
+<main>
+
+    <mat-toolbar>
+        <span>Elenchos</span>
+    </mat-toolbar>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Novo usuário</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+            <mat-stepper orientation="horizontal">
+                <mat-step>
+                    <ng-template matStepLabel>Nome</ng-template>
+                    <ng-template matStepContent>
+                        <mat-form-field>
+                            <mat-label>Primeiro nome</mat-label>
+                            <input matInput type="text" [(ngModel)]="firstName" cdkFocusInitial required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Sobrenome(s)</mat-label>
+                            <input matInput type="text" [(ngModel)]="surname" required>
+                        </mat-form-field>
+                        <div class="btn-container">
+                            <button mat-button matStepperNext>
+                                <mat-icon>arrow_forward</mat-icon>
+                                Próximo
+                            </button>
+                        </div>
+                    </ng-template>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Contato</ng-template>
+                    <ng-template matStepContent>
+                        <mat-form-field>
+                            <mat-label>Email</mat-label>
+                            <input matInput type="text" [(ngModel)]="email" cdkFocusInitial required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Telefone</mat-label>
+                            <input matInput type="phone" [(ngModel)]="phone">
+                        </mat-form-field>
+                        <div class="btn-container">
+                            <button id="btn-back" mat-button matStepperPrevious>
+                                <mat-icon>arrow_back</mat-icon>
+                                Voltar
+                            </button>
+                            <button mat-button matStepperNext>
+                                <mat-icon>arrow_forward</mat-icon>
+                                Próximo
+                            </button>
+                        </div>
+                    </ng-template>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Senha</ng-template>
+                    <mat-form-field>
+                        <mat-label>Senha</mat-label>
+                        <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password"
+                            cdkFocusInitial required>
+                        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Confirme a senha</mat-label>
+                        <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" [(ngModel)]="confirmPassword"
+                            required>
+                        <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
+                            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <button mat-button matStepperPrevious>
+                        <mat-icon>arrow_back</mat-icon>
+                        Voltar
+                    </button>
+                </mat-step>
+            </mat-stepper>
+
+            <mat-divider></mat-divider>
+
+            <div id="containerBelow">
+                <div class="itensBelow">
+                    <button mat-button routerLink="/login">
+                        <mat-icon>arrow_back</mat-icon>
+                        Voltar ao login
+                    </button>
+                </div>
+                <div class="itensBelow">
+                    <button id="btnEnter" mat-raised-button (click)="addNewUser()">Criar</button>
+                </div>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+</main>

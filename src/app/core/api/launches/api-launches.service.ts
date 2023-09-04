@@ -13,22 +13,22 @@ export class ApiLaunchesService {
   ) { }
 
   getLaunches() {
-    return this.http.get(`${this.apiUrl}/launches`);
+    return this.http.get(`${this.apiUrl.apiUrl}/launches`);
   }
 
   getLaunch(id: string) {
-    return this.http.get(`${this.apiUrl}/launches/${id}`);
+    return this.http.get(`${this.apiUrl.apiUrl}/launches/${id}`);
   }
 
   postLaunch(body: any[]) {
-    this.http.post(`${this.apiUrl}/launches`, body);
+    this.http.post(`${this.apiUrl.apiUrl}/launches`, body);
   }
 
   patchLaunch(id: string, body: any[]) {
-    this.http.patch(`${this.apiUrl}/launches/${id}`, body);
+    this.http.patch(`${this.apiUrl.apiUrl}/launches/${id}`, body);
   }
 
   deleteLaunch(id: string) {
-    this.http.delete(`${this.apiUrl}/launches/${id}`);
+    this.http.delete(`${this.apiUrl.apiUrl}/launches/${id}`);
   }
 }

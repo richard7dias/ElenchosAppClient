@@ -1,1 +1,11 @@
-<p>login-settings works!</p>
+<mat-card>
+    <mat-card-content>
+        Configurações de perfil
+        nome: {{firstName}} <br>
+        sobrenome: {{surname}} <br>
+        email: {{email}} <br>
+        telefone: {{phone}} <br>
+        senha: {{password}} <br>
+    </mat-card-content>
+    <button mat-stroked-button color="warn" (click)="openModal()">Excluir conta</button>
+</mat-card>

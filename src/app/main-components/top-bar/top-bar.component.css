@@ -2,6 +2,16 @@
     flex: 1 1 auto;
 }
 
+#container-username {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+#container-username h3 {
+    margin: 0;
+}
+
 mat-toolbar {
     background-color: #387876;
     color: #ffffff;

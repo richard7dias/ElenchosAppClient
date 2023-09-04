@@ -11,13 +11,14 @@ import { RuleOfThreeComponent } from './pages/financial-tools/rule-of-three/rule
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { LoginSettingsComponent } from './pages/login-settings/login-settings.component';
+import { AuthGuard } from './core/auth-guard/auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'budget', component: BudgetComponent },
-  { path: 'invest', component: InvestComponent },
-  { path: 'travel', component: TravelBudgetComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'budget', component: BudgetComponent, canActivate: [AuthGuard] },
+  { path: 'invest', component: InvestComponent, canActivate: [AuthGuard] },
+  { path: 'travel', component: TravelBudgetComponent, canActivate: [AuthGuard] },
   { path: 'tools', redirectTo: 'tools/fuel', pathMatch: 'full' },
   {
     path: 'tools', component: FinancialToolsComponent,
@@ -25,11 +26,11 @@ const routes: Routes = [
       { path: 'fuel', component: FuelComponent },
       { path: 'coin', component: ExchangeComponent },
       { path: 'rule-of-three', component: RuleOfThreeComponent }
-    ]
+    ], canActivate: [AuthGuard]
   },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'login-settings', component: LoginSettingsComponent },
+  { path: 'login-settings', component: LoginSettingsComponent, canActivate: [AuthGuard] },
 
 ];
 
