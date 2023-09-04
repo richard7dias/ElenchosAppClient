@@ -11,11 +11,11 @@ import { User } from 'src/app/core/authenticator/user';
 import { HttpResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-confirm-window',
-  templateUrl: './confirm-window.component.html',
-  styleUrls: ['./confirm-window.component.css']
+  selector: 'app-confirm-window-delete',
+  templateUrl: './confirm-window-delete.component.html',
+  styleUrls: ['./confirm-window-delete.component.css']
 })
-export class ConfirmWindowComponent {
+export class ConfirmWindowDeleteComponent {
   internalUser!: Observable<User | null>;
 
   constructor(

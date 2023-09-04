@@ -15,16 +15,17 @@ export class AuthenticatorService {
     let user: User | null = this.internalUser.getValue();
 
     //-----------------------dev----------------
-    // user = {
-    //   email: "1",
-    //   phone: 123456,
-    //   password: "1",
-    //   fullName: "Richard Oliveira",
-    //   firstName: "Richard",
-    //   id: "93dd577d-7ae1-4670-8b20-ac4782a330a1"
-    // };
+    user = {
+      email: "1",
+      phone: 123456,
+      password: "1",
+      fullName: "Richard Oliveira",
+      firstName: "Richard",
+      id: "93dd577d-7ae1-4670-8b20-ac4782a330a1",
+      active: true
+    };
 
-    // this.setInternalUser(user);
+    this.setInternalUser(user);
     //-------------------------------------------
 
     return !!user;

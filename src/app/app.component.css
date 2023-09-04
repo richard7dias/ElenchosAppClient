@@ -1,3 +1,29 @@
+app-top-bar {
+    position: fixed;
+    z-index: 9999;
+    width: 100vw;
+}
+
+app-left-bar {
+    position: fixed;
+    top: 64px;
+}
+
+#routers {
+    margin-top: 64px;
+    margin-left: 48px;
+}
+
 main {
     display: flex;
+}
+
+@media (max-width: 600px) {
+    app-left-bar {
+        top: 56px;
+    }
+
+    #routers {
+        margin-top: 56px;
+    }
 }

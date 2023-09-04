@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
 import { AuthenticatorService } from 'src/app/core/authenticator/authenticator.service';
-import { ConfirmWindowComponent } from './confirm-window/confirm-window.component';
+import { ConfirmWindowDeleteComponent } from './confirm-window-delete/confirm-window-delete.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -47,11 +47,28 @@ export class LoginSettingsComponent {
   }
 
   openModal() {
-    this.dialog.open(ConfirmWindowComponent, {
-      width: '250px',
+    this.dialog.open(ConfirmWindowDeleteComponent, {
+      width: '500px',
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
     });
   }
+
+  editAccount() {
+
+
+
+  }
+
+
+  // console.log(this.hidePassword);
+  // console.log(this.hideConfirmPassword);
+  // console.log(this.idInternalUser);
+  // console.log(this.firstName);
+  // console.log(this.surname);
+  // console.log(this.email);
+  // console.log(this.phone);
+  // console.log(this.password);
+  // console.log(this.confirmPassword);
 }
 

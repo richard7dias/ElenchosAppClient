@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfirmWindowComponent } from './confirm-window.component';
+import { ConfirmWindowDeleteComponent } from './confirm-window-delete.component';
 
 describe('ConfirmWindowComponent', () => {
-  let component: ConfirmWindowComponent;
-  let fixture: ComponentFixture<ConfirmWindowComponent>;
+  let component: ConfirmWindowDeleteComponent;
+  let fixture: ComponentFixture<ConfirmWindowDeleteComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfirmWindowComponent ]
+      declarations: [ConfirmWindowDeleteComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
-    fixture = TestBed.createComponent(ConfirmWindowComponent);
+    fixture = TestBed.createComponent(ConfirmWindowDeleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

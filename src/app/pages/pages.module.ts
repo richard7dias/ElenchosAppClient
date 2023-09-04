@@ -24,7 +24,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginSettingsComponent } from './login-settings/login-settings.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { ConfirmWindowComponent } from './login-settings/confirm-window/confirm-window.component';
+import { ConfirmWindowDeleteComponent } from './login-settings/confirm-window-delete/confirm-window-delete.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import { ConfirmWindowComponent } from './login-settings/confirm-window/confirm-
     LoginComponent,
     SignupComponent,
     LoginSettingsComponent,
-    ConfirmWindowComponent
+    ConfirmWindowDeleteComponent
   ],
   imports: [
     CommonModule,
