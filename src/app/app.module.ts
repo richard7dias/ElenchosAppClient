@@ -10,9 +10,9 @@ import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { MainComponentsModule } from './main-components/main-components.module';
 import { AuthGuard } from './core/auth-guard/auth-guard.service';
-import { AlertService } from './core/alert/alert.service';
-import { NumberService } from './core/formatting/number.service';
-import { AuthenticatorService } from './core/authenticator/authenticator.service';
+import { AlertService } from './shared/alert/alert.service';
+import { NumberService } from './shared/formatting/number.service';
+import { InternalUserService } from './shared/internal-values/internal-user/internal-user.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { AuthenticatorService } from './core/authenticator/authenticator.service
   ],
   providers: [
     AuthGuard,
-    AuthenticatorService,
+    InternalUserService,
     AlertService,
     NumberService
   ],

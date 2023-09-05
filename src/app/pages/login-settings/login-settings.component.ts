@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
-import { AuthenticatorService } from 'src/app/core/authenticator/authenticator.service';
+import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
 import { ConfirmWindowDeleteComponent } from './confirm-window-delete/confirm-window-delete.component';
 import { MatDialog } from '@angular/material/dialog';
-import { User } from 'src/app/core/authenticator/user';
-import { AlertService } from 'src/app/core/alert/alert.service';
+import { User } from 'src/app/core/interfaces/user.interface';
+import { AlertService } from 'src/app/shared/alert/alert.service';
 import { HttpResponse } from '@angular/common/http';
+import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({
   selector: 'app-login-settings',
@@ -15,42 +16,42 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class LoginSettingsComponent {
 
+  internalUser!: User;
+
   seePasswordFields: boolean = false;
   hideOldPassword: boolean = true;
   hideNewPassword: boolean = true;
   hideConfirmNewPassword: boolean = true;
-  idInternalUser: string = "";
+
   firstName!: string;
   surname!: string;
   email!: string;
   phone!: number;
-  password!: string;
-  newPassword!: string;
   oldPassword!: string;
+  newPassword!: string;
   confirmNewPassword!: string;
 
   constructor(
-    private internalUser: AuthenticatorService,
+    private user: InternalUserService,
     public dialog: MatDialog,
     private alert: AlertService,
-    private users: ApiUsersService
+    private users: ApiUsersService,
+    private loadingBar: LoadingService
   ) { }
 
   ngOnInit() {
-    this.internalUser.getInternalUser().subscribe(user => {
+    this.user.getInternalUser().subscribe(user => {
       if (user) {
-        this.idInternalUser = user.id;
-        this.firstName = user.firstName;
-
-        const words = user.fullName.split(" ");
-        words.shift();
-        this.surname = words.join(" ");
-
-        this.email = user.email;
-        this.phone = user.phone;
-        this.password = user.password;
+        this.internalUser = user;
       }
     });
+
+    const words = this.internalUser.fullName.split(" ");
+    words.shift();
+    this.surname = words.join(" ");
+    this.firstName = this.internalUser.firstName;
+    this.email = this.internalUser.email;
+    this.phone = this.internalUser.phone;
   }
 
   openModal() {
@@ -65,7 +66,7 @@ export class LoginSettingsComponent {
     if (this.firstName && this.surname && this.email) {
       if (this.seePasswordFields) {
         if (this.oldPassword && this.newPassword && this.confirmNewPassword) {
-          if (this.oldPassword === this.password) {
+          if (this.oldPassword === this.internalUser.password) {
             if (this.newPassword === this.confirmNewPassword) {
               let modifiedUser: User = {
                 "email": this.email,
@@ -73,8 +74,8 @@ export class LoginSettingsComponent {
                 "password": this.newPassword,
                 "fullName": `${this.firstName} ${this.surname}`,
                 "firstName": this.firstName,
-                "id": this.idInternalUser,
-                "active": true
+                "id": this.internalUser.id,
+                "active": this.internalUser.active
               };
               return this.postModifiedUser(modifiedUser);
             } else {
@@ -84,20 +85,17 @@ export class LoginSettingsComponent {
             return this.alert.openSnackBar('Senha antiga incorreta!');
           }
         } else {
-          console.log(this.oldPassword)
-          console.log(this.newPassword)
-          console.log(this.confirmNewPassword)
           return this.alert.openSnackBar('Preencha todos os campos corretamente!');
         }
       } else {
         let modifiedUser: User = {
           "email": this.email,
           "phone": this.phone,
-          "password": this.password,
+          "password": this.internalUser.password,
           "fullName": `${this.firstName} ${this.surname}`,
           "firstName": this.firstName,
-          "id": this.idInternalUser,
-          "active": true
+          "id": this.internalUser.id,
+          "active": this.internalUser.active
         };
         return this.postModifiedUser(modifiedUser);
       }
@@ -107,15 +105,18 @@ export class LoginSettingsComponent {
   }
 
   private postModifiedUser(modifiedUser: User) {
+    this.loadingBar.setLoadingBar(true);
     this.users.patchUser(modifiedUser.id, modifiedUser).subscribe(
       (response: HttpResponse<any>) => {
         if (response.status === 200) {
-          this.internalUser.setInternalUser(modifiedUser);
+          this.user.setInternalUser(modifiedUser);
           this.alert.openSnackBar(response.body.message);
+          this.loadingBar.setLoadingBar(false);
         }
       },
       (response) => {
         this.alert.openSnackBar(response.error);
+        this.loadingBar.setLoadingBar(false);
       }
     );
   }

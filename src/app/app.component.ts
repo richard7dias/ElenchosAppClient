@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { LoadingService } from './core/loading/loading.service';
+import { LoadingService } from './shared/loading/loading.service';
 import { ApiUsersService } from './core/api/users/api-users.service';
-import { AuthenticatorService } from './core/authenticator/authenticator.service';
+import { InternalUserService } from './shared/internal-values/internal-user/internal-user.service';
 import { Router } from '@angular/router';
-import { User } from './core/authenticator/user';
+import { User } from './core/interfaces/user.interface';
 import { HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -16,14 +16,15 @@ export class AppComponent {
   loadingBarVisible: boolean = false;
 
   constructor(
-    public loadingService: LoadingService,
-    private internalUser: AuthenticatorService,
+    public loadingBar: LoadingService,
+    private internalUser: InternalUserService,
     private users: ApiUsersService,
     private router: Router
   ) { }
 
   ngOnInit() {
     this.isAuthLocalStorage();
+    this.seeLoadingBar();
   }
 
   private isAuthLocalStorage() {
@@ -46,5 +47,11 @@ export class AppComponent {
         }
       );
     }
+  }
+
+  private seeLoadingBar() {
+    this.loadingBar.getLoadingBar().subscribe(bar => {
+      this.loadingBarVisible = bar;
+    });
   }
 }

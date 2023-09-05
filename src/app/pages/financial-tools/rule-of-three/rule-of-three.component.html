@@ -4,7 +4,7 @@
         <mat-card-subtitle>Preencha com os dados necessários:</mat-card-subtitle>
     </mat-card-header>
 
-    <form>
+    <form (ngSubmit)="calculate()">
         <div id="firstLine">
             <mat-form-field>
                 <mat-label>Primeiro número</mat-label>
@@ -25,9 +25,9 @@
                 <p>Resultado: {{result}}</p>
             </div>
         </div>
-    </form>
 
-    <mat-card-actions align="end">
-        <button mat-raised-button (click)="calculate()">CALCULAR</button>
-    </mat-card-actions>
+        <mat-card-actions align="end">
+            <button mat-raised-button type="submit">CALCULAR</button>
+        </mat-card-actions>
+    </form>
 </mat-card>

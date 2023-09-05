@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticatorService } from '../authenticator/authenticator.service';
+import { InternalUserService } from '../../shared/internal-values/internal-user/internal-user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class AuthGuard {
 
   constructor(
     private router: Router,
-    private authenticator: AuthenticatorService
+    private authenticator: InternalUserService
   ) { }
 
   canActivate(): Observable<boolean> | boolean {

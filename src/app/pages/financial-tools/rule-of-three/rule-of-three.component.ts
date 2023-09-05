@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AlertService } from 'src/app/core/alert/alert.service';
-import { NumberService } from 'src/app/core/formatting/number.service';
+import { AlertService } from 'src/app/shared/alert/alert.service';
+import { NumberService } from 'src/app/shared/formatting/number.service';
 
 @Component({
   selector: 'app-rule-of-three',

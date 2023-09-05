@@ -1,4 +1,5 @@
 main {
+    z-index: 1000;
     position: absolute;
     top: 0;
     left: 0;
@@ -17,8 +18,8 @@ mat-toolbar {
     transform: translate(-50%, -50%);
 }
 
-mat-toolbar span {
-    font-size: 1.8rem;
+img {
+    height: 70%;
     margin-left: 100px;
 }
 

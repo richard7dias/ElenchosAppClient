@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from './user';
+import { User } from '../../../core/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticatorService {
+export class InternalUserService {
 
   private internalUser: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 

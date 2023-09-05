@@ -1,10 +1,11 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/core/alert/alert.service';
+import { AlertService } from 'src/app/shared/alert/alert.service';
 import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
-import { AuthenticatorService } from 'src/app/core/authenticator/authenticator.service';
-import { User } from 'src/app/core/authenticator/user';
+import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
+import { User } from 'src/app/core/interfaces/user.interface';
+import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({
   selector: 'app-signup',
@@ -26,7 +27,8 @@ export class SignupComponent {
     private alert: AlertService,
     private users: ApiUsersService,
     private router: Router,
-    private authenticator: AuthenticatorService,
+    private authenticator: InternalUserService,
+    private loadingBar: LoadingService
   ) { }
 
   addNewUser() {
@@ -46,16 +48,19 @@ export class SignupComponent {
         active: true
       }
 
+      this.loadingBar.setLoadingBar(true);
       this.users.postUser(newUser).subscribe(
         (response: HttpResponse<any>) => {
           if (response.status === 201) {
             this.authenticator.setInternalUser(newUser);
             this.router.navigate(['/dashboard']);
             this.alert.openSnackBar(response.body.message);
+            this.loadingBar.setLoadingBar(false);
           }
         },
         (response) => {
           this.alert.openSnackBar(response.error);
+          this.loadingBar.setLoadingBar(false);
         }
       );
     } else {

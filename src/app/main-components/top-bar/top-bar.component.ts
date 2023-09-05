@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
-import { AuthenticatorService } from './../../core/authenticator/authenticator.service';
+import { InternalUserService } from '../../shared/internal-values/internal-user/internal-user.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/core/authenticator/user';
+import { User } from 'src/app/core/interfaces/user.interface';
 
 @Component({
   selector: 'app-top-bar',
@@ -14,7 +14,7 @@ export class TopBarComponent implements OnInit {
   userName?: string;
 
   constructor(
-    private internalUser: AuthenticatorService,
+    private internalUser: InternalUserService,
     private router: Router
   ) { }
 

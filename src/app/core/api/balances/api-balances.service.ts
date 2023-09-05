@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
-import { AuthenticatorService } from '../../authenticator/authenticator.service';
+import { InternalUserService } from '../../../shared/internal-values/internal-user/internal-user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class ApiBalancesService {
   constructor(
     private http: HttpClient,
     private apiUrl: ApiService,
-    private internalUser: AuthenticatorService
+    private internalUser: InternalUserService
   ) { }
 
   getBalances() {

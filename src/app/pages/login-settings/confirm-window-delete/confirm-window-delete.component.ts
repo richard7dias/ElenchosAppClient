@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, take } from 'rxjs';
 
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import { AlertService } from 'src/app/core/alert/alert.service';
+import { AlertService } from 'src/app/shared/alert/alert.service';
 import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
-import { AuthenticatorService } from 'src/app/core/authenticator/authenticator.service';
-import { User } from 'src/app/core/authenticator/user';
+import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
+import { User } from 'src/app/core/interfaces/user.interface';
 import { HttpResponse } from '@angular/common/http';
+import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({
   selector: 'app-confirm-window-delete',
@@ -25,9 +26,11 @@ export class ConfirmWindowDeleteComponent {
   constructor(
     public dialog: MatDialog,
     private users: ApiUsersService,
-    private user: AuthenticatorService,
+    private user: InternalUserService,
     private router: Router,
-    private alert: AlertService
+    private alert: AlertService,
+    private loadingBar: LoadingService,
+    private modalRef: MatDialogRef<ConfirmWindowDeleteComponent>
   ) { }
 
   ngOnInit() {
@@ -40,9 +43,12 @@ export class ConfirmWindowDeleteComponent {
 
   protected deleteUser() {
     if (this.password === this.internalUser.password) {
+      this.loadingBar.setLoadingBar(true);
       this.users.deleteUser(this.internalUser.id).subscribe(
         (response: HttpResponse<any>) => {
           this.alert.openSnackBar(response.body.message);
+          this.modalRef.close(true);
+          this.loadingBar.setLoadingBar(false);
         }
       );
       this.user.setInternalUser(null);

@@ -16,5 +16,5 @@
     <button mat-button mat-dialog-close>Cancelar</button>
     <button mat-button color="warn" (click)="seePasswordField = !seePasswordField"
         *ngIf="!seePasswordField">Sim</button>
-    <button mat-button color="warn" mat-dialog-close (click)="deleteUser()" *ngIf="seePasswordField">Deletar</button>
+    <button mat-button color="warn" (click)="deleteUser()" *ngIf="seePasswordField">Deletar</button>
 </div>
