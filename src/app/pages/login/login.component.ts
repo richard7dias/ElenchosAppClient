@@ -45,10 +45,10 @@ export class LoginComponent {
           }
         },
         (response) => {
-          this.alert.openSnackBar(response.error.message, 'Fechar', 6);
+          this.alert.openSnackBar(response.error.message);
         });
     } else {
-      this.alert.openSnackBar('Preencha todos os campos corretamente!', 'Fechar', 6);
+      this.alert.openSnackBar('Preencha todos os campos corretamente!');
     }
   }
 }

@@ -6,8 +6,6 @@ import { Router } from '@angular/router';
 import { User } from './core/authenticator/user';
 import { HttpResponse } from '@angular/common/http';
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

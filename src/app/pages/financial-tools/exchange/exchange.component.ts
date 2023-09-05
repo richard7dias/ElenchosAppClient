@@ -34,6 +34,6 @@ export class ExchangeComponent {
 
   calculate(): void {
 
-    this.alert.openSnackBar('Tem que fazer o cáculo depois que a api estiver top', 'Fechar', 6);
+    this.alert.openSnackBar('Tem que fazer o cáculo depois que a api estiver top');
   }
 }

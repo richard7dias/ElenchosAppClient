@@ -12,13 +12,23 @@ mat-form-field {
     margin: 5px;
 }
 
-mat-card-actions {
-    display: flex;
-    justify-content: flex-end;
+#container-password-fields{
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-#btn-delete {
-    margin-right: auto;
+#password-confirm-field{
+    width: 260px;
+}
+
+mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+mat-card-actions button {
+    padding: 0 13px;
 }
 
 @media(max-width: 550px) {

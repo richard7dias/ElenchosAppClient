@@ -22,7 +22,7 @@ export class RuleOfThreeComponent {
     let calculate = (this.number3 * this.number2) / this.number1;
 
     if (isNaN(calculate)) {
-      this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.', 'Fechar', 8);
+      this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.');
       this.result = 0;
     } else {
       this.result = this.numberFormat.inPortToDuo(calculate);

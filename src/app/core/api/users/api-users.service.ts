@@ -27,7 +27,7 @@ export class ApiUsersService {
     return this.http.post<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/users`, newUser, { observe: 'response' });
   }
 
-  patchUser(id: string, body: any[]): Observable<HttpResponse<Object>> {
+  patchUser(id: string, body: Object): Observable<HttpResponse<Object>> {
     return this.http.patch<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/users/${id}`, body, { observe: 'response' });
   }
 

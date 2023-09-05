@@ -24,7 +24,7 @@ export class FuelComponent {
     this.resultNumber = (this.km / this.economy) * this.fuel;
 
     if (isNaN(this.resultNumber) || this.resultNumber == 0) {
-      this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.', 'Fechar', 8);
+      this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.');
     } else {
       this.result = `Você gastará R$ ${this.money.inRealBRL(this.resultNumber)}.`;
     }

@@ -16,7 +16,11 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ['./confirm-window-delete.component.css']
 })
 export class ConfirmWindowDeleteComponent {
-  internalUser!: Observable<User | null>;
+
+  internalUser!: User;
+  hidePassword: boolean = true;
+  seePasswordField: boolean = false;
+  password!: string;
 
   constructor(
     public dialog: MatDialog,
@@ -27,20 +31,24 @@ export class ConfirmWindowDeleteComponent {
   ) { }
 
   ngOnInit() {
-    this.internalUser = this.user.getInternalUser();
-  }
-
-  protected okButtom() {
-    this.internalUser.pipe(take(1)).subscribe((user) => {
+    this.user.getInternalUser().subscribe(user => {
       if (user) {
-        this.users.deleteUser(user.id).subscribe(
-          (response: HttpResponse<any>) => {
-              this.alert.openSnackBar(response.body.message, 'Fechar', 10);
-          }
-        );
-        this.user.setInternalUser(null);
-        this.router.navigate(['/login']);
+        this.internalUser = user;
       }
     });
+  }
+
+  protected deleteUser() {
+    if (this.password === this.internalUser.password) {
+      this.users.deleteUser(this.internalUser.id).subscribe(
+        (response: HttpResponse<any>) => {
+          this.alert.openSnackBar(response.body.message);
+        }
+      );
+      this.user.setInternalUser(null);
+      this.router.navigate(['/login']);
+    } else {
+      this.alert.openSnackBar('Senha incorreta.');
+    }
   }
 }

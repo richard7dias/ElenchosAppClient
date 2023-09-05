@@ -4,6 +4,9 @@ import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
 import { AuthenticatorService } from 'src/app/core/authenticator/authenticator.service';
 import { ConfirmWindowDeleteComponent } from './confirm-window-delete/confirm-window-delete.component';
 import { MatDialog } from '@angular/material/dialog';
+import { User } from 'src/app/core/authenticator/user';
+import { AlertService } from 'src/app/core/alert/alert.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-settings',
@@ -12,21 +15,25 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class LoginSettingsComponent {
 
-  hidePassword: boolean = true;
-  hideConfirmPassword: boolean = true;
+  seePasswordFields: boolean = false;
+  hideOldPassword: boolean = true;
+  hideNewPassword: boolean = true;
+  hideConfirmNewPassword: boolean = true;
   idInternalUser: string = "";
-  firstName?: string;
-  surname?: string;
-  email?: string;
-  phone?: number;
-  password?: string;
-  confirmPassword!: string;
+  firstName!: string;
+  surname!: string;
+  email!: string;
+  phone!: number;
+  password!: string;
+  newPassword!: string;
+  oldPassword!: string;
+  confirmNewPassword!: string;
 
   constructor(
     private internalUser: AuthenticatorService,
-    private users: ApiUsersService,
-    private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private alert: AlertService,
+    private users: ApiUsersService
   ) { }
 
   ngOnInit() {
@@ -55,20 +62,62 @@ export class LoginSettingsComponent {
   }
 
   editAccount() {
-
-
-
+    if (this.firstName && this.surname && this.email) {
+      if (this.seePasswordFields) {
+        if (this.oldPassword && this.newPassword && this.confirmNewPassword) {
+          if (this.oldPassword === this.password) {
+            if (this.newPassword === this.confirmNewPassword) {
+              let modifiedUser: User = {
+                "email": this.email,
+                "phone": this.phone,
+                "password": this.newPassword,
+                "fullName": `${this.firstName} ${this.surname}`,
+                "firstName": this.firstName,
+                "id": this.idInternalUser,
+                "active": true
+              };
+              return this.postModifiedUser(modifiedUser);
+            } else {
+              return this.alert.openSnackBar('Senhas novas não conferem!');
+            }
+          } else {
+            return this.alert.openSnackBar('Senha antiga incorreta!');
+          }
+        } else {
+          console.log(this.oldPassword)
+          console.log(this.newPassword)
+          console.log(this.confirmNewPassword)
+          return this.alert.openSnackBar('Preencha todos os campos corretamente!');
+        }
+      } else {
+        let modifiedUser: User = {
+          "email": this.email,
+          "phone": this.phone,
+          "password": this.password,
+          "fullName": `${this.firstName} ${this.surname}`,
+          "firstName": this.firstName,
+          "id": this.idInternalUser,
+          "active": true
+        };
+        return this.postModifiedUser(modifiedUser);
+      }
+    } else {
+      return this.alert.openSnackBar('Preencha todos os campos corretamente!');
+    }
   }
 
-
-  // console.log(this.hidePassword);
-  // console.log(this.hideConfirmPassword);
-  // console.log(this.idInternalUser);
-  // console.log(this.firstName);
-  // console.log(this.surname);
-  // console.log(this.email);
-  // console.log(this.phone);
-  // console.log(this.password);
-  // console.log(this.confirmPassword);
+  private postModifiedUser(modifiedUser: User) {
+    this.users.patchUser(modifiedUser.id, modifiedUser).subscribe(
+      (response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.internalUser.setInternalUser(modifiedUser);
+          this.alert.openSnackBar(response.body.message);
+        }
+      },
+      (response) => {
+        this.alert.openSnackBar(response.error);
+      }
+    );
+  }
 }
 

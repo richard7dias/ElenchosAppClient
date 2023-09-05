@@ -33,7 +33,7 @@ export class SignupComponent {
     if (this.firstName && this.surname && this.email && this.password && this.confirmPassword) {
 
       if (this.password !== this.confirmPassword) {
-        return this.alert.openSnackBar("Erro! As senhas não conferem.", "Fechar", 7);
+        return this.alert.openSnackBar("Erro! As senhas não conferem.");
       }
 
       let newUser: User = {
@@ -51,15 +51,15 @@ export class SignupComponent {
           if (response.status === 201) {
             this.authenticator.setInternalUser(newUser);
             this.router.navigate(['/dashboard']);
-            this.alert.openSnackBar(response.body.message, 'Fechar', 7);
+            this.alert.openSnackBar(response.body.message);
           }
         },
         (response) => {
-          this.alert.openSnackBar(response.error, 'Fechar', 7);
+          this.alert.openSnackBar(response.error);
         }
       );
     } else {
-      this.alert.openSnackBar('Erro! Preencha todos os dados necessários.', 'Fechar', 7);
+      this.alert.openSnackBar('Erro! Preencha todos os dados necessários.');
     }
   }
 }

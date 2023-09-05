@@ -27,21 +27,51 @@
                     <input matInput type="text" name="phone" [(ngModel)]="phone">
                 </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Senha</mat-label>
-                    <input matInput type="text" name="password" [(ngModel)]="password" required>
-                </mat-form-field>
+                <div id="container-password-fields" *ngIf="seePasswordFields">
+                    <mat-form-field>
+                        <mat-label>Senha antiga</mat-label>
+                        <input matInput [type]="hideOldPassword ? 'password' : 'text'" name="oldPassword"
+                            [(ngModel)]="oldPassword" required>
+                        <button mat-icon-button matSuffix (click)="hideOldPassword = !hideOldPassword"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideOldPassword">
+                            <mat-icon>{{hideOldPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Confirme sua nova senha</mat-label>
-                    <input matInput type="text" name="confirmPassword" [(ngModel)]="confirmPassword" required>
-                </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Nova senha</mat-label>
+                        <input matInput [type]="hideNewPassword ? 'password' : 'text'" name="newPassword"
+                            [(ngModel)]="newPassword" required>
+                        <button mat-icon-button matSuffix (click)="hideNewPassword = !hideNewPassword"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideNewPassword">
+                            <mat-icon>{{hideNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+
+                    <mat-form-field id="password-confirm-field">
+                        <mat-label>Confirme sua nova senha</mat-label>
+                        <input matInput [type]="hideConfirmNewPassword ? 'password' : 'text'" name="confirmNewPassword"
+                            [(ngModel)]="confirmNewPassword" required>
+                        <button mat-icon-button matSuffix (click)="hideConfirmNewPassword = !hideConfirmNewPassword"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmNewPassword">
+                            <mat-icon>{{hideConfirmNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
             </form>
 
             <mat-card-actions>
-                <button mat-stroked-button id="btn-delete" color="warn" (click)="openModal()">
+                <button mat-stroked-button color="warn" (click)="openModal()">
                     <mat-icon>delete_forever</mat-icon>
-                    Excluir conta
+                    Deletar conta
+                </button>
+                <button mat-stroked-button (click)="seePasswordFields = !seePasswordFields" *ngIf="!seePasswordFields">
+                    <mat-icon>lock_reset</mat-icon>
+                    Trocar senha
+                </button>
+                <button mat-stroked-button (click)="seePasswordFields = !seePasswordFields" *ngIf="seePasswordFields">
+                    <mat-icon>lock</mat-icon>
+                    Manter senha
                 </button>
                 <button mat-stroked-button (click)="editAccount()">
                     <mat-icon>edit</mat-icon>

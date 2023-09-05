@@ -38,9 +38,9 @@ export class NewQuotationModalComponent {
       //implementar aqui a lógica para salvar na api com o guid do usuário logado
 
       this.modalRef.close(true);
-      this.alert.openSnackBar('Cotação adicionada com sucesso!', 'Ok', 5);
+      this.alert.openSnackBar('Cotação adicionada com sucesso!');
     } else {
-      this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.', 'Fechar', 8);
+      this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.');
     }
   }
 }
