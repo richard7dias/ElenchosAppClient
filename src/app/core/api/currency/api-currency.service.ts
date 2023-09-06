@@ -42,7 +42,7 @@ export class ApiCurrencyService {
     return this.http.patch<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/currency/${this.internalUser.id}/${id}`, body, { observe: 'response' });
   }
 
-  deleteCurrency(id: string): Observable<HttpResponse<Object>> {
-    return this.http.delete<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/currency/${this.internalUser.id}/${id}`, { observe: 'response' });
+  deleteCurrency(IsNameOrId: string, nameOrId: string): Observable<HttpResponse<Object>> {
+    return this.http.delete<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/currency/${this.internalUser.id}/${IsNameOrId}/${nameOrId}`, { observe: 'response' });
   }
 }

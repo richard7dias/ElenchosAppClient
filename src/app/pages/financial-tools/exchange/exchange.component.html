@@ -15,8 +15,14 @@
     <form (ngSubmit)="calculate()">
         <mat-form-field>
             <mat-label>Moeda atual</mat-label>
-            <mat-select [(ngModel)]="firstCoin" name="firstCoin" required>
-                <mat-option *ngFor="let coin of coins" [value]="coin">{{coin}}</mat-option>
+            <mat-select [(ngModel)]="firstCoin" name="firstCoin" required (ngModelChange)="onSelectChange($event, 1)">
+                <mat-option *ngFor="let coin of coins" [value]="coin">
+                    {{coin}}
+                    <button mat-icon-button class="delete-button" (click)="deleteCurrency(coin)"
+                        *ngIf="selected1CoinOption !== coin">
+                        <mat-icon fontIcon="delete"></mat-icon>
+                    </button>
+                </mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -28,8 +34,14 @@
         <div id="secondLine">
             <mat-form-field>
                 <mat-label>Converter para</mat-label>
-                <mat-select [(ngModel)]="secondCoin" name="secondCoin" required>
-                    <mat-option *ngFor="let coin of coins" [value]="coin">{{coin}}</mat-option>
+                <mat-select [(ngModel)]="secondCoin" name="secondCoin" required (ngModelChange)="onSelectChange($event, 2)">
+                    <mat-option *ngFor="let coin of coins" [value]="coin">
+                        {{coin}}
+                        <button mat-icon-button class="delete-button" (click)="deleteCurrency(coin)"
+                            *ngIf="selected2CoinOption !== coin">
+                            <mat-icon fontIcon="delete"></mat-icon>
+                        </button>
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
 

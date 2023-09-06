@@ -19,6 +19,8 @@ export class ExchangeComponent {
   inputValue!: string;
   secondCoin!: number;
   result: string | number = 0;
+  selected1CoinOption: string | null = null;
+  selected2CoinOption: string | null = null;
 
   constructor(
     private dialog: MatDialog,
@@ -52,14 +54,25 @@ export class ExchangeComponent {
   }
 
   openModal() {
-    const modalRef = this.dialog.open(NewQuotationModalComponent, {
+    this.dialog.open(NewQuotationModalComponent, {
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
     });
+  }
 
-    modalRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  onSelectChange(selectedValue: string, selectValue: number) {
+    switch (selectValue) {
+      case 1:
+        this.selected1CoinOption = selectedValue;
+        break
+      case 2:
+        this.selected2CoinOption = selectedValue;
+        break
+    }
+  }
+
+  deleteCurrency(coin: string) {
+
   }
 
   calculate(): void {
