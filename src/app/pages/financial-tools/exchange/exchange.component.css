@@ -39,13 +39,6 @@ mat-card-content {
     width: 65%;
 }
 
-#new-quotation {
-    width: 35%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
 #result {
     background-color: #f3f3f3;
     border-bottom: 1px solid #7b7b7b;

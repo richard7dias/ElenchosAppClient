@@ -1,24 +1,38 @@
+<div>
+    <button mat-button (click)="openModalNewQuotation()">
+        <mat-icon>add_box</mat-icon>
+        Nova cotação
+    </button>
+
+    <button mat-button (click)="openModalEditQuotation()">
+        <mat-icon>edit</mat-icon>
+        Editar cotações
+    </button>
+</div>
+
 <mat-card>
     <mat-card-header>
         <div id="titles">
             <mat-card-title>Câmbio</mat-card-title>
             <mat-card-subtitle>Preencha com os dados necessários:</mat-card-subtitle>
         </div>
-        <div id="new-quotation">
-            <button mat-button (click)="openModal()">
-                <mat-icon>add_box</mat-icon>
-                Nova cotação
-            </button>
-        </div>
     </mat-card-header>
 
     <form (ngSubmit)="calculate()">
         <mat-form-field>
-            <mat-label>Moeda atual</mat-label>
+            <mat-label>Valor para converter</mat-label>
+            <input matInput type="number" [(ngModel)]="inputValue" name="inputValue" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Da moeda:</mat-label>
             <mat-select [(ngModel)]="firstCoin" name="firstCoin" required (ngModelChange)="onSelectChange($event, 1)">
+
+                <mat-option *ngIf="coins.length === 0" disabled>Adicione moedas em "Nova cotação"</mat-option>
+
                 <mat-option *ngFor="let coin of coins" [value]="coin">
-                    {{coin}}
-                    <button mat-icon-button class="delete-button" (click)="deleteCurrency(coin)"
+                    {{ coin }}
+                    <button mat-icon-button class="delete-button" (click)="openModalDeleteQuotation(coin)"
                         *ngIf="selected1CoinOption !== coin">
                         <mat-icon fontIcon="delete"></mat-icon>
                     </button>
@@ -26,24 +40,24 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Valor atual</mat-label>
-            <input matInput type="number" [(ngModel)]="inputValue" name="inputValue" required>
-        </mat-form-field>
-
         <div id="secondLine">
             <mat-form-field>
-                <mat-label>Converter para</mat-label>
-                <mat-select [(ngModel)]="secondCoin" name="secondCoin" required (ngModelChange)="onSelectChange($event, 2)">
+                <mat-label>Para a moeda:</mat-label>
+                <mat-select [(ngModel)]="secondCoin" name="secondCoin" required
+                    (ngModelChange)="onSelectChange($event, 2)">
+
+                    <mat-option *ngIf="coins.length === 0" disabled>Adicione moedas em "Nova cotação"</mat-option>
+
                     <mat-option *ngFor="let coin of coins" [value]="coin">
-                        {{coin}}
-                        <button mat-icon-button class="delete-button" (click)="deleteCurrency(coin)"
+                        {{ coin }}
+                        <button mat-icon-button class="delete-button" (click)="openModalDeleteQuotation(coin)"
                             *ngIf="selected2CoinOption !== coin">
                             <mat-icon fontIcon="delete"></mat-icon>
                         </button>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+
 
             <div id="result">
                 <p>Resultado: {{result}}</p>

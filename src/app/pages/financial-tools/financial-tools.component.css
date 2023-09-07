@@ -7,3 +7,7 @@ main {
 button {
     margin-right: 5px;
 }
+
+.mat-divider {
+    margin: 10px 0;
+}

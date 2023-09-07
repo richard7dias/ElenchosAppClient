@@ -6,6 +6,9 @@ import { ApiCurrencyService } from 'src/app/core/api/currency/api-currency.servi
 import { Currency } from 'src/app/core/interfaces/currency.interface';
 import { HttpResponse } from '@angular/common/http';
 import { InternalCurrencyService } from 'src/app/shared/internal-values/internal-currency/currency.service';
+import { LoadingService } from 'src/app/shared/loading/loading.service';
+import { DeleteQuotationModalComponent } from './delete-quotation-modal/delete-quotation-modal.component';
+import { EditQuotationModalComponent } from './edit-quotation-modal/edit-quotation-modal.component';
 
 @Component({
   selector: 'app-exchange',
@@ -13,6 +16,8 @@ import { InternalCurrencyService } from 'src/app/shared/internal-values/internal
   styleUrls: ['./exchange.component.css']
 })
 export class ExchangeComponent {
+
+  currenciesList: Currency[] | null = null;
 
   coins: string[] = [];
   firstCoin!: number;
@@ -26,19 +31,25 @@ export class ExchangeComponent {
     private dialog: MatDialog,
     private alert: AlertService,
     private apiCurrencies: ApiCurrencyService,
-    private internalCurrency: InternalCurrencyService
-  ) { }
+    private internalCurrency: InternalCurrencyService,
+    private loadingBar: LoadingService
+  ) {
+  }
 
   ngOnInit() {
     this.apiCurrencies.getCurrencies().subscribe(
       (response: HttpResponse<Currency[]>) => {
-        const currenciesList: Currency[] | null = response.body;
-        if (currenciesList) {
-          this.internalCurrency.setInternalCurrency(currenciesList);
+        this.currenciesList = response.body;
+        if (this.currenciesList) {
+          this.internalCurrency.setInternalCurrency(this.currenciesList);
+          this.updateCoinsList();
         }
       }
     );
+  }
 
+
+  updateCoinsList() {
     this.internalCurrency.getInternalCurrency().subscribe(currencies => {
       const currenciesList: Currency[] = currencies || [];
       const uniqueCoins = new Set<string>();
@@ -50,13 +61,28 @@ export class ExchangeComponent {
 
       this.coins = Array.from(uniqueCoins);
       this.coins.sort();
-    })
+    });
   }
 
-  openModal() {
+  openModalNewQuotation() {
     this.dialog.open(NewQuotationModalComponent, {
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
+    });
+  }
+
+  openModalEditQuotation(){
+    this.dialog.open(EditQuotationModalComponent, {
+      enterAnimationDuration: "200ms",
+      exitAnimationDuration: "200ms",
+    });
+  }
+
+  openModalDeleteQuotation(coin: string) {
+    this.dialog.open(DeleteQuotationModalComponent, {
+      enterAnimationDuration: "200ms",
+      exitAnimationDuration: "200ms",
+      data: { coin: coin }
     });
   }
 
@@ -69,10 +95,6 @@ export class ExchangeComponent {
         this.selected2CoinOption = selectedValue;
         break
     }
-  }
-
-  deleteCurrency(coin: string) {
-
   }
 
   calculate(): void {

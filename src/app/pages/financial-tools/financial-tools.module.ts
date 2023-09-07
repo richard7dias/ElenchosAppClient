@@ -11,6 +11,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { ExchangeComponent } from './exchange/exchange.component';
 import { FuelComponent } from './fuel/fuel.component';
@@ -18,6 +20,8 @@ import { RuleOfThreeComponent } from './rule-of-three/rule-of-three.component';
 import { FinancialToolsComponent } from './financial-tools.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NewQuotationModalComponent } from './exchange/new-quotation-modal/new-quotation-modal.component';
+import { DeleteQuotationModalComponent } from './exchange/delete-quotation-modal/delete-quotation-modal.component';
+import { EditQuotationModalComponent } from './exchange/edit-quotation-modal/edit-quotation-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,9 @@ import { NewQuotationModalComponent } from './exchange/new-quotation-modal/new-q
     FuelComponent,
     RuleOfThreeComponent,
     FinancialToolsComponent,
-    NewQuotationModalComponent
+    NewQuotationModalComponent,
+    DeleteQuotationModalComponent,
+    EditQuotationModalComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +46,9 @@ import { NewQuotationModalComponent } from './exchange/new-quotation-modal/new-q
     MatTabsModule,
     MatSelectModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule
   ],
   exports: [
     ExchangeComponent,

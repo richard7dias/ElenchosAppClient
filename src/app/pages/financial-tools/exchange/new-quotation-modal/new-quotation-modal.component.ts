@@ -22,6 +22,7 @@ export class NewQuotationModalComponent {
   quoteFor!: string;
   quotationValue!: number;
   check!: string;
+  updatedCurrenciesList: Currency[] = [];
 
   constructor(
     private modalRef: MatDialogRef<NewQuotationModalComponent>,
@@ -68,13 +69,13 @@ export class NewQuotationModalComponent {
           this.alert.openSnackBar(response.error);
         }
       );
-      
+
       this.internalCurrency.getInternalCurrency().subscribe(currencies => {
         const currenciesList: Currency[] = currencies || [];
-        const updatedCurrenciesList = [...currenciesList, newQuotation];
-        this.internalCurrency.setInternalCurrency(updatedCurrenciesList);
+        this.updatedCurrenciesList = [...currenciesList, newQuotation];
       });
-      
+
+      this.internalCurrency.setInternalCurrency(this.updatedCurrenciesList);
       this.loadingBar.setLoadingBar(false);
       this.modalRef.close(true);
     } else {

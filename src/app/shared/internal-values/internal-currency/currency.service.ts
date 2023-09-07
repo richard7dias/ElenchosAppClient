@@ -11,7 +11,7 @@ export class InternalCurrencyService {
 
   constructor() { }
 
-  setInternalCurrency(internalCurrency: Currency[]) {
+  setInternalCurrency(internalCurrency: Currency[] | null) {
     this.internalCurrency.next(internalCurrency);
   }
 

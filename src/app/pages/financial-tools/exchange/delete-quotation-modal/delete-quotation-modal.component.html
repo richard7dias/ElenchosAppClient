@@ -1,0 +1,14 @@
+<main>
+    <h1 mat-dialog-title>Confirmação</h1>
+    <div mat-dialog-content id="mat-dialog-content">
+        <p id="subtitle">
+            Você tem certeza que gostaria de apagar esta cotação? Isso implica em todas as cotações com esse nome, e
+            atreladas a ela, serem apagadas!
+        </p>
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancelar</button>
+        <button mat-button color="warn" (click)="deleteQuotation()">Sim</button>
+    </div>
+</main>

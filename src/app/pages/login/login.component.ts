@@ -18,11 +18,11 @@ export class LoginComponent {
   password!: string;
   hide: boolean = true;
   remember: boolean = false;
-
+  
   constructor(
     private alert: AlertService,
     private users: ApiUsersService,
-    private authenticator: InternalUserService,
+    private user: InternalUserService,
     private router: Router,
     public loadingBar: LoadingService
   ) { }
@@ -35,7 +35,7 @@ export class LoginComponent {
 
           if (response.status === 200) {
 
-            this.authenticator.setInternalUser(response.body);
+            this.user.setInternalUser(response.body);
 
             if (this.remember) {
               localStorage.setItem('authToken', response.body.id);
