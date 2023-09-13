@@ -4,8 +4,30 @@ mat-card {
     width: 475px;
 }
 
-form {
+#inputs-container {
     margin: 15px;
+}
+
+#line-button-change {
+    position: absolute;
+    margin: -21.52px 297px;
+}
+
+#line-button-change button mat-icon {
+    margin-left: 9px;
+}
+
+#result {
+    background-color: #f3f3f3;
+    border-bottom: 1px solid #7b7b7b;
+    width: 211px;
+    height: 55px;
+    display: inline-block;
+    position: relative;
+    top: 15px;
+    margin-right: 10px;
+
+    color: rgba(0, 0, 0, 0.87);
 }
 
 mat-form-field {
@@ -39,24 +61,10 @@ mat-card-content {
     width: 65%;
 }
 
-#result {
-    background-color: #f3f3f3;
-    border-bottom: 1px solid #7b7b7b;
-    width: 211px;
-    height: 55px;
-    display: inline-block;
-    position: relative;
-    top: 15px;
-}
-
 #result p {
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
     margin-left: 20px;
     font-size: 1rem;
-}
-
-#secondLine {
-    margin-top: -20px;
 }

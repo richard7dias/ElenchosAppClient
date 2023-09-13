@@ -1,4 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+    height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-progress-bar .mdc-linear-progress__buffer-bar {
+    background-color: rgb(255 255 255 / 25%);
+}
+
+.mat-mdc-snack-bar-container {
+    --mat-mdc-snack-bar-button-color: #60CCC8;
+}
+
+.mdc-text-field--filled .mdc-line-ripple::after {
+    border-bottom-color: #387876;
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disable) .mdc-floating-label {
+    color: #387876;
+}
+
+.mat-primary .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    color: #387876;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after,
+.mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
+    color: #387876;
+}

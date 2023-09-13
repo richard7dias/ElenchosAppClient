@@ -22,7 +22,7 @@ export class NewQuotationModalComponent {
   quoteFor!: string;
   quotationValue!: number;
   check!: string;
-  updatedCurrenciesList: Currency[] = [];
+  updatedCurrenciesList: Currency[] | null = null;
 
   constructor(
     private modalRef: MatDialogRef<NewQuotationModalComponent>,
@@ -43,7 +43,7 @@ export class NewQuotationModalComponent {
 
   ngDoCheck() {
     if (this.quoteFrom && this.quoteFor && this.quotationValue) {
-      this.check = `1 ${this.quoteFrom} é igual a ${this.quotationValue} (${this.quoteFor}).`;
+      this.check = `1 ${this.quoteFor} é igual a ${this.quotationValue} (${this.quoteFrom}).`;
     }
   }
 
@@ -70,12 +70,15 @@ export class NewQuotationModalComponent {
         }
       );
 
-      this.internalCurrency.getInternalCurrency().subscribe(currencies => {
-        const currenciesList: Currency[] = currencies || [];
-        this.updatedCurrenciesList = [...currenciesList, newQuotation];
-      });
+      this.currencies.getCurrencies().subscribe(
+        (response: HttpResponse<Currency[]>) => {
+          this.updatedCurrenciesList = response.body;
+          if (this.updatedCurrenciesList) {
+            this.internalCurrency.setInternalCurrency(this.updatedCurrenciesList);
+          }
+        }
+      );
 
-      this.internalCurrency.setInternalCurrency(this.updatedCurrenciesList);
       this.loadingBar.setLoadingBar(false);
       this.modalRef.close(true);
     } else {

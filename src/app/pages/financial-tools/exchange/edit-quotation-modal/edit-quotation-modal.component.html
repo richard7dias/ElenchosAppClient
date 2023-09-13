@@ -1,65 +1,66 @@
 <main>
-    <h2 mat-dialog-title>Editar cotações</h2>
+    <div id="modal-header">
+        <h2 mat-dialog-title>Editar cotações</h2>
+        <div align="end">
+            <button mat-button (click)="openModalNewQuotation()">
+                <mat-icon>add_box</mat-icon>
+            </button>
+            <button mat-button (click)="accordion?.closeAll()">
+                <mat-icon>unfold_less</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <span id="msg-no-currencies" *ngIf="internalCurrency.length === 0">Adicione moedas em Nova cotação, no ícone "+"
+        acima.</span>
 
     <mat-dialog-content>
-        <mat-accordion class="example-headers-align" multi>
-            <mat-expansion-panel>
+        <mat-accordion multi>
+            <mat-expansion-panel *ngFor="let currency of internalCurrency" #panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Personal data
+                        {{currency.quoteFrom}} para {{currency.quoteFor}}
                     </mat-panel-title>
                     <mat-panel-description>
-                        Type your name and age
-                        <mat-icon>account_circle</mat-icon>
+                        {{calculateCheck(currency)}}
                     </mat-panel-description>
                 </mat-expansion-panel-header>
 
-                <mat-form-field>
-                    <mat-label>First name</mat-label>
-                    <input matInput>
-                </mat-form-field>
+                <div class="lineFields">
+                    <mat-form-field>
+                        <mat-label>Valor para converter:</mat-label>
+                        <input matInput [(ngModel)]="currency.quotationValue" name="inputValue" type="number" required>
+                    </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Age</mat-label>
-                    <input matInput type="number" min="1">
-                </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Da moeda:</mat-label>
+                        <input matInput [(ngModel)]="currency.quoteFrom" name="firstCoin" type="text" required>
+                    </mat-form-field>
+                </div>
 
-            </mat-expansion-panel>
-            <mat-expansion-panel disabled>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Destination
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        Type the country name
-                        <mat-icon>map</mat-icon>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
+                <div class="lineFields">
+                    <mat-form-field>
+                        <mat-label>Para a moeda:</mat-label>
+                        <input matInput [(ngModel)]="currency.quoteFor" name="secondCoin" type="text" required>
+                    </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Country</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </mat-expansion-panel>
+                    <mat-card-actions>
+                        <button mat-icon-button color="warn" (click)="openModalDeleteQuotation(currency.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button mat-button (click)="editCurrency(currency, panel)">
+                            Salvar
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </mat-card-actions>
+                </div>
 
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Day of the trip
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        Inform the date you wish to travel
-                        <mat-icon>date_range</mat-icon>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
             </mat-expansion-panel>
         </mat-accordion>
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
-        <button mat-button mat-dialog-close>Cancelar</button>
-        <button mat-button type="submit">Adicionar</button>
+        <button mat-button mat-dialog-close>Fechar</button>
     </mat-dialog-actions>
-
 
 </main>

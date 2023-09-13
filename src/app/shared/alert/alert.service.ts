@@ -14,7 +14,6 @@ export class AlertService {
     config.horizontalPosition = 'end';
     config.verticalPosition = 'top';
     config.panelClass = ['custom-snackbar'];
-    config.extraClasses = ['my-custom-snackbar'];
     config.zIndex = 1000;
 
     this._snackBar.open(message, 'Fechar', config);

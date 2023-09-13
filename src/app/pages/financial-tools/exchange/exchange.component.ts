@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NewQuotationModalComponent } from './new-quotation-modal/new-quotation-modal.component';
+import { HttpResponse } from '@angular/common/http';
+
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { ApiCurrencyService } from 'src/app/core/api/currency/api-currency.service';
 import { Currency } from 'src/app/core/interfaces/currency.interface';
-import { HttpResponse } from '@angular/common/http';
 import { InternalCurrencyService } from 'src/app/shared/internal-values/internal-currency/currency.service';
-import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { DeleteQuotationModalComponent } from './delete-quotation-modal/delete-quotation-modal.component';
 import { EditQuotationModalComponent } from './edit-quotation-modal/edit-quotation-modal.component';
+import { NumberService } from 'src/app/shared/formatting/number.service';
+import { NewQuotationModalComponent } from './new-quotation-modal/new-quotation-modal.component';
 
 @Component({
   selector: 'app-exchange',
@@ -20,19 +21,20 @@ export class ExchangeComponent {
   currenciesList: Currency[] | null = null;
 
   coins: string[] = [];
-  firstCoin!: number;
-  inputValue!: string;
-  secondCoin!: number;
-  result: string | number = 0;
+  inputValue!: number;
+  firstCoin!: string;
+  secondCoin!: string;
+  result: string = '0';
   selected1CoinOption: string | null = null;
   selected2CoinOption: string | null = null;
+  showChange: boolean = false;
 
   constructor(
     private dialog: MatDialog,
     private alert: AlertService,
     private apiCurrencies: ApiCurrencyService,
     private internalCurrency: InternalCurrencyService,
-    private loadingBar: LoadingService
+    private numberFormat: NumberService
   ) {
   }
 
@@ -48,6 +50,15 @@ export class ExchangeComponent {
     );
   }
 
+  ngDoCheck() {
+    if (this.inputValue && this.firstCoin && this.secondCoin) {
+      this.calculate();
+    }
+
+    if (this.firstCoin && this.secondCoin) {
+      this.showChange = true;
+    }
+  }
 
   updateCoinsList() {
     this.internalCurrency.getInternalCurrency().subscribe(currencies => {
@@ -71,7 +82,7 @@ export class ExchangeComponent {
     });
   }
 
-  openModalEditQuotation(){
+  openModalEditQuotation() {
     this.dialog.open(EditQuotationModalComponent, {
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
@@ -82,8 +93,20 @@ export class ExchangeComponent {
     this.dialog.open(DeleteQuotationModalComponent, {
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
-      data: { coin: coin }
+      data: { isIdOrName: 'name', coin: coin }
     });
+  }
+
+  changeSelect() {
+    let first = this.firstCoin;
+    let second = this.secondCoin;
+    let selected1 = this.selected1CoinOption;
+    let selected2 = this.selected2CoinOption;
+
+    this.firstCoin = second;
+    this.secondCoin = first;
+    this.selected1CoinOption = selected2;
+    this.selected2CoinOption = selected1;
   }
 
   onSelectChange(selectedValue: string, selectValue: number) {
@@ -98,7 +121,32 @@ export class ExchangeComponent {
   }
 
   calculate(): void {
+    if (this.inputValue && this.firstCoin && this.secondCoin) {
+      if (this.currenciesList) {
+        let currentFiltered: Currency[] | null = null;
 
-    this.alert.openSnackBar('Tem que fazer o cáculo depois que a api estiver top');
+        currentFiltered = this.currenciesList.filter(
+          c => c.quoteFor == this.firstCoin && c.quoteFrom == this.secondCoin
+        );
+
+        if (currentFiltered && currentFiltered.length > 0) {
+          this.result = this.numberFormat.inPortToDuo(
+            this.inputValue * currentFiltered[0].quotationValue
+          );
+        } else {
+          currentFiltered = this.currenciesList.filter(
+            c => c.quoteFrom == this.firstCoin && c.quoteFor == this.secondCoin
+          );
+
+          if (currentFiltered && currentFiltered.length > 0) {
+            this.result = this.numberFormat.inPortToDuo(
+              this.inputValue / currentFiltered[0].quotationValue
+            );
+          } else {
+            this.result = `Não há cotação envolvendo ${this.firstCoin} com ${this.secondCoin}`;
+          }
+        }
+      }
+    }
   }
 }

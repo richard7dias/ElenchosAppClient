@@ -3,6 +3,10 @@ mat-progress-bar {
     position: fixed;
 }
 
+.mat-mdc-progress-bar {
+    --mdc-linear-progress-active-indicator-color: #ffffff;
+}
+
 app-top-bar {
     position: fixed;
     z-index: 1000;
@@ -11,6 +15,7 @@ app-top-bar {
 
 app-left-bar {
     position: fixed;
+    z-index: 999;
     top: 64px;
 }
 
