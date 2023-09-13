@@ -12,11 +12,18 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { LoginSettingsComponent } from './pages/login-settings/login-settings.component';
 import { AuthGuard } from './core/auth-guard/auth-guard.service';
+import { AccountBalancesComponent } from './pages/budget/account-balances/account-balances.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'budget', component: BudgetComponent, canActivate: [AuthGuard] },
+  {
+    path: 'budget', component: BudgetComponent,
+    children: [
+      { path: 'account-balances', component: AccountBalancesComponent }
+    ], canActivate: [AuthGuard]
+  },
   { path: 'invest', component: InvestComponent, canActivate: [AuthGuard] },
   { path: 'travel', component: TravelBudgetComponent, canActivate: [AuthGuard] },
   { path: 'tools', redirectTo: 'tools/fuel', pathMatch: 'full' },
