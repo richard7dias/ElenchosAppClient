@@ -32,3 +32,20 @@ body {
 .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
     color: #387876;
 }
+
+.mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+    color: rgb(255 255 255 / 87%);
+}
+
+.mat-button-toggle-checked {
+    background-color: #387876;
+}
+
+.mat-button-toggle-standalone.mat-button-toggle-appearance-standard,
+.mat-button-toggle-group-appearance-standard {
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 35px;
+}

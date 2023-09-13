@@ -1,0 +1,13 @@
+main {
+    padding: 10px 20px;
+    width: 92.1vw;
+    height: 83.5vh;
+}
+
+button {
+    margin-right: 5px;
+}
+
+.mat-divider {
+    margin: -1px 0 10px 0;
+}

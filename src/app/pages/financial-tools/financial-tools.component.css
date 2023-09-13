@@ -1,5 +1,5 @@
 main {
-    padding: 20px;
+    padding: 10px 20px;
     width: 92.1vw;
     height: 83.5vh;
 }
@@ -9,5 +9,5 @@ button {
 }
 
 .mat-divider {
-    margin: 10px 0;
+    margin: -1px 0 10px 0;
 }

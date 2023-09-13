@@ -1,3 +1,11 @@
-
-<button routerLink="account-balances">test</button>
-<router-outlet></router-outlet>
+<main>
+    <mat-button-toggle-group>
+        <mat-button-toggle routerLink="account-balances" [checked]="true">Saldos</mat-button-toggle>
+        <mat-button-toggle routerLink="monthly-budget">Orçamento</mat-button-toggle>
+        <mat-button-toggle routerLink="launches">Lançamentos</mat-button-toggle>
+        <mat-button-toggle routerLink="reports">Relatórios</mat-button-toggle>
+        <mat-button-toggle routerLink="cash-flow">Fluxo de caixa</mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-divider></mat-divider>
+    <router-outlet></router-outlet>
+</main>

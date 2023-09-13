@@ -26,8 +26,7 @@ export class FuelComponent {
     if (isNaN(this.resultNumber) || this.resultNumber == 0) {
       this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.');
     } else {
-      this.result = `Você gastará R$ ${this.money.inRealBRL(this.resultNumber)}.`;
+      this.result = `Você gastará R$ ${this.money.inPortToDuo(this.resultNumber)}.`;
     }
   }
-
 }

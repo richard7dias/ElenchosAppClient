@@ -13,15 +13,23 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { LoginSettingsComponent } from './pages/login-settings/login-settings.component';
 import { AuthGuard } from './core/auth-guard/auth-guard.service';
 import { AccountBalancesComponent } from './pages/budget/account-balances/account-balances.component';
+import { CashFlowComponent } from './pages/budget/cash-flow/cash-flow.component';
+import { MonthlyBudgetComponent } from './pages/budget/monthly-budget/monthly-budget.component';
+import { LaunchesComponent } from './pages/budget/launches/launches.component';
+import { ReportsComponent } from './pages/budget/reports/reports.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'budget', component: BudgetComponent, canActivate: [AuthGuard] },
+  { path: 'budget', redirectTo: 'budget/account-balances', pathMatch: 'full' },
   {
     path: 'budget', component: BudgetComponent,
     children: [
-      { path: 'account-balances', component: AccountBalancesComponent }
+      { path: 'account-balances', component: AccountBalancesComponent },
+      { path: 'cash-flow', component: CashFlowComponent },
+      { path: 'monthly-budget', component: MonthlyBudgetComponent },
+      { path: 'launches', component: LaunchesComponent },
+      { path: 'reports', component: ReportsComponent },
     ], canActivate: [AuthGuard]
   },
   { path: 'invest', component: InvestComponent, canActivate: [AuthGuard] },

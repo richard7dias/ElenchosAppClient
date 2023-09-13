@@ -1,9 +1,9 @@
 <main>
-    <nav>
-        <button mat-stroked-button routerLink="fuel">Combustível</button>
-        <button mat-stroked-button routerLink="coin">Câmbio</button>
-        <button mat-stroked-button routerLink="rule-of-three">Regra de três</button>
-    </nav>
+    <mat-button-toggle-group>
+        <mat-button-toggle routerLink="fuel" [checked]="true">Combustível</mat-button-toggle>
+        <mat-button-toggle routerLink="coin">Câmbio</mat-button-toggle>
+        <mat-button-toggle routerLink="rule-of-three">Regra de três</mat-button-toggle>
+    </mat-button-toggle-group>
     <mat-divider></mat-divider>
     <router-outlet></router-outlet>
 </main>

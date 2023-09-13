@@ -17,7 +17,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InvestComponent } from './invest/invest.component';
-import { BudgetComponent } from './budget/budget.component';
 import { TravelBudgetComponent } from './travel-budget/travel-budget.component';
 import { FinancialToolsModule } from './financial-tools/financial-tools.module';
 import { LoginComponent } from './login/login.component';
@@ -25,12 +24,12 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginSettingsComponent } from './login-settings/login-settings.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { ConfirmWindowDeleteComponent } from './login-settings/confirm-window-delete/confirm-window-delete.component';
+import { BudgetModule } from './budget/budget.module';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     InvestComponent,
-    BudgetComponent,
     TravelBudgetComponent,
     LoginComponent,
     SignupComponent,
@@ -53,7 +52,8 @@ import { ConfirmWindowDeleteComponent } from './login-settings/confirm-window-de
     FormsModule,
     MatDividerModule,
     AppRoutingModule,
-    MatDialogModule
+    MatDialogModule,
+    BudgetModule
   ]
 })
 export class PagesModule { }
