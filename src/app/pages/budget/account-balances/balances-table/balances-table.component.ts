@@ -3,7 +3,12 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { TableBalances } from '../table-interfaces/table-balances.interface';
+import { BalancesTable } from '../table-interfaces/balances-table.interface';
+import { Balance } from 'src/app/core/interfaces/balance.interface';
+import { NumberService } from 'src/app/shared/formatting/number.service';
+import { ApiBalancesService } from 'src/app/core/api/balances/api-balances.service';
+import { HttpResponse } from '@angular/common/http';
+import { InternalBalancesService } from 'src/app/shared/internal-values/internal-balances/internal-balances.service';
 
 @Component({
   selector: 'app-balances-table',
@@ -12,29 +17,48 @@ import { TableBalances } from '../table-interfaces/table-balances.interface';
 })
 export class BalancesTableComponent implements AfterViewInit {
 
-  ELEMENT_DATA: TableBalances[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' }
-  ];
-
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-
-  constructor(private _liveAnnouncer: LiveAnnouncer) { }
+  internalBalances!: Balance[];
 
   @ViewChild(MatSort) sort!: MatSort;
+
+  tableDataApi: BalancesTable[] = [
+    { account: 'Nubank', valueBalance: 3456.23 },
+    { account: 'Itaú', valueBalance: 1231313 },
+    { account: 'Santander', valueBalance: 23 },
+    { account: 'Bradesco', valueBalance: 67 },
+  ];
+
+  displayedColumns: string[] = ['account', 'valueBalance'];
+  dataSource = new MatTableDataSource(this.tableDataApi);
+
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    public _numberFormat: NumberService,
+    private _apiBalances: ApiBalancesService,
+    private _internalBalances: InternalBalancesService
+  ) { }
+
+  ngOnInit() {
+
+  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 
-  announceSortChange(sortState: Sort) {
+  sortData(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  getTotalValue() {
+    return this._numberFormat.inPortToDuo(this.tableDataApi
+      .map(obj => obj.valueBalance)
+      .reduce((acc, value) => acc + value, 0
+      )
+    );
   }
 }

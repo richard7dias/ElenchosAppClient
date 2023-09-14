@@ -3,7 +3,8 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { TableBalances } from '../table-interfaces/table-balances.interface';
+import { ExpenseTable } from '../table-interfaces/expense-table.interface';
+import { NumberService } from 'src/app/shared/formatting/number.service';
 
 @Component({
   selector: 'app-expense-table',
@@ -12,17 +13,19 @@ import { TableBalances } from '../table-interfaces/table-balances.interface';
 })
 export class ExpenseTableComponent implements AfterViewInit {
 
-  ELEMENT_DATA: TableBalances[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' }
+  tableDataApi: ExpenseTable[] = [
+    { description: 'Cartão de crédito', valueExpense: 1000 },
+    { description: 'Mês', valueExpense: 203 },
+    { description: 'Dívidas', valueExpense: 2102 }
   ];
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  displayedColumns: string[] = ['description', 'valueExpense'];
+  dataSource = new MatTableDataSource(this.tableDataApi);
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) { }
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    public _numberFormat: NumberService
+  ) { }
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -30,11 +33,19 @@ export class ExpenseTableComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  announceSortChange(sortState: Sort) {
+  sortData(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  getTotalValue() {
+    return this._numberFormat.inPortToDuo(this.tableDataApi
+      .map(obj => obj.valueExpense)
+      .reduce((acc, value) => acc + value, 0
+      )
+    );
   }
 }

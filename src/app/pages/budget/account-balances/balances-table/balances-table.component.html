@@ -1,34 +1,35 @@
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-    class="mat-elevation-z8">
+<div class="container-title">
+    <h4>Contas</h4>
+    <button mat-button>
+        <mat-icon>add_box</mat-icon>
+    </button>
+</div>
 
-    <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-            No.
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="account">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by account">
+            Conta
         </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.account}} </td>
+        <td mat-footer-cell class="tfoot" *matFooterCellDef> Total </td>
+    </ng-container>`
+
+    <ng-container matColumnDef="valueBalance">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by valueBalance">
+            Valor
+        </th>
+        <td mat-cell class="values" *matCellDef="let element">
+            <p class="value-RS">R$</p>
+            <p class="value-real">{{ this._numberFormat.inPortToDuo(element.valueBalance) }}</p>
+        </td>
+        <td mat-footer-cell class="values tfoot" *matFooterCellDef>
+            <p class="value-RS">R$</p>
+            <p class="value-real">{{getTotalValue()}}</p>
+        </td>
     </ng-container>
 
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-            Name
-        </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
-            Weight
-        </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-            Symbol
-        </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true;"></tr>
 </table>

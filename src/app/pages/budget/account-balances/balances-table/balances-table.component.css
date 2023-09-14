@@ -1,7 +1,49 @@
+.container-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ng-tns-c51-2 {
+    display: flex;
+    justify-content: flex-end;
+    padding: 17px;
+}
+
+h4 {
+    margin: 6px 6px 16px;
+}
+
 table {
     width: 100%;
 }
 
 th.mat-sort-header-sorted {
     color: black;
+}
+
+.container-title button mat-icon {
+    margin: auto;
+}
+
+.values {
+    display: flex;
+    justify-content: space-between;
+}
+
+.value-real {
+    padding: 20px 0;
+    margin-bottom: 0;
+}
+
+.value-RS {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    margin-bottom: 0;
+}
+
+.tfoot {
+    font-weight: 550;
+    border-top: 1px solid #d6d6d6;
 }

@@ -1,38 +1,48 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { InternalUserService } from '../../../shared/internal-values/internal-user/internal-user.service';
+import { User } from '../../interfaces/user.interface';
+import { Observable } from 'rxjs';
+import { Balance } from '../../interfaces/balance.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiBalancesService {
 
-  idOwner: string = "93dd577d-7ae1-4670-8b20-ac4782a330a1";
+  internalUser!: User;
 
   constructor(
     private http: HttpClient,
     private apiUrl: ApiService,
-    private internalUser: InternalUserService
-  ) { }
-
-  getBalances() {
-    return this.http.get(`${this.apiUrl.apiUrl}/balances/${this.idOwner}`);
+    private user: InternalUserService
+  ) {
+    this.user.getInternalUser().subscribe(user => {
+      if (user) {
+        this.internalUser = user;
+      }
+    })
   }
 
-  getBalance(account: string) {
-    return this.http.get(`${this.apiUrl.apiUrl}/balances/${account}`);
+  getBalances(): Observable<HttpResponse<Balance[]>> {
+    return this.http.get<Balance[]>(`${this.apiUrl.apiUrl}/balance/${this.internalUser.id}`, { observe: 'response' }
+    );
   }
 
-  postBalance(body: any[]) {
-    this.http.post(`${this.apiUrl.apiUrl}/balances`, body);
+  getBalance(id: string): Observable<HttpResponse<Balance>> {
+    return this.http.get<Balance>(`${this.apiUrl.apiUrl}/balance/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 
-  patchBalance(account: string, body: any[]) {
-    this.http.patch(`${this.apiUrl.apiUrl}/balances/${account}`, body);
+  postBalance(body: Balance): Observable<HttpResponse<Object>> {
+    return this.http.post<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/balance/${this.internalUser.id}`, body, { observe: 'response' });
   }
 
-  deleteBalance(account: string) {
-    this.http.delete(`${this.apiUrl.apiUrl}/balances/${account}`);
+  patchBalance(id: string, body: Object): Observable<HttpResponse<Object>> {
+    return this.http.patch<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/balance/${this.internalUser.id}/${id}`, body, { observe: 'response' });
+  }
+
+  deleteBalance(id: string): Observable<HttpResponse<Object>> {
+    return this.http.delete<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/balance/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 }
