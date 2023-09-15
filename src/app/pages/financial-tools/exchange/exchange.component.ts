@@ -31,7 +31,6 @@ export class ExchangeComponent {
 
   constructor(
     private dialog: MatDialog,
-    private alert: AlertService,
     private apiCurrencies: ApiCurrencyService,
     private internalCurrency: InternalCurrencyService,
     private numberFormat: NumberService

@@ -1,8 +1,5 @@
 <div class="container-title">
     <h4>Contas</h4>
-    <button mat-button>
-        <mat-icon>add_box</mat-icon>
-    </button>
 </div>
 
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
@@ -13,7 +10,7 @@
         </th>
         <td mat-cell *matCellDef="let element"> {{element.account}} </td>
         <td mat-footer-cell class="tfoot" *matFooterCellDef> Total </td>
-    </ng-container>`
+    </ng-container>
 
     <ng-container matColumnDef="valueBalance">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by valueBalance">
@@ -27,6 +24,32 @@
             <p class="value-RS">R$</p>
             <p class="value-real">{{getTotalValue()}}</p>
         </td>
+    </ng-container>
+
+    <ng-container matColumnDef="itens">
+        <th mat-header-cell *matHeaderCellDef>
+            <button mat-button (click)="openModalNewBalance()">
+                <mat-icon>add_box</mat-icon>
+            </button>
+        </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openModalEditBalance(element)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Editar</span>
+                </button>
+                <button mat-menu-item (click)="openModalDeleteBalance(element)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span>Apagar</span>
+                </button>
+            </mat-menu>
+
+        </td>
+        <td mat-footer-cell class="tfoot" *matFooterCellDef></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>

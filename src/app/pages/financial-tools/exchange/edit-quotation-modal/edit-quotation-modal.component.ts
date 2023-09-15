@@ -1,7 +1,9 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
+
 import { ApiCurrencyService } from 'src/app/core/api/currency/api-currency.service';
 import { Currency } from 'src/app/core/interfaces/currency.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
@@ -24,11 +26,11 @@ export class EditQuotationModalComponent {
   titlesCheck: string[] = [];
 
   constructor(
-    private currencies: InternalCurrencyService,
-    private apiCurrency: ApiCurrencyService,
-    private alert: AlertService,
-    private dialog: MatDialog,
-    private loadingBar: LoadingService,
+    private _currencies: InternalCurrencyService,
+    private _apiCurrency: ApiCurrencyService,
+    private _alert: AlertService,
+    private _dialog: MatDialog,
+    private _loadingBar: LoadingService,
   ) { }
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class EditQuotationModalComponent {
   }
 
   refreshCurrencies() {
-    this.currencies.getInternalCurrency().subscribe(currencies => {
+    this._currencies.getInternalCurrency().subscribe(currencies => {
       if (currencies) {
         this.internalCurrency = currencies;
         currencies.forEach(currency => {
@@ -60,31 +62,31 @@ export class EditQuotationModalComponent {
         quoteFor: currency.quoteFor,
         quoteFrom: currency.quoteFrom
       }
-      this.loadingBar.setLoadingBar(true);
-      this.apiCurrency.patchCurrency(editedCurrency.id, editedCurrency).subscribe(
+      this._loadingBar.setLoadingBar(true);
+      this._apiCurrency.patchCurrency(editedCurrency.id, editedCurrency).subscribe(
         (response: HttpResponse<any>) => {
-          this.alert.openSnackBar(response.body.message);
+          this._alert.openSnackBar(response.body.message);
           panel.close();
         }
       );
       this.refreshCurrencies();
-      this.currencies.setInternalCurrency(this.internalCurrency);
-      this.loadingBar.setLoadingBar(false);
+      this._currencies.setInternalCurrency(this.internalCurrency);
+      this._loadingBar.setLoadingBar(false);
     } else {
-      this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.');
+      this._alert.openSnackBar('Erro! Digite todos os campos de forma correta.');
     }
   }
 
   openModalNewQuotation() {
-    this.dialog.closeAll();
-    this.dialog.open(NewQuotationModalComponent, {
+    this._dialog.closeAll();
+    this._dialog.open(NewQuotationModalComponent, {
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
     });
   }
 
   openModalDeleteQuotation(coin: string) {
-    this.dialog.open(DeleteQuotationModalComponent, {
+    this._dialog.open(DeleteQuotationModalComponent, {
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
       data: { isIdOrName: 'id', coin: coin }

@@ -1,0 +1,55 @@
+import { HttpResponse } from '@angular/common/http';
+import { Component, Inject } from '@angular/core';
+
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ApiBalancesService } from 'src/app/core/api/balances/api-balances.service';
+import { Balance } from 'src/app/core/interfaces/balance.interface';
+
+import { AlertService } from 'src/app/shared/alert/alert.service';
+import { InternalBalancesService } from 'src/app/shared/internal-values/internal-balances/internal-balances.service';
+import { LoadingService } from 'src/app/shared/loading/loading.service';
+
+@Component({
+  selector: 'app-delete-balance-modal',
+  templateUrl: './delete-balance-modal.component.html',
+  styleUrls: ['./delete-balance-modal.component.css']
+})
+export class DeleteBalanceModalComponent {
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public _data: any,
+    private _alert: AlertService,
+    private _modalRef: MatDialogRef<DeleteBalanceModalComponent>,
+    private _loadingBar: LoadingService,
+    private _apiBalances: ApiBalancesService,
+    private _internalBalances: InternalBalancesService
+  ) { }
+
+  deleteBalance() {
+    this._loadingBar.setLoadingBar(true);
+    this._apiBalances.deleteBalance(this._data.id).subscribe(
+      (response: HttpResponse<any>) => {
+        this._alert.openSnackBar(response.body.message);
+        this.updateBalances();
+      },
+      (response) => {
+        this._alert.openSnackBar(response.error);
+      }
+    );
+    this._loadingBar.setLoadingBar(false);
+    this._modalRef.close(true);
+  }
+
+  updateBalances() {
+    let balancesUpdated!: Balance[];
+    this._internalBalances.getInternalBalances().subscribe(balances => {
+      if (balances) {
+        balancesUpdated = balances
+      }
+    });
+
+    //ta dando errado na atualização da tabela no observable do internalBalances
+
+    this._internalBalances.setInternalBalances(balancesUpdated);
+  }
+}

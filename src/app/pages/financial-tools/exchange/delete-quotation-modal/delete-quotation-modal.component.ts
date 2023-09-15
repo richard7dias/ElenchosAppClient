@@ -20,18 +20,18 @@ export class DeleteQuotationModalComponent {
   isIdOrName: string = 'name';
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private loadingBar: LoadingService,
-    private apiCurrencies: ApiCurrencyService,
-    private alert: AlertService,
-    private internalCurrency: InternalCurrencyService,
-    private modalRef: MatDialogRef<DeleteQuotationModalComponent>
+    @Inject(MAT_DIALOG_DATA) public _data: any,
+    private _loadingBar: LoadingService,
+    private _apiCurrencies: ApiCurrencyService,
+    private _alert: AlertService,
+    private _internalCurrency: InternalCurrencyService,
+    private _modalRef: MatDialogRef<DeleteQuotationModalComponent>
   ) { }
 
   ngOnInit() {
-    this.isIdOrName = this.data.isIdOrName;
-    this.currencyNameOrId = this.data.coin;
-    this.internalCurrency.getInternalCurrency().subscribe(currency => {
+    this.isIdOrName = this._data.isIdOrName;
+    this.currencyNameOrId = this._data.coin;
+    this._internalCurrency.getInternalCurrency().subscribe(currency => {
       if (currency) {
         this.currenciesList = currency;
       }
@@ -39,12 +39,12 @@ export class DeleteQuotationModalComponent {
   }
 
   deleteQuotation() {
-    this.loadingBar.setLoadingBar(true);
+    this._loadingBar.setLoadingBar(true);
     let newCurrenciesList: Currency[] | null = null;
 
-    this.apiCurrencies.deleteCurrency(this.isIdOrName, this.currencyNameOrId).subscribe(
+    this._apiCurrencies.deleteCurrency(this.isIdOrName, this.currencyNameOrId).subscribe(
       (response: HttpResponse<any>) => {
-        this.alert.openSnackBar(response.body.message);
+        this._alert.openSnackBar(response.body.message);
 
         if (this.currenciesList !== null) {
           if (this.isIdOrName === 'name') {
@@ -58,12 +58,12 @@ export class DeleteQuotationModalComponent {
           }
         }
 
-        this.internalCurrency.setInternalCurrency(newCurrenciesList);
-        this.modalRef.close(true);
-        this.loadingBar.setLoadingBar(false);
+        this._internalCurrency.setInternalCurrency(newCurrenciesList);
+        this._modalRef.close(true);
+        this._loadingBar.setLoadingBar(false);
       }, (response) => {
-        this.alert.openSnackBar(response.error.message);
-        this.loadingBar.setLoadingBar(false);
+        this._alert.openSnackBar(response.error.message);
+        this._loadingBar.setLoadingBar(false);
       }
     );
   }

@@ -26,23 +26,23 @@ export class ApiBalancesService {
   }
 
   getBalances(): Observable<HttpResponse<Balance[]>> {
-    return this.http.get<Balance[]>(`${this.apiUrl.apiUrl}/balance/${this.internalUser.id}`, { observe: 'response' }
+    return this.http.get<Balance[]>(`${this.apiUrl.apiUrl}/balances/${this.internalUser.id}`, { observe: 'response' }
     );
   }
 
   getBalance(id: string): Observable<HttpResponse<Balance>> {
-    return this.http.get<Balance>(`${this.apiUrl.apiUrl}/balance/${this.internalUser.id}/${id}`, { observe: 'response' });
+    return this.http.get<Balance>(`${this.apiUrl.apiUrl}/balances/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 
   postBalance(body: Balance): Observable<HttpResponse<Object>> {
-    return this.http.post<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/balance/${this.internalUser.id}`, body, { observe: 'response' });
+    return this.http.post<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/balances/${this.internalUser.id}`, body, { observe: 'response' });
   }
 
   patchBalance(id: string, body: Object): Observable<HttpResponse<Object>> {
-    return this.http.patch<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/balance/${this.internalUser.id}/${id}`, body, { observe: 'response' });
+    return this.http.patch<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/balances/${this.internalUser.id}/${id}`, body, { observe: 'response' });
   }
 
   deleteBalance(id: string): Observable<HttpResponse<Object>> {
-    return this.http.delete<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/balance/${this.internalUser.id}/${id}`, { observe: 'response' });
+    return this.http.delete<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/balances/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 }

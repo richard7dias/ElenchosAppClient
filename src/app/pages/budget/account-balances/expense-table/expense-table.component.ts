@@ -2,8 +2,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { SourceExpense } from 'src/app/core/interfaces/sourceExpense.interface';
 
-import { ExpenseTable } from '../table-interfaces/expense-table.interface';
 import { NumberService } from 'src/app/shared/formatting/number.service';
 
 @Component({
@@ -13,13 +13,13 @@ import { NumberService } from 'src/app/shared/formatting/number.service';
 })
 export class ExpenseTableComponent implements AfterViewInit {
 
-  tableDataApi: ExpenseTable[] = [
-    { description: 'Cartão de crédito', valueExpense: 1000 },
-    { description: 'Mês', valueExpense: 203 },
-    { description: 'Dívidas', valueExpense: 2102 }
+  tableDataApi: SourceExpense[] = [
+    { description: 'Cartão de crédito', valueExpense: 1000, idOwner: '', id: '' },
+    { description: 'Mês', valueExpense: 203, idOwner: '', id: '' },
+    { description: 'Dívidas', valueExpense: 2102, idOwner: '', id: '' }
   ];
 
-  displayedColumns: string[] = ['description', 'valueExpense'];
+  displayedColumns: string[] = ['description', 'valueExpense', 'itens'];
   dataSource = new MatTableDataSource(this.tableDataApi);
 
   constructor(
@@ -47,5 +47,13 @@ export class ExpenseTableComponent implements AfterViewInit {
       .reduce((acc, value) => acc + value, 0
       )
     );
+  }
+
+  editElement(element: SourceExpense) {
+    console.log(element)
+  }
+
+  deleteElement(element: SourceExpense) {
+    console.log(element)
   }
 }
