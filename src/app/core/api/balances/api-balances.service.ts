@@ -22,7 +22,7 @@ export class ApiBalancesService {
       if (user) {
         this.internalUser = user;
       }
-    })
+    });
   }
 
   getBalances(): Observable<HttpResponse<Balance[]>> {
