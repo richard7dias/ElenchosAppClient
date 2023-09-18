@@ -32,10 +32,6 @@ export class InternalUserService {
     this.setInternalUser(user);
     //-------------------------------------------
 
-    // if (user) {
-    //   this._internalCash.updateInternalCash(user);
-    // }
-
     return !!user;
   }
 
