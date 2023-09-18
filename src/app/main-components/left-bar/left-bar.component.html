@@ -1,17 +1,19 @@
 <div id="container">
-    <button mat-icon-button matTooltipPosition="right" matTooltip="Dashboard" routerLink="dashboard">
-        <mat-icon>dashboard</mat-icon>
-    </button>
-    <button mat-icon-button matTooltipPosition="right" matTooltip="Orçamento familiar" routerLink="budget">
-        <mat-icon>diversity_3</mat-icon>
-    </button>
-    <button mat-icon-button matTooltipPosition="right" matTooltip="Investimentos" routerLink="invest">
-        <mat-icon>attach_money</mat-icon>
-    </button>
-    <button mat-icon-button matTooltipPosition="right" matTooltip="Orçamento de viagem" routerLink="travel">
-        <mat-icon>flight</mat-icon>
-    </button>
-    <button mat-icon-button matTooltipPosition="right" matTooltip="Ferramentas financeiras" routerLink="tools">
-        <mat-icon>construction</mat-icon>
-    </button>
+    <mat-button-toggle-group>
+        <mat-button-toggle [checked]="true">
+            <mat-icon routerLink="dashboard">dashboard</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle>
+            <mat-icon routerLink="budget">attach_money</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle>
+            <mat-icon routerLink="invest">trending_up</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle>
+            <mat-icon routerLink="travel">flight</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle>
+            <mat-icon routerLink="tools">construction</mat-icon>
+        </mat-button-toggle>
+    </mat-button-toggle-group>
 </div>

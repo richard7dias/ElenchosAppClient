@@ -3,7 +3,9 @@
 
     <div id="container-infos">
         <mat-card id="cash-card">
-            <mat-card-content>Caixa: R$ {{internalCash}}</mat-card-content>
+            <a routerLink="budget/account-balances">
+                <mat-card-content>Caixa: R$ {{internalCash}}</mat-card-content>
+            </a>
         </mat-card>
     </div>
 

@@ -7,7 +7,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { LeftBarComponent } from './left-bar/left-bar.component';
@@ -27,7 +28,8 @@ import { AppRoutingModule } from '../app-routing.module';
     MatMenuModule,
     BrowserAnimationsModule,
     MatTooltipModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonToggleModule
   ],
   exports: [
     TopBarComponent,

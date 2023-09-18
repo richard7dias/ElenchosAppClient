@@ -4,10 +4,37 @@
     background-color: #f2f2f2;
 }
 
-button {
+mat-button-toggle-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: none;
+}
+
+mat-button-toggle {
     margin-top: 10px;
 }
 
-mat-icon {
+.mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+    color: white;
+}
+
+.mat-button-toggle-appearance-standard {
     color: #387876;
+    background: #fff0;
+    width: 47px;
+    height: 47px;
+    border-radius: 50%;
+}
+
+.mat-button-toggle-checked {
+    background-color: #387876;
+}
+
+mat-icon {
+    margin-top: 10px;
+}
+
+.mat-button-toggle-group-appearance-standard .mat-button-toggle+.mat-button-toggle {
+    border-left: none;
 }
