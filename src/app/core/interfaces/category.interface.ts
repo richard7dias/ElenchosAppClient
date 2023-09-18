@@ -5,4 +5,5 @@ export interface Category {
     budget: number;
     expense: number;
     available: number;
+    [key: string]: number | string;
 }

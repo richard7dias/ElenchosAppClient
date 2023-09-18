@@ -1,34 +1,49 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApiService } from '../api.service';
+
+import { User } from '../../interfaces/user.interface';
+import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
+import { Observable } from 'rxjs';
+import { Category } from '../../interfaces/category.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiCategoriesService {
 
+  internalUser!: User;
+
   constructor(
     private http: HttpClient,
-    private apiUrl: ApiService
-  ) { }
-
-  getCategories() {
-    return this.http.get(`${this.apiUrl.apiUrl}/categories`);
+    private apiUrl: ApiService,
+    private user: InternalUserService
+  ) {
+    this.user.getInternalUser().subscribe(user => {
+      if (user) {
+        this.internalUser = user;
+      }
+    });
   }
 
-  getCategory(name: string) {
-    return this.http.get(`${this.apiUrl.apiUrl}/categories/${name}`);
+  getCategories(): Observable<HttpResponse<Category[]>> {
+    return this.http.get<Category[]>(`${this.apiUrl.apiUrl}/categories/${this.internalUser.id}`, { observe: 'response' }
+    );
   }
 
-  postCategory(body: any[]) {
-    this.http.post(`${this.apiUrl.apiUrl}/categories`, body);
+  getCategory(id: string): Observable<HttpResponse<Category>> {
+    return this.http.get<Category>(`${this.apiUrl.apiUrl}/categories/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 
-  patchCategory(name: string, body: any[]) {
-    this.http.patch(`${this.apiUrl.apiUrl}/categories/${name}`, body);
+  postCategory(body: Category): Observable<HttpResponse<Object>> {
+    return this.http.post<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/categories/${this.internalUser.id}`, body, { observe: 'response' });
   }
 
-  deleteCategory(name: string) {
-    this.http.delete(`${this.apiUrl.apiUrl}/categories/${name}`);
+  patchCategory(id: string, body: Object): Observable<HttpResponse<Object>> {
+    return this.http.patch<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/categories/${this.internalUser.id}/${id}`, body, { observe: 'response' });
+  }
+
+  deleteCategory(id: string): Observable<HttpResponse<Object>> {
+    return this.http.delete<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/categories/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 }
