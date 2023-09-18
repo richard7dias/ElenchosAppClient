@@ -1,8 +1,13 @@
-<div id="container">
-    <mat-toolbar>
-        <img src="../../../assets/ElenchosLogotipoBranco.png" alt="Elenchos Logotipo">
-        <span class="spacer"></span>
+<mat-toolbar>
+    <img src="../../../assets/ElenchosLogotipoBranco.png" alt="Elenchos Logotipo">
 
+    <div id="container-infos">
+        <mat-card id="cash-card">
+            <mat-card-content>Caixa: R${{internalCash}}</mat-card-content>
+        </mat-card>
+    </div>
+
+    <div id="container-user">
         <div id="container-username">
             <h3>{{userName}}</h3>
         </div>
@@ -19,7 +24,6 @@
                 Sair
             </button>
         </mat-menu>
+    </div>
 
-
-    </mat-toolbar>
-</div>
+</mat-toolbar>

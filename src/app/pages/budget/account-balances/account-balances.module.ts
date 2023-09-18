@@ -11,6 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 
 import { BalancesTableComponent } from './balances-table/balances-table.component';
 import { ExpenseTableComponent } from './expense-table/expense-table.component';
@@ -18,6 +19,9 @@ import { AccountBalancesComponent } from './account-balances.component';
 import { EditBalanceModalComponent } from './balances-table/edit-balance-modal/edit-balance-modal.component';
 import { DeleteBalanceModalComponent } from './balances-table/delete-balance-modal/delete-balance-modal.component';
 import { NewBalanceModalComponent } from './balances-table/new-balance-modal/new-balance-modal.component';
+import { NewExpenseModalComponent } from './expense-table/new-expense-modal/new-expense-modal.component';
+import { EditExpenseModalComponent } from './expense-table/edit-expense-modal/edit-expense-modal.component';
+import { DeleteExpenseModalComponent } from './expense-table/delete-expense-modal/delete-expense-modal.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,10 @@ import { NewBalanceModalComponent } from './balances-table/new-balance-modal/new
     AccountBalancesComponent,
     EditBalanceModalComponent,
     DeleteBalanceModalComponent,
-    NewBalanceModalComponent
+    NewBalanceModalComponent,
+    NewExpenseModalComponent,
+    EditExpenseModalComponent,
+    DeleteExpenseModalComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +46,8 @@ import { NewBalanceModalComponent } from './balances-table/new-balance-modal/new
     MatDialogModule,
     MatFormFieldModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatCardModule
   ]
 })
 export class AccountBalancesModule { }

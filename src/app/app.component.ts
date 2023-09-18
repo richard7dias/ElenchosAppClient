@@ -5,6 +5,7 @@ import { InternalUserService } from './shared/internal-values/internal-user/inte
 import { Router } from '@angular/router';
 import { User } from './core/interfaces/user.interface';
 import { HttpResponse } from '@angular/common/http';
+import { ApiBalancesService } from './core/api/balances/api-balances.service';
 
 @Component({
   selector: 'app-root',

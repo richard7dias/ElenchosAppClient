@@ -1,34 +1,48 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
+import { User } from '../../interfaces/user.interface';
+import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
+import { Observable } from 'rxjs';
+import { SourceExpense } from '../../interfaces/sourceExpense.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiSourceExpenseService {
 
+  internalUser!: User;
+
   constructor(
     private http: HttpClient,
-    private apiUrl: ApiService
-  ) { }
-
-  getSourceExpenses() {
-    return this.http.get(`${this.apiUrl.apiUrl}/source-expense`);
+    private apiUrl: ApiService,
+    private user: InternalUserService
+  ) {
+    this.user.getInternalUser().subscribe(user => {
+      if (user) {
+        this.internalUser = user;
+      }
+    })
   }
 
-  getSourceExpense(description: string) {
-    return this.http.get(`${this.apiUrl.apiUrl}/source-expense/${description}`);
+  getSourceExpenses(): Observable<HttpResponse<SourceExpense[]>> {
+    return this.http.get<SourceExpense[]>(`${this.apiUrl.apiUrl}/source-expenses/${this.internalUser.id}`, { observe: 'response' }
+    );
   }
 
-  postSourceExpense(body: any[]) {
-    this.http.post(`${this.apiUrl.apiUrl}/source-expense`, body);
+  getSourceExpense(id: string): Observable<HttpResponse<SourceExpense>> {
+    return this.http.get<SourceExpense>(`${this.apiUrl.apiUrl}/source-expenses/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 
-  patchSourceExpense(description: string, body: any[]) {
-    this.http.patch(`${this.apiUrl.apiUrl}/source-expense/${description}`, body);
+  postSourceExpense(body: SourceExpense): Observable<HttpResponse<Object>> {
+    return this.http.post<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/source-expenses/${this.internalUser.id}`, body, { observe: 'response' });
   }
 
-  deleteSourceExpense(description: string) {
-    this.http.delete(`${this.apiUrl.apiUrl}/source-expense/${description}`);
+  patchSourceExpense(id: string, body: Object): Observable<HttpResponse<Object>> {
+    return this.http.patch<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/source-expenses/${this.internalUser.id}/${id}`, body, { observe: 'response' });
+  }
+
+  deleteSourceExpense(id: string): Observable<HttpResponse<Object>> {
+    return this.http.delete<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/source-expenses/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { User } from '../../../core/interfaces/user.interface';
 import { AlertService } from '../../alert/alert.service';
+import { InternalCashService } from '../internal-cash/internal-cash.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class InternalUserService {
   private internalUser: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 
   constructor(
-    private alert: AlertService
+    private _internalCash: InternalCashService
   ) { }
 
   isAuthenticated(): boolean {
@@ -30,6 +31,10 @@ export class InternalUserService {
 
     this.setInternalUser(user);
     //-------------------------------------------
+
+    // if (user) {
+    //   this._internalCash.updateInternalCash(user);
+    // }
 
     return !!user;
   }

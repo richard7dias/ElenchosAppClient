@@ -1,10 +1,18 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SourceExpense } from 'src/app/core/interfaces/sourceExpense.interface';
 
 import { NumberService } from 'src/app/shared/formatting/number.service';
+import { NewExpenseModalComponent } from './new-expense-modal/new-expense-modal.component';
+import { EditExpenseModalComponent } from './edit-expense-modal/edit-expense-modal.component';
+import { DeleteExpenseModalComponent } from './delete-expense-modal/delete-expense-modal.component';
+import { Balance } from 'src/app/core/interfaces/balance.interface';
+import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
+import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-expense-table',
@@ -13,21 +21,40 @@ import { NumberService } from 'src/app/shared/formatting/number.service';
 })
 export class ExpenseTableComponent implements AfterViewInit {
 
-  tableDataApi: SourceExpense[] = [
-    { description: 'Cartão de crédito', valueExpense: 1000, idOwner: '', id: '' },
-    { description: 'Mês', valueExpense: 203, idOwner: '', id: '' },
-    { description: 'Dívidas', valueExpense: 2102, idOwner: '', id: '' }
-  ];
+  @ViewChild(MatSort) sort!: MatSort;
+
+  internalExpenses!: SourceExpense[];
 
   displayedColumns: string[] = ['description', 'valueExpense', 'itens'];
-  dataSource = new MatTableDataSource(this.tableDataApi);
+  dataSource = new MatTableDataSource(this.internalExpenses);
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
-    public _numberFormat: NumberService
+    public _numberFormat: NumberService,
+    private _apiExpenses: ApiSourceExpenseService,
+    private _internalExpenses: InternalExpensesService,
+    private _dialog: MatDialog
   ) { }
 
-  @ViewChild(MatSort) sort!: MatSort;
+  ngOnInit() {
+    this._apiExpenses.getSourceExpenses().subscribe(
+      (response: HttpResponse<SourceExpense[]>) => {
+        if (response.body) {
+          this._internalExpenses.setInternalExpenses(response.body);
+        }
+      }
+    );
+
+    this._internalExpenses.getInternalExpenses().subscribe(expenses => {
+      if (expenses) {
+        this.internalExpenses = expenses;
+      }
+    })
+  }
+
+  ngDoCheck() {
+    this.dataSource.data = this.internalExpenses;
+  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -42,18 +69,36 @@ export class ExpenseTableComponent implements AfterViewInit {
   }
 
   getTotalValue() {
-    return this._numberFormat.inPortToDuo(this.tableDataApi
-      .map(obj => obj.valueExpense)
-      .reduce((acc, value) => acc + value, 0
-      )
-    );
+    if (this.internalExpenses && this.internalExpenses.length > 0) {
+      return this._numberFormat.inPortToDuo(this.internalExpenses
+        .map(obj => obj.valueExpense)
+        .reduce((acc, value) => acc + value, 0)
+      );
+    } else {
+      return 0;
+    }
   }
 
-  editElement(element: SourceExpense) {
-    console.log(element)
+  openModalNewExpense() {
+    this._dialog.open(NewExpenseModalComponent, {
+      enterAnimationDuration: "200ms",
+      exitAnimationDuration: "200ms",
+    });
   }
 
-  deleteElement(element: SourceExpense) {
-    console.log(element)
+  openModalEditExpense(expense: SourceExpense) {
+    this._dialog.open(EditExpenseModalComponent, {
+      enterAnimationDuration: "200ms",
+      exitAnimationDuration: "200ms",
+      data: expense
+    });
+  }
+
+  openModalDeleteExpense(expense: SourceExpense) {
+    this._dialog.open(DeleteExpenseModalComponent, {
+      enterAnimationDuration: "200ms",
+      exitAnimationDuration: "200ms",
+      data: expense
+    });
   }
 }

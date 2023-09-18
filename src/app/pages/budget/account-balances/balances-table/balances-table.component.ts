@@ -48,7 +48,7 @@ export class BalancesTableComponent implements AfterViewInit {
       if (balances) {
         this.internalBalances = balances;
       }
-    })
+    });
   }
 
   ngDoCheck() {

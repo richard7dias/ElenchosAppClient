@@ -1,18 +1,18 @@
 <main>
-    <h2 mat-dialog-title>Editar conta bancária</h2>
+    <h2 mat-dialog-title>Editar fonte de gastos</h2>
     <form (submit)="submitForm()">
-        
+
         <mat-dialog-content>
 
             <mat-form-field>
-                <mat-label>Nome da conta:</mat-label>
-                <input matInput type="text" [(ngModel)]="accountNameInput" name="accountNameInput"
-                    placeholder="Ex. Nubank, Itaú..." required>
+                <mat-label>Descrição da fonte de gastos:</mat-label>
+                <input matInput type="text" [(ngModel)]="expenseDescriptionInput" name="expenseDescriptionInput"
+                    placeholder="Ex: Cartão de crédito" required>
             </mat-form-field>
 
             <mat-form-field>
-                <mat-label>Saldo da conta:</mat-label>
-                <input matInput type="number" [(ngModel)]="accountValueInput" name="accountValueInput" required
+                <mat-label>Valor atual:</mat-label>
+                <input matInput type="number" [(ngModel)]="expenseValueInput" name="expenseValueInput" required
                     cdkFocusInitial>
             </mat-form-field>
 

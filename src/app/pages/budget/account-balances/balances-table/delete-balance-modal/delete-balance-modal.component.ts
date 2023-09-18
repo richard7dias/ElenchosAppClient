@@ -33,7 +33,7 @@ export class DeleteBalanceModalComponent {
         this.updateBalances();
       },
       (response) => {
-        this._alert.openSnackBar(response.error);
+        this._alert.openSnackBar(response.error.message);
       }
     );
     this._loadingBar.setLoadingBar(false);
@@ -41,15 +41,12 @@ export class DeleteBalanceModalComponent {
   }
 
   updateBalances() {
-    let balancesUpdated!: Balance[];
-    this._internalBalances.getInternalBalances().subscribe(balances => {
-      if (balances) {
-        balancesUpdated = balances
+    this._apiBalances.getBalances().subscribe(
+      (response: HttpResponse<Balance[]>) => {
+        if (response.body) {
+          this._internalBalances.setInternalBalances(response.body);
+        }
       }
-    });
-
-    //ta dando errado na atualização da tabela no observable do internalBalances
-
-    this._internalBalances.setInternalBalances(balancesUpdated);
+    );
   }
 }

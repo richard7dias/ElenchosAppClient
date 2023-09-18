@@ -10,8 +10,20 @@ main {
     align-items: flex-start;
 }
 
+h4 {
+    text-align: center;
+}
+
+#th-cash-text {
+    text-align: center;
+}
+
+table {
+    width: 150px;
+}
+
 .container-tables {
-    margin-right: 100px;
+    margin: 0 50px;
     align-self: flex-start;
-    width: 300px;
+    width: 350px;
 }

@@ -3,9 +3,21 @@
         <div class="container-tables">
             <app-balances-table></app-balances-table>
         </div>
+
+        <div id="container-cash">
+            <div>
+                <h4>Caixa</h4>
+            </div>
+            <table mat-table class="mat-elevation-z8">
+                <ng-container matColumnDef="cash">
+                    <th mat-header-cell *matHeaderCellDef id="th-cash-text"> R$ {{internalCash}} </th>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumCash"></tr>
+            </table>
+        </div>
+
         <div class="container-tables">
             <app-expense-table></app-expense-table>
         </div>
     </div>
-
 </main>

@@ -1,25 +1,21 @@
-.container-title {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.ng-tns-c51-4 {
+.ng-tns-c61-4 {
     display: flex;
     justify-content: flex-end;
     padding: 17px;
 }
 
 h4 {
-    margin: 6px 6px 16px;
-}
-
-table {
-    width: 100%;
+    text-align: center;
 }
 
 th.mat-sort-header-sorted {
     color: black;
+}
+
+th mat-icon {
+    font-size: 1.1rem;
+    display: grid;
+    place-items: center;
 }
 
 .container-title button mat-icon {
