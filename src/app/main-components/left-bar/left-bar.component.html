@@ -1,18 +1,18 @@
 <div id="container">
     <mat-button-toggle-group>
-        <mat-button-toggle [checked]="true" routerLink="dashboard">
+        <mat-button-toggle [checked]="dashboardChecked" routerLink="dashboard">
             <mat-icon>dashboard</mat-icon>
         </mat-button-toggle>
-        <mat-button-toggle routerLink="budget">
+        <mat-button-toggle [checked]="budgetChecked" routerLink="budget">
             <mat-icon>attach_money</mat-icon>
         </mat-button-toggle>
-        <mat-button-toggle routerLink="invest">
+        <mat-button-toggle [checked]="investChecked" routerLink="invest">
             <mat-icon>trending_up</mat-icon>
         </mat-button-toggle>
-        <mat-button-toggle routerLink="travel">
+        <mat-button-toggle [checked]="travelChecked" routerLink="travel">
             <mat-icon>flight</mat-icon>
         </mat-button-toggle>
-        <mat-button-toggle routerLink="tools">
+        <mat-button-toggle [checked]="toolsChecked" routerLink="tools">
             <mat-icon>construction</mat-icon>
         </mat-button-toggle>
     </mat-button-toggle-group>
