@@ -13,12 +13,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { ExchangeComponent } from './exchange/exchange.component';
 import { FuelComponent } from './fuel/fuel.component';
 import { RuleOfThreeComponent } from './rule-of-three/rule-of-three.component';
 import { FinancialToolsComponent } from './financial-tools.component';
-import { MatTabsModule } from '@angular/material/tabs';
 import { NewQuotationModalComponent } from './exchange/new-quotation-modal/new-quotation-modal.component';
 import { DeleteQuotationModalComponent } from './exchange/delete-quotation-modal/delete-quotation-modal.component';
 import { EditQuotationModalComponent } from './exchange/edit-quotation-modal/edit-quotation-modal.component';

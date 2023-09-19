@@ -9,6 +9,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { LeftBarComponent } from './left-bar/left-bar.component';
@@ -29,7 +31,9 @@ import { AppRoutingModule } from '../app-routing.module';
     BrowserAnimationsModule,
     MatTooltipModule,
     MatCardModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTabsModule,
+    MatDividerModule
   ],
   exports: [
     TopBarComponent,

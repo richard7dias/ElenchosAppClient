@@ -49,3 +49,11 @@ body {
 .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
     line-height: 35px;
 }
+
+.mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+    color: #387876;
+}
+
+.mat-mdc-tab-link:not(.mat-mdc-tab-disabled) .mdc-tab-indicator__content--underline {
+    border-color: #387876;
+}

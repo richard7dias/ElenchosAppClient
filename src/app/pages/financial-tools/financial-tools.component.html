@@ -1,9 +1,17 @@
 <main>
-    <mat-button-toggle-group>
-        <mat-button-toggle routerLink="fuel" [checked]="fuelChecked">Combustível</mat-button-toggle>
-        <mat-button-toggle routerLink="coin" [checked]="coinChecked">Câmbio</mat-button-toggle>
-        <mat-button-toggle routerLink="rule-of-three" [checked]="ruleOfThreeChecked">Regra de três</mat-button-toggle>
-    </mat-button-toggle-group>
+    <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+        <a mat-tab-link routerLink="fuel" [active]="fuelChecked">
+            Combustível
+        </a>
+        <a mat-tab-link routerLink="coin" [active]="coinChecked">
+            Câmbio
+        </a>
+        <a mat-tab-link routerLink="rule-of-three" [active]="ruleOfThreeChecked">
+            Regra de três
+        </a>
+    </nav>
     <mat-divider></mat-divider>
-    <router-outlet></router-outlet>
+    <mat-tab-nav-panel #tabPanel>
+        <router-outlet></router-outlet>
+    </mat-tab-nav-panel>
 </main>

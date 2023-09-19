@@ -1,21 +1,23 @@
 <main>
-    <mat-button-toggle-group>
-        <mat-button-toggle routerLink="account-balances" [checked]="accountBalancesChecked">
+    <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+        <a mat-tab-link routerLink="account-balances" [active]="accountBalancesChecked">
             Saldos
-        </mat-button-toggle>
-        <mat-button-toggle routerLink="monthly-budget" [checked]="monthlyBudgetChecked">
+        </a>
+        <a mat-tab-link routerLink="monthly-budget" [active]="monthlyBudgetChecked">
             Orçamento
-        </mat-button-toggle>
-        <mat-button-toggle routerLink="launches" [checked]="launchesChecked">
+        </a>
+        <a mat-tab-link routerLink="launches" [active]="launchesChecked">
             Lançamentos
-        </mat-button-toggle>
-        <mat-button-toggle routerLink="reports" [checked]="reportsChecked">
+        </a>
+        <a mat-tab-link routerLink="reports" [active]="reportsChecked">
             Relatórios
-        </mat-button-toggle>
-        <mat-button-toggle routerLink="cash-flow" [checked]="cashFlowChecked">
+        </a>
+        <a mat-tab-link routerLink="cash-flow" [active]="cashFlowChecked">
             Fluxo de caixa
-        </mat-button-toggle>
-    </mat-button-toggle-group>
+        </a>
+    </nav>
     <mat-divider></mat-divider>
-    <router-outlet></router-outlet>
+    <mat-tab-nav-panel #tabPanel>
+        <router-outlet></router-outlet>
+    </mat-tab-nav-panel>
 </main>
