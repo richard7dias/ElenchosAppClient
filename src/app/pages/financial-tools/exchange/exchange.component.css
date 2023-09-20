@@ -68,3 +68,18 @@ mat-card-content {
     margin-left: 20px;
     font-size: 1rem;
 }
+
+@media (max-width: 600px) {
+    mat-card {
+        width: 90%;
+    }
+
+    mat-form-field,
+    #result {
+        width: 46%;
+    }
+
+    #line-button-change {
+        margin: -21.52px 199px;
+    }
+}

@@ -40,3 +40,14 @@ mat-card-content {
 #secondLine {
     margin-top: -20px;
 }
+
+@media (max-width: 600px) {
+    mat-card {
+        width: 90%;
+    }
+
+    mat-form-field,
+    #result {
+        width: 45%;
+    }
+}

@@ -35,6 +35,30 @@ a {
     margin: 0;
 }
 
-img {
+#logotipo {
     height: 70%;
+}
+
+#logo {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    #logotipo {
+        display: none;
+    }
+
+    #logo {
+        display: block;
+        height: 90%;
+    }
+
+    #cash-card {
+        font-size: .8rem;
+        height: 30px;
+    }
+
+    #cash-card mat-card-content {
+        padding: 0px 10px;
+    }
 }
