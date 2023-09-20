@@ -16,7 +16,7 @@ export class BudgetComponent {
   cashFlowChecked: boolean = false;
 
   constructor(private _internalRoute: InternalRouteService) {
-    this._internalRoute.getLastChildCurrentRoute().subscribe(route => {
+    this._internalRoute.getCustomRoute(2).subscribe(route => {
       this.removeChecked();
       switch (route) {
         case 'account-balances':

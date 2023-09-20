@@ -31,6 +31,15 @@ export class InternalRouteService {
     );
   }
 
+  getCustomRoute(index: number): Observable<string> {
+    return this.currentRoute.pipe(
+      map((route) => {
+        const segments = route.split('/');
+        return segments[index];
+      })
+    );
+  }
+
   getLastChildCurrentRoute(): Observable<string> {
     return this.currentRoute.pipe(
       map((route) => {

@@ -7,10 +7,14 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 
 import { LaunchesComponent } from './launches.component';
+import { ExpensesComponent } from './expenses/expenses.component';
+import { EntriesComponent } from './entries/entries.component';
 
 @NgModule({
   declarations: [
-    LaunchesComponent
+    LaunchesComponent,
+    ExpensesComponent,
+    EntriesComponent
   ],
   imports: [
     CommonModule,

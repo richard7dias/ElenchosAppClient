@@ -1,4 +1,5 @@
 <mat-chip-listbox>
-    <mat-chip-option selected>Gastos</mat-chip-option>
-    <mat-chip-option>Entradas</mat-chip-option>
+    <mat-chip-option routerLink="expenses" [selected]="expensesChecked">Gastos</mat-chip-option>
+    <mat-chip-option routerLink="entries" [selected]="entriesChecked">Entradas</mat-chip-option>
 </mat-chip-listbox>
+<router-outlet></router-outlet>

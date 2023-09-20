@@ -18,6 +18,8 @@ import { CashFlowComponent } from './pages/budget/cash-flow/cash-flow.component'
 import { MonthlyBudgetComponent } from './pages/budget/monthly-budget/monthly-budget.component';
 import { LaunchesComponent } from './pages/budget/launches/launches.component';
 import { ReportsComponent } from './pages/budget/reports/reports.component';
+import { ExpensesComponent } from './pages/budget/launches/expenses/expenses.component';
+import { EntriesComponent } from './pages/budget/launches/entries/entries.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -29,7 +31,14 @@ const routes: Routes = [
       { path: 'account-balances', component: AccountBalancesComponent },
       { path: 'cash-flow', component: CashFlowComponent },
       { path: 'monthly-budget', component: MonthlyBudgetComponent },
-      { path: 'launches', component: LaunchesComponent },
+      { path: 'launches', redirectTo: 'launches/expenses', pathMatch: 'full' },
+      {
+        path: 'launches', component: LaunchesComponent,
+        children: [
+          { path: 'expenses', component: ExpensesComponent },
+          { path: 'entries', component: EntriesComponent },
+        ], canActivate: [AuthGuard]
+      },
       { path: 'reports', component: ReportsComponent },
     ], canActivate: [AuthGuard]
   },
