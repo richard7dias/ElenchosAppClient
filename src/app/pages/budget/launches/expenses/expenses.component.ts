@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class ExpensesComponent {
 
+
+  newExpense() {
+    console.log('deu bom');
+  }
 }

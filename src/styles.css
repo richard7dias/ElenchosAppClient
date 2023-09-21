@@ -57,3 +57,7 @@ body {
 .mat-mdc-tab-link:not(.mat-mdc-tab-disabled) .mdc-tab-indicator__content--underline {
     border-color: #387876;
 }
+
+.mat-sort-header-container {
+    justify-content: center !important;
+}

@@ -1,5 +1,7 @@
 main {
-    margin-top: 30px;
+    margin: 10px auto;
+    padding: 20px;
+    max-width: 700px;
 }
 
 h4 {
@@ -15,6 +17,7 @@ th mat-icon {
 .values {
     display: flex;
     justify-content: space-between;
+    width: 120px;
 }
 
 .value-real {
@@ -32,4 +35,12 @@ th mat-icon {
 .tfoot {
     font-weight: 550;
     border-top: 1px solid #d6d6d6;
+}
+
+@media (max-width: 600px) {
+    main {
+        margin: 0 auto;
+        width: 90%;
+        overflow-y: auto;
+    }
 }

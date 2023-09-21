@@ -28,6 +28,10 @@ table {
 }
 
 @media (max-width: 600px) {
+    main {
+        justify-content: center;
+    }
+
     #container-general {
         display: flex;
         margin: 0 auto;
@@ -37,8 +41,8 @@ table {
     }
 
     .container-tables {
-        margin-bottom: 40px;
-        margin-left: 0;
+        margin: 0 0 40px 0;
+        align-self: auto;
     }
 
     #container-cash {
