@@ -51,7 +51,13 @@ export class ExpenseLaunchesTableComponent {
 
     this._internalLaunches.getinternalLaunches().subscribe(launches => {
       if (launches) {
-        this.internalLaunches = launches.reverse();
+        this.internalLaunches = launches
+          .reverse()
+          .filter(launch => {
+            const launchMonth = parseInt(this._dateFormat.datePtBr(launch.date).split('/')[1]);
+            return launchMonth === this._internalDate.getCurrentMonthNumber();
+          });
+
         this.internalLaunches.forEach(launch => {
           const newDate = this._dateFormat.datePtBr(launch.date);
           launch.date = newDate;
