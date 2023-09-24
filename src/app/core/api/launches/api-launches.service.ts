@@ -1,34 +1,49 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { ApiService } from '../api.service';
+import { User } from '../../interfaces/user.interface';
+import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
+import { Observable } from 'rxjs';
+import { Launch } from '../../interfaces/launch.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiLaunchesService {
 
+  internalUser!: User;
+
   constructor(
     private http: HttpClient,
-    private apiUrl: ApiService
-  ) { }
-
-  getLaunches() {
-    return this.http.get(`${this.apiUrl.apiUrl}/launches`);
+    private apiUrl: ApiService,
+    private user: InternalUserService
+  ) {
+    this.user.getInternalUser().subscribe(user => {
+      if (user) {
+        this.internalUser = user;
+      }
+    });
   }
 
-  getLaunch(id: string) {
-    return this.http.get(`${this.apiUrl.apiUrl}/launches/${id}`);
+  getLaunches(): Observable<HttpResponse<Launch[]>> {
+    return this.http.get<Launch[]>(`${this.apiUrl.apiUrl}/launches/${this.internalUser.id}`, { observe: 'response' }
+    );
   }
 
-  postLaunch(body: any[]) {
-    this.http.post(`${this.apiUrl.apiUrl}/launches`, body);
+  getLaunch(id: string): Observable<HttpResponse<Launch>> {
+    return this.http.get<Launch>(`${this.apiUrl.apiUrl}/launches/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 
-  patchLaunch(id: string, body: any[]) {
-    this.http.patch(`${this.apiUrl.apiUrl}/launches/${id}`, body);
+  postLaunch(body: Launch): Observable<HttpResponse<Object>> {
+    return this.http.post<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/launches/${this.internalUser.id}`, body, { observe: 'response' });
   }
 
-  deleteLaunch(id: string) {
-    this.http.delete(`${this.apiUrl.apiUrl}/launches/${id}`);
+  patchLaunch(id: string, body: Object): Observable<HttpResponse<Object>> {
+    return this.http.patch<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/launches/${this.internalUser.id}/${id}`, body, { observe: 'response' });
+  }
+
+  deleteLaunch(id: string): Observable<HttpResponse<Object>> {
+    return this.http.delete<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/launches/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 }

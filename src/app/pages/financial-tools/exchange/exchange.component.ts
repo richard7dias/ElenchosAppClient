@@ -8,7 +8,7 @@ import { Currency } from 'src/app/core/interfaces/currency.interface';
 import { InternalCurrencyService } from 'src/app/shared/internal-values/internal-currency/currency.service';
 import { DeleteQuotationModalComponent } from './delete-quotation-modal/delete-quotation-modal.component';
 import { EditQuotationModalComponent } from './edit-quotation-modal/edit-quotation-modal.component';
-import { NumberService } from 'src/app/shared/formatting/number.service';
+import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { NewQuotationModalComponent } from './new-quotation-modal/new-quotation-modal.component';
 
 @Component({

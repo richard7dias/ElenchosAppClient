@@ -10,7 +10,7 @@ mat-progress-bar {
 app-top-bar {
     position: fixed;
     z-index: 1000;
-    width: 100vw;
+    width: 100%;
 }
 
 app-left-bar {
@@ -22,7 +22,7 @@ app-left-bar {
 #routers {
     margin-top: 64px;
     margin-left: 48px;
-    width: 100%;
+    width: 100vw;
     height: 100%;
 }
 

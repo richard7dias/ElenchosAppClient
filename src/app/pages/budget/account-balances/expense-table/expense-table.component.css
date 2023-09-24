@@ -23,6 +23,10 @@ th mat-icon {
 }
 
 .values {
+    width: 110px;
+}
+
+#container-values {
     display: flex;
     justify-content: space-between;
 }

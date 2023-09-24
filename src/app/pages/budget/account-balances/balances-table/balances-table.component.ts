@@ -4,7 +4,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { Balance } from 'src/app/core/interfaces/balance.interface';
-import { NumberService } from 'src/app/shared/formatting/number.service';
+import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { ApiBalancesService } from 'src/app/core/api/balances/api-balances.service';
 import { HttpResponse } from '@angular/common/http';
 import { InternalBalancesService } from 'src/app/shared/internal-values/internal-balances/internal-balances.service';

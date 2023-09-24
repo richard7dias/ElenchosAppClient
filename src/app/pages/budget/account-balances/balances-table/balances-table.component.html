@@ -17,26 +17,33 @@
             Valor
         </th>
         <td mat-cell class="values" *matCellDef="let element">
-            <p class="value-RS">R$</p>
-            <p class="value-real">{{ this._numberFormat.inPortToDuo(element.valueBalance) }}</p>
+            <div id="container-values">
+                <p class="value-RS">R$</p>
+                <p class="value-real">{{ this._numberFormat.inPortToDuo(element.valueBalance) }}</p>
+            </div>
         </td>
         <td mat-footer-cell class="values tfoot" *matFooterCellDef>
-            <p class="value-RS">R$</p>
-            <p class="value-real">{{getTotalValue()}}</p>
+            <div id="container-values">
+                <p class="value-RS">R$</p>
+                <p class="value-real">{{getTotalValue()}}</p>
+            </div>
         </td>
     </ng-container>
 
     <ng-container matColumnDef="itens">
         <th mat-header-cell *matHeaderCellDef>
-            <button mat-icon-button (click)="openModalNewBalance()">
-                <mat-icon>add_box</mat-icon>
-            </button>
+            <div id="container-btns">
+                <button mat-icon-button (click)="openModalNewBalance()">
+                    <mat-icon>add_box</mat-icon>
+                </button>
+            </div>
         </th>
         <td mat-cell *matCellDef="let element">
-            <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-
+            <div id="container-btns">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+            </div>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="openModalEditBalance(element)">
                     <mat-icon>edit</mat-icon>

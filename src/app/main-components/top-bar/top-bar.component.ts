@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { InternalUserService } from '../../shared/internal-values/internal-user/internal-user.service';
 import { Component, OnInit } from '@angular/core';
-import { NumberService } from 'src/app/shared/formatting/number.service';
+import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { InternalCashService } from 'src/app/shared/internal-values/internal-cash/internal-cash.service';
 import { ApiBalancesService } from 'src/app/core/api/balances/api-balances.service';
 import { HttpResponse } from '@angular/common/http';

@@ -1,17 +1,9 @@
-main {
-    margin: 10px auto;
-    padding: 20px;
-    max-width: 700px;
+mat-form-field {
+    padding: 20px 20px 0px 20px;
 }
 
-h4 {
-    text-align: center;
-}
-
-th mat-icon {
-    font-size: 1.1rem;
-    display: grid;
-    place-items: center;
+table {
+    padding: 0px 20px 20px 20px;
 }
 
 .values {
@@ -35,15 +27,17 @@ th mat-icon {
     margin-bottom: 0;
 }
 
-.tfoot {
-    font-weight: 550;
-    border-top: 1px solid #d6d6d6;
+#container-more-btn {
+    display: grid;
+    place-items: center;
+}
+
+#td-date {
+    width: 100px;
 }
 
 @media (max-width: 600px) {
-    main {
-        margin: 0 auto;
-        width: 90%;
+    #container-table {
         overflow-y: auto;
     }
 }

@@ -1,12 +1,12 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, ViewChild } from '@angular/core';
+
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
-import { NumberService } from 'src/app/shared/formatting/number.service';
 import { HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 
+import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { Category } from 'src/app/core/interfaces/category.interface';
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
 import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';
@@ -71,8 +71,18 @@ export class MonthlyBudgetComponent {
   getTotalTableFoot(propName: string) {
     if (this.internalCategories && this.internalCategories.length > 0) {
       return this._numberFormat.inPortToDuo(this.internalCategories
-        .map(obj => obj[propName] as number)
-        .reduce((acc, value) => acc + value, 0)
+        .map(obj => {
+          switch (propName) {
+            case 'budget':
+              return obj.budget;
+            case 'expense':
+              return obj.expense;
+            case 'available':
+              return obj.available;
+            default:
+              return 0;
+          }
+        }).reduce((acc, value) => acc + value, 0)
       );
     } else {
       return 0;

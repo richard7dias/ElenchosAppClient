@@ -18,12 +18,16 @@
             Valor
         </th>
         <td mat-cell class="values" *matCellDef="let element">
-            <p class="value-RS">R$</p>
-            <p class="value-real">{{ this._numberFormat.inPortToDuo(element.valueExpense)}}</p>
+            <div id="container-values">
+                <p class="value-RS">R$</p>
+                <p class="value-real">{{ this._numberFormat.inPortToDuo(element.valueExpense)}}</p>
+            </div>
         </td>
         <td mat-footer-cell class="values tfoot" *matFooterCellDef>
-            <p class="value-RS">R$</p>
-            <p class="value-real">{{getTotalValue()}}</p>
+            <div id="container-values">
+                <p class="value-RS">R$</p>
+                <p class="value-real">{{getTotalValue()}}</p>
+            </div>
         </td>
     </ng-container>
 

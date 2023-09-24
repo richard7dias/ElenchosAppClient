@@ -1,5 +1,7 @@
 main {
     padding: 0 20px;
+    max-width: 1000px;
+    margin: auto;
 }
 
 .mat-mdc-standard-chip.mat-primary.mat-mdc-chip-selected {

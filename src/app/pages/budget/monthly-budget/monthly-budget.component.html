@@ -19,14 +19,18 @@
             </th>
             <td mat-cell *matCellDef="let element">
                 <div class="values">
-                    <p class="value-RS">R$</p>
-                    <p class="value-real">{{ this._numberFormat.inPortToDuo(element.budget) }}</p>
+                    <div id="container-values">
+                        <p class="value-RS">R$</p>
+                        <p class="value-real">{{ this._numberFormat.inPortToDuo(element.budget) }}</p>
+                    </div>
                 </div>
             </td>
             <td mat-footer-cell class="tfoot" *matFooterCellDef>
                 <div class="values">
-                    <p class="value-RS">R$</p>
-                    <p class="value-real">{{getTotalTableFoot('budget')}}</p>
+                    <div id="container-values">
+                        <p class="value-RS">R$</p>
+                        <p class="value-real">{{getTotalTableFoot('budget')}}</p>
+                    </div>
                 </div>
             </td>
         </ng-container>
@@ -37,14 +41,18 @@
             </th>
             <td mat-cell *matCellDef="let element">
                 <div class="values">
-                    <p class="value-RS">R$</p>
-                    <p class="value-real">{{ this._numberFormat.inPortToDuo(element.expense) }}</p>
+                    <div id="container-values">
+                        <p class="value-RS">R$</p>
+                        <p class="value-real">{{ this._numberFormat.inPortToDuo(element.expense) }}</p>
+                    </div>
                 </div>
             </td>
             <td mat-footer-cell class="tfoot" *matFooterCellDef>
                 <div class="values">
-                    <p class="value-RS">R$</p>
-                    <p class="value-real">{{getTotalTableFoot('expense')}}</p>
+                    <div id="container-values">
+                        <p class="value-RS">R$</p>
+                        <p class="value-real">{{getTotalTableFoot('expense')}}</p>
+                    </div>
                 </div>
             </td>
         </ng-container>
@@ -55,14 +63,18 @@
             </th>
             <td mat-cell *matCellDef="let element">
                 <div class="values">
-                    <p class="value-RS">R$</p>
-                    <p class="value-real">{{ this._numberFormat.inPortToDuo(element.available) }}</p>
+                    <div id="container-values">
+                        <p class="value-RS">R$</p>
+                        <p class="value-real">{{ this._numberFormat.inPortToDuo(element.available) }}</p>
+                    </div>
                 </div>
             </td>
             <td mat-footer-cell class="tfoot" *matFooterCellDef>
                 <div class="values">
-                    <p class="value-RS">R$</p>
-                    <p class="value-real">{{getTotalTableFoot('available')}}</p>
+                    <div id="container-values">
+                        <p class="value-RS">R$</p>
+                        <p class="value-real">{{getTotalTableFoot('available')}}</p>
+                    </div>
                 </div>
             </td>
         </ng-container>

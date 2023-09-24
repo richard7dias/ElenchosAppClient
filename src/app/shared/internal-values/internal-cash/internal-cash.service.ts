@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
-import { NumberService } from '../../formatting/number.service';
+import { NumberService } from '../../formatting/number/number.service';
 import { InternalBalancesService } from '../internal-balances/internal-balances.service';
 import { InternalExpensesService } from '../internal-expenses/internal-expenses.service';
 import { Balance } from 'src/app/core/interfaces/balance.interface';

@@ -11,8 +11,9 @@ import { PagesModule } from './pages/pages.module';
 import { MainComponentsModule } from './main-components/main-components.module';
 import { AuthGuard } from './core/auth-guard/auth-guard.service';
 import { AlertService } from './shared/alert/alert.service';
-import { NumberService } from './shared/formatting/number.service';
+import { NumberService } from './shared/formatting/number/number.service';
 import { InternalUserService } from './shared/internal-values/internal-user/internal-user.service';
+import { DateService } from './shared/formatting/date/date.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { InternalUserService } from './shared/internal-values/internal-user/inte
     AuthGuard,
     InternalUserService,
     AlertService,
-    NumberService
+    NumberService,
+    DateService
   ],
   bootstrap: [AppComponent]
 })

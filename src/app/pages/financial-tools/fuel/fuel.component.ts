@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertService } from 'src/app/shared/alert/alert.service';
-import { NumberService } from 'src/app/shared/formatting/number.service';
+import { NumberService } from 'src/app/shared/formatting/number/number.service';
 
 @Component({
   selector: 'app-fuel',

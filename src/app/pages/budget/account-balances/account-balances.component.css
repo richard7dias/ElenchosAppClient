@@ -24,7 +24,7 @@ table {
 .container-tables {
     margin: 0 50px;
     align-self: flex-start;
-    width: 350px;
+    width: 380px;
 }
 
 @media (max-width: 600px) {

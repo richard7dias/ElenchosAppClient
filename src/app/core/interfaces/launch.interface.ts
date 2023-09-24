@@ -1,8 +1,9 @@
-export interface Lauch {
+export interface Launch {
     idOwner: string;
     id: string;
-    date: Date;
+    date: string;
     description: string;
-    category: string;
+    categoryName: string;
+    categoryId: string;
     value: number;
 }
