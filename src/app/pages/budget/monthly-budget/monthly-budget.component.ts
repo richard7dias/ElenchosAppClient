@@ -60,14 +60,6 @@ export class MonthlyBudgetComponent {
     this.dataSource.sort = this.sort;
   }
 
-  sortData(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
   getTotalTableFoot(propName: string) {
     if (this.internalCategories && this.internalCategories.length > 0) {
       return this._numberFormat.inPortToDuo(this.internalCategories

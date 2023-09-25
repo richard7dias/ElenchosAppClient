@@ -59,14 +59,6 @@ export class BalancesTableComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  sortData(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
   getTotalValue() {
     if (this.internalBalances && this.internalBalances.length > 0) {
       return this._numberFormat.inPortToDuo(this.internalBalances

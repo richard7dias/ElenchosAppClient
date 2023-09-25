@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { HttpResponse } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, SimpleChanges, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -48,22 +48,7 @@ export class ExpenseLaunchesTableComponent {
         }
       }
     );
-
-    this._internalLaunches.getinternalLaunches().subscribe(launches => {
-      if (launches) {
-        this.internalLaunches = launches
-          .reverse()
-          .filter(launch => {
-            const launchMonth = parseInt(this._dateFormat.datePtBr(launch.date).split('/')[1]);
-            return launchMonth === this._internalDate.getCurrentMonthNumber();
-          });
-
-        this.internalLaunches.forEach(launch => {
-          const newDate = this._dateFormat.datePtBr(launch.date);
-          launch.date = newDate;
-        });
-      }
-    });
+    this.updateInternalLaunches();
   }
 
   ngDoCheck() {
@@ -74,17 +59,28 @@ export class ExpenseLaunchesTableComponent {
     this.dataSource.sort = this.sort;
   }
 
+
+  updateInternalLaunches() {
+    this._internalLaunches.getinternalLaunches().subscribe(launches => {
+      if (launches) {
+        this.internalLaunches = launches
+          .filter(launch => {
+            const launchMonth = parseInt(this._dateFormat.datePtBr(launch.date).split('/')[1]);
+            return launchMonth === this._internalDate.getCurrentMonthNumber();
+          });
+        // quando comento o filtro, ele carrega normalmente
+
+        this.internalLaunches.forEach(launch => {
+          const newDate = this._dateFormat.datePtBr(launch.date);
+          launch.date = newDate;
+        });
+      }
+    });
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  sortData(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
   }
 
   openModalEditCategory(launch: Launch) {

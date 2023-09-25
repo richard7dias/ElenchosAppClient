@@ -9,7 +9,7 @@
     </mat-form-field>
 
     <div id="container-table">
-        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+        <table mat-table [dataSource]="dataSource" matSort>
             <ng-container matColumnDef="date">
                 <th mat-header-cell id="td-date" *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
                     Data
