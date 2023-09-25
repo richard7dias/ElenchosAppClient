@@ -1,4 +1,17 @@
-import { Component } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { Component, Inject } from '@angular/core';
+
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
+
+import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
+import { Category } from 'src/app/core/interfaces/category.interface';
+import { Launch } from 'src/app/core/interfaces/launch.interface';
+import { AlertService } from 'src/app/shared/alert/alert.service';
+import { DateService } from 'src/app/shared/formatting/date/date.service';
+import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';
+import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';
+import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({
   selector: 'app-edit-launch-modal',
@@ -7,4 +20,104 @@ import { Component } from '@angular/core';
 })
 export class EditLaunchModalComponent {
 
+  internalCategories!: Category[];
+
+  dateInput!: string;
+  descriptionInput!: string;
+  categoryInput!: string;
+  valueInput!: number;
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public _data: any,
+    private _internalLaunches: InternalLaunchesService,
+    private _apiLaunches: ApiLaunchesService,
+    private _loadingBar: LoadingService,
+    private _alert: AlertService,
+    private _modalRef: MatDialogRef<EditLaunchModalComponent>,
+    private _internalCategories: InternalCategoriesService,
+    private _apiCategories: ApiCategoriesService,
+    private _dateFormat: DateService
+  ) { }
+
+  ngOnInit() {
+    this.searchInternalCategories();
+    this.dateInput = this._data.toISOString();
+    this.descriptionInput = this._data.description;
+    this.categoryInput = this._data.categoryName;
+    this.valueInput = this._data.value;
+  }
+
+  searchInternalCategories() {
+    this._internalCategories.getInternalCategories().subscribe(categories => {
+      if (categories) {
+        this.internalCategories = categories;
+      } else {
+        this.callApiCategories();
+      }
+    });
+  }
+
+  callApiCategories() {
+    this._apiCategories.getCategories().subscribe(
+      (response: HttpResponse<Category[]>) => {
+        this._internalCategories.setInternalCategories(response.body);
+        this.searchInternalCategories();
+      }
+    );
+  }
+
+  submitForm(): void {
+    if (this.dateInput && this.descriptionInput && this.categoryInput && this.valueInput) {
+
+      let launchEdited: Launch = {
+        idOwner: this._data.idOwner,
+        id: this._data.id,
+        date: this.dateInput,
+        description: this.descriptionInput,
+        categoryName: this._data.categoryName,
+        categoryId: this._data.categoryId,
+        value: this.valueInput
+      }
+
+      if (this._data.categoryName != this.categoryInput) {
+        let newCategoryChanged = this.internalCategories.filter(category => {
+          category.name == this.categoryInput
+        })[0];
+
+        launchEdited.id = newCategoryChanged.id
+      }
+
+      if (typeof this.dateInput !== 'string') {
+        launchEdited.date = this._dateFormat.datePtBr(this.dateInput);
+      }
+
+      this._loadingBar.setLoadingBar(true);
+      this._apiLaunches.patchLaunch(this._data.id, launchEdited).subscribe(
+        (response: HttpResponse<any>) => {
+          if (response.status === 200) {
+            this._alert.openSnackBar(response.body.message);
+            this.updateLaunches();
+            this._modalRef.close(true);
+          }
+        },
+        (response) => {
+          this._alert.openSnackBar(response.error.message);
+        }
+      );
+      this._loadingBar.setLoadingBar(false);
+
+    } else {
+      this._alert.openSnackBar('Preencha todos os campos necessários!')
+    }
+  }
+
+  updateLaunches() {
+    this._apiLaunches.getLaunches().subscribe(
+      (response: HttpResponse<Launch[]>) => {
+        if (response.body) {
+          this._internalLaunches.setInternalLaunches(response.body);
+        }
+      }
+    );
+  }
 }

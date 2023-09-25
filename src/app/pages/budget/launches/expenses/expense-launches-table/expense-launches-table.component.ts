@@ -1,9 +1,8 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { HttpResponse } from '@angular/common/http';
-import { Component, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
@@ -31,7 +30,6 @@ export class ExpenseLaunchesTableComponent {
   dataSource = new MatTableDataSource(this.internalLaunches);
 
   constructor(
-    private _liveAnnouncer: LiveAnnouncer,
     public _numberFormat: NumberService,
     private _apiLaunches: ApiLaunchesService,
     private _internalLaunches: InternalLaunchesService,
@@ -41,14 +39,14 @@ export class ExpenseLaunchesTableComponent {
   ) { }
 
   ngOnInit() {
-    this._apiLaunches.getLaunches().subscribe(
-      (response: HttpResponse<Launch[]>) => {
-        if (response.body) {
-          this._internalLaunches.setinternalLaunches(response.body);
-        }
+    this._internalLaunches.getInternalLaunches().subscribe(launches => {
+      if (!launches) {
+        this.callApiLaunches();
+        this.updateInternalLaunchesFirstTime();
       }
-    );
-    this.updateInternalLaunches();
+    });
+
+    this.updateInternalLaunchesReloadPage();
   }
 
   ngDoCheck() {
@@ -59,21 +57,32 @@ export class ExpenseLaunchesTableComponent {
     this.dataSource.sort = this.sort;
   }
 
+  callApiLaunches() {
+    this._apiLaunches.getLaunches().subscribe(
+      (response: HttpResponse<Launch[]>) => {
+        if (response.body) {
+          this._internalLaunches.setInternalLaunches(response.body);
+        }
+      }
+    );
+  }
 
-  updateInternalLaunches() {
-    this._internalLaunches.getinternalLaunches().subscribe(launches => {
+  updateInternalLaunchesFirstTime() {
+    this._internalLaunches.getInternalLaunchesByCurrentMonth().subscribe(launches => {
       if (launches) {
-        this.internalLaunches = launches
-          .filter(launch => {
-            const launchMonth = parseInt(this._dateFormat.datePtBr(launch.date).split('/')[1]);
-            return launchMonth === this._internalDate.getCurrentMonthNumber();
-          });
-        // quando comento o filtro, ele carrega normalmente
-
+        this.internalLaunches = launches;
         this.internalLaunches.forEach(launch => {
           const newDate = this._dateFormat.datePtBr(launch.date);
           launch.date = newDate;
         });
+      }
+    });
+  }
+
+  updateInternalLaunchesReloadPage() {
+    this._internalLaunches.getInternalLaunchesByCurrentMonth().subscribe(launches => {
+      if (launches) {
+        this.internalLaunches = launches;
       }
     });
   }

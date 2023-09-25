@@ -17,6 +17,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { LaunchesComponent } from './launches.component';
 import { ExpensesComponent } from './expenses/expenses.component';
@@ -51,10 +52,11 @@ import { DeleteLaunchModalComponent } from './expenses/delete-launch-modal/delet
     MatTableModule,
     MatMenuModule,
     MatIconModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule
   ],
   providers: [
     DatePipe
-  ],
+  ]
 })
 export class LaunchesModule { }

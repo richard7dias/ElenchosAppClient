@@ -4,6 +4,7 @@
             <mat-card-title>Novo lançamento de gasto</mat-card-title>
         </mat-card-header>
         <form (submit)="newExpense()">
+
             <mat-card-content>
                 <mat-form-field>
                     <mat-label>Data</mat-label>
@@ -12,11 +13,13 @@
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
+
                 <mat-form-field>
                     <mat-label>Descrição</mat-label>
                     <input matInput type="text" [(ngModel)]="descriptionInput" name="descriptionInput"
                         id="descriptionInput">
                 </mat-form-field>
+
                 <mat-form-field>
                     <mat-label>Categoria</mat-label>
                     <mat-select [(ngModel)]="categoryInput" name="categoryInput">
@@ -24,10 +27,12 @@
                             [value]="category">{{category.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
+
                 <mat-form-field>
                     <mat-label>Valor (R$)</mat-label>
                     <input matInput type="number" [(ngModel)]="valueInput" name="valueInput">
                 </mat-form-field>
+
             </mat-card-content>
             <mat-card-actions align="end">
                 <button mat-button type="submit">Lançar</button>

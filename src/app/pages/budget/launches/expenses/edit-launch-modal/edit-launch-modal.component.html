@@ -1,1 +1,39 @@
-<p>edit-launch-modal works!</p>
+<main>
+    <h2 mat-dialog-title>Editar lançamento de gasto</h2>
+    <form (submit)="submitForm()">
+
+        <mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Data</mat-label>
+                <input matInput [matDatepicker]="picker" type="text" [(ngModel)]="dateInput" name="dateInput" required>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Descrição</mat-label>
+                <input matInput type="text" [(ngModel)]="descriptionInput" name="descriptionInput"
+                    id="descriptionInput" required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Categoria</mat-label>
+                <mat-select [(ngModel)]="categoryInput" name="categoryInput" required>
+                    <mat-option *ngFor="let category of internalCategories"
+                        [value]="category">{{category.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Valor (R$)</mat-label>
+                <input matInput type="number" [(ngModel)]="valueInput" name="valueInput" required>
+            </mat-form-field>
+
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>Cancelar</button>
+            <button mat-button type="submit">Editar</button>
+        </mat-dialog-actions>
+
+    </form>
+</main>

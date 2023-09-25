@@ -98,7 +98,7 @@ export class ExpensesComponent {
 
       this._apiLaunches.getLaunches().subscribe(
         (response: HttpResponse<Launch[]>) => {
-          this._internalLaunches.setinternalLaunches(response.body);
+          this._internalLaunches.setInternalLaunches(response.body);
         }
       );
     } else {
