@@ -41,7 +41,7 @@ export class EditLaunchModalComponent {
 
   ngOnInit() {
     this.searchInternalCategories();
-    this.dateInput = this._data.toISOString();
+    this.dateInput = this._dateFormat.stringToDate(this._data.date).toISOString();
     this.descriptionInput = this._data.description;
     this.categoryInput = this._data.categoryName;
     this.valueInput = this._data.value;
@@ -74,21 +74,17 @@ export class EditLaunchModalComponent {
         id: this._data.id,
         date: this.dateInput,
         description: this.descriptionInput,
-        categoryName: this._data.categoryName,
+        categoryName: this.categoryInput,
         categoryId: this._data.categoryId,
         value: this.valueInput
       }
 
-      if (this._data.categoryName != this.categoryInput) {
-        let newCategoryChanged = this.internalCategories.filter(category => {
-          category.name == this.categoryInput
-        })[0];
+      let newCategoryChanged = this.internalCategories.find(category => {
+        return category.name === this.categoryInput;
+      });
 
-        launchEdited.id = newCategoryChanged.id
-      }
-
-      if (typeof this.dateInput !== 'string') {
-        launchEdited.date = this._dateFormat.datePtBr(this.dateInput);
+      if (newCategoryChanged) {
+        launchEdited.categoryId = newCategoryChanged.id;
       }
 
       this._loadingBar.setLoadingBar(true);

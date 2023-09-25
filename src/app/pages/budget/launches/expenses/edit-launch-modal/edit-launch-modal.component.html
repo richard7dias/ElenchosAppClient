@@ -20,7 +20,7 @@
                 <mat-label>Categoria</mat-label>
                 <mat-select [(ngModel)]="categoryInput" name="categoryInput" required>
                     <mat-option *ngFor="let category of internalCategories"
-                        [value]="category">{{category.name}}</mat-option>
+                        [value]="category.name">{{category.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
