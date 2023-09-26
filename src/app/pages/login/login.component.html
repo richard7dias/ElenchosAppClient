@@ -1,32 +1,35 @@
 <main>
-    
+
     <mat-toolbar>
-        <img src="../../../assets/ElenchosLogotipoBranco.png" alt="Elenchos Logotipo">
+        <img id="img-large-screen" src="../../../assets/ElenchosLogotipoBranco.png" alt="Elenchos Logotipo">
     </mat-toolbar>
 
 
     <mat-card>
         <mat-card-header>
+            <img id="img-small-screen" src="../../../assets/ElenchosLogotipo.png" alt="Elenchos">
             <mat-card-title>Login</mat-card-title>
         </mat-card-header>
 
         <mat-card-content>
-            <mat-form-field appearance="fill">
-                <mat-label>Email</mat-label>
-                <input matInput type="text" [(ngModel)]="email" required>
-                <mat-icon matSuffix>person</mat-icon>
-            </mat-form-field>
+            <form (submit)="login()" (keydown.enter)="$event.preventDefault(); login()">
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" [(ngModel)]="email" name="email" required>
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Senha</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" required>
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Senha</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password" required>
+                    <button mat-icon-button matSuffix type="button" (click)="hide = !hide"
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
 
-            <button id="btnEnter" mat-raised-button (click)="login()">Entrar</button>
+                <button id="btnEnter" mat-raised-button type="submit">Entrar</button>
+            </form>
 
             <div id="containerBelow">
                 <div class="itensBelow">
