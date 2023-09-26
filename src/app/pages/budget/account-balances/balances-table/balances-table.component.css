@@ -48,6 +48,10 @@ th mat-icon {
     place-items: center;
 }
 
+.mat-cell {
+    padding: 20px;
+}
+
 .tfoot {
     font-weight: 550;
     border-top: 1px solid #d6d6d6;

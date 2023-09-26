@@ -43,6 +43,10 @@ th mat-icon {
     margin-bottom: 0;
 }
 
+.mat-cell {
+    padding: 20px;
+}
+
 .tfoot {
     font-weight: 550;
     border-top: 1px solid #d6d6d6;
