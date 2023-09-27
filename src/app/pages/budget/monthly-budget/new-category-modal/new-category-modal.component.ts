@@ -69,14 +69,13 @@ export class NewCategoryModalComponent {
         }
       );
 
-      this._loadingBar.setLoadingBar(false);
-
       this._apiCategories.getCategories().subscribe(
         (response: HttpResponse<Category[]>) => {
           this._internalCategories.setInternalCategories(response.body);
         }
       );
 
+      this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
     }

@@ -69,14 +69,13 @@ export class NewBalanceModalComponent {
         }
       );
 
-      this._loadingBar.setLoadingBar(false);
-
       this._apiBalances.getBalances().subscribe(
         (response: HttpResponse<Balance[]>) => {
           this._internalBalances.setInternalBalances(response.body);
         }
       );
 
+      this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
     }

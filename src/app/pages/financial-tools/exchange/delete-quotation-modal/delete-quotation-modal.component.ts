@@ -39,9 +39,9 @@ export class DeleteQuotationModalComponent {
   }
 
   deleteQuotation() {
-    this._loadingBar.setLoadingBar(true);
     let newCurrenciesList: Currency[] | null = null;
 
+    this._loadingBar.setLoadingBar(true);
     this._apiCurrencies.deleteCurrency(this.isIdOrName, this.currencyNameOrId).subscribe(
       (response: HttpResponse<any>) => {
         this._alert.openSnackBar(response.body.message);
@@ -60,11 +60,11 @@ export class DeleteQuotationModalComponent {
 
         this._internalCurrency.setInternalCurrency(newCurrenciesList);
         this._modalRef.close(true);
-        this._loadingBar.setLoadingBar(false);
       }, (response) => {
         this._alert.openSnackBar(response.error.message);
         this._loadingBar.setLoadingBar(false);
       }
     );
+    this._loadingBar.setLoadingBar(false);
   }
 }

@@ -58,12 +58,14 @@ export class EditLaunchModalComponent {
   }
 
   callApiCategories() {
+    this._loadingBar.setLoadingBar(true);
     this._apiCategories.getCategories().subscribe(
       (response: HttpResponse<Category[]>) => {
         this._internalCategories.setInternalCategories(response.body);
         this.searchInternalCategories();
       }
     );
+    this._loadingBar.setLoadingBar(false);
   }
 
   submitForm(): void {

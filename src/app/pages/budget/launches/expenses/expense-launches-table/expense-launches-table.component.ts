@@ -11,8 +11,8 @@ import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';
 import { EditLaunchModalComponent } from '../edit-launch-modal/edit-launch-modal.component';
 import { DeleteLaunchModalComponent } from '../delete-launch-modal/delete-launch-modal.component';
-import { DateService } from 'src/app/shared/formatting/date/date.service';
 import { InternalDateService } from 'src/app/shared/internal-values/internal-date/internal-date.service';
+import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 
 @Component({
@@ -34,8 +34,8 @@ export class ExpenseLaunchesTableComponent {
     private _apiLaunches: ApiLaunchesService,
     private _internalLaunches: InternalLaunchesService,
     private _dialog: MatDialog,
-    private _dateFormat: DateService,
-    public _internalDate: InternalDateService
+    public _internalDate: InternalDateService,
+    private _loadingBar: LoadingService
   ) { }
 
   ngOnInit() {
@@ -57,6 +57,7 @@ export class ExpenseLaunchesTableComponent {
   }
 
   callApiLaunches() {
+    this._loadingBar.setLoadingBar(true);
     this._apiLaunches.getLaunches().subscribe(
       (response: HttpResponse<Launch[]>) => {
         if (response.body) {
@@ -64,6 +65,7 @@ export class ExpenseLaunchesTableComponent {
         }
       }
     );
+    this._loadingBar.setLoadingBar(false);
   }
 
   updateInternalLaunchesReloadPage() {

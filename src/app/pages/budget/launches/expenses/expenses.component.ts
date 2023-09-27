@@ -62,12 +62,14 @@ export class ExpensesComponent {
   }
 
   callApiCategories() {
+    this._loadingBar.setLoadingBar(true);
     this._apiCategories.getCategories().subscribe(
       (response: HttpResponse<Category[]>) => {
         this._internalCategories.setInternalCategories(response.body);
         this.searchInternalCategories();
       }
     );
+    this._loadingBar.setLoadingBar(false);
   }
 
   newExpense() {
@@ -94,13 +96,14 @@ export class ExpensesComponent {
           this._alert.openSnackBar(response.error);
         }
       );
-      this._loadingBar.setLoadingBar(false);
 
       this._apiLaunches.getLaunches().subscribe(
         (response: HttpResponse<Launch[]>) => {
           this._internalLaunches.setInternalLaunches(response.body);
         }
       );
+      
+      this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
     }

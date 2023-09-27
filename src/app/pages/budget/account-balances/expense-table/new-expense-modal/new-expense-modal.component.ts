@@ -68,14 +68,13 @@ export class NewExpenseModalComponent {
         }
       );
 
-      this._loadingBar.setLoadingBar(false);
-
       this._apiExpenses.getSourceExpenses().subscribe(
         (response: HttpResponse<SourceExpense[]>) => {
           this._internalExpenses.setInternalExpenses(response.body);
         }
       );
 
+      this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
     }

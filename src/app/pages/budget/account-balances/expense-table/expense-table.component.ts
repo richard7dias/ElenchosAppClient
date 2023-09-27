@@ -12,6 +12,7 @@ import { EditExpenseModalComponent } from './edit-expense-modal/edit-expense-mod
 import { DeleteExpenseModalComponent } from './delete-expense-modal/delete-expense-modal.component';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
+import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({
   selector: 'app-expense-table',
@@ -31,7 +32,8 @@ export class ExpenseTableComponent implements AfterViewInit {
     public _numberFormat: NumberService,
     private _apiExpenses: ApiSourceExpenseService,
     private _internalExpenses: InternalExpensesService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _loadingBar: LoadingService
   ) {
   }
 
@@ -54,6 +56,7 @@ export class ExpenseTableComponent implements AfterViewInit {
   }
 
   callApiSourceExpenses(): void {
+    this._loadingBar.setLoadingBar(true);
     this._apiExpenses.getSourceExpenses().subscribe(
       (response: HttpResponse<SourceExpense[]>) => {
         if (response.body) {
@@ -61,6 +64,7 @@ export class ExpenseTableComponent implements AfterViewInit {
         }
       }
     );
+    this._loadingBar.setLoadingBar(false);
   }
 
   getTotalValue() {

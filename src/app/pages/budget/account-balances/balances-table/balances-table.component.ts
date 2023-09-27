@@ -1,6 +1,5 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { Balance } from 'src/app/core/interfaces/balance.interface';
@@ -12,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewBalanceModalComponent } from './new-balance-modal/new-balance-modal.component';
 import { EditBalanceModalComponent } from './edit-balance-modal/edit-balance-modal.component';
 import { DeleteBalanceModalComponent } from './delete-balance-modal/delete-balance-modal.component';
+import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({
   selector: 'app-balances-table',
@@ -28,25 +28,28 @@ export class BalancesTableComponent implements AfterViewInit {
   dataSource = new MatTableDataSource(this.internalBalances);
 
   constructor(
-    private _liveAnnouncer: LiveAnnouncer,
     public _numberFormat: NumberService,
     private _apiBalances: ApiBalancesService,
     private _internalBalances: InternalBalancesService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _loadingBar: LoadingService
   ) { }
 
   ngOnInit() {
-    this._apiBalances.getBalances().subscribe(
-      (response: HttpResponse<Balance[]>) => {
-        if (response.body) {
-          this._internalBalances.setInternalBalances(response.body);
-        }
-      }
-    );
-
     this._internalBalances.getInternalBalances().subscribe(balances => {
       if (balances) {
         this.internalBalances = balances;
+      } else {
+        this._loadingBar.setLoadingBar(true);
+        this._apiBalances.getBalances().subscribe(
+          (response: HttpResponse<Balance[]>) => {
+            if (response.body) {
+              this._internalBalances.setInternalBalances(response.body);
+              this.internalBalances = response.body;
+            }
+          }
+        );
+        this._loadingBar.setLoadingBar(false);
       }
     });
   }

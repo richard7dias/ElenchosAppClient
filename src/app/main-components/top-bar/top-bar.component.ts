@@ -8,6 +8,7 @@ import { HttpResponse } from '@angular/common/http';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { InternalBalancesService } from 'src/app/shared/internal-values/internal-balances/internal-balances.service';
 import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
+import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -27,6 +28,7 @@ export class TopBarComponent implements OnInit {
     private _apiExpenses: ApiSourceExpenseService,
     private _internalBalances: InternalBalancesService,
     private _internalExpenses: InternalExpensesService,
+    private _loadingBar: LoadingService
   ) { }
 
   ngOnInit() {
@@ -43,6 +45,7 @@ export class TopBarComponent implements OnInit {
   }
 
   cashCalculate() {
+    this._loadingBar.setLoadingBar(true);
     this._apiBalances.getBalances().subscribe(
       (response: HttpResponse<any>) => {
         this._internalBalances.setInternalBalances(response.body);
@@ -54,6 +57,7 @@ export class TopBarComponent implements OnInit {
         this._internalExpenses.setInternalExpenses(response.body);
       }
     );
+    this._loadingBar.setLoadingBar(false);
   }
 
   logout() {
