@@ -3,6 +3,4 @@ export interface Category {
     id: string;
     name: string;
     budget: number;
-    expense: number;
-    available: number;
 }

@@ -40,9 +40,7 @@ export class EditCategoryModalComponent {
         id: this._data.id,
         idOwner: this._data.idOwner,
         name: this.categoryNameInput,
-        budget: this.categoryBudgetInput,
-        expense: this._data.expense,
-        available: this._data.available,
+        budget: this.categoryBudgetInput
       }
 
       this._loadingBar.setLoadingBar(true);

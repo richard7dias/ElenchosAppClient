@@ -39,10 +39,9 @@ export class ExpenseLaunchesTableComponent {
   ) { }
 
   ngOnInit() {
-    this._internalLaunches.getInternalLaunches().subscribe(launches => {
+    this._internalLaunches.getInternalLaunchesByCurrentMonth().subscribe(launches => {
       if (!launches) {
         this.callApiLaunches();
-        this.updateInternalLaunchesFirstTime();
       }
     });
 
@@ -65,18 +64,6 @@ export class ExpenseLaunchesTableComponent {
         }
       }
     );
-  }
-
-  updateInternalLaunchesFirstTime() {
-    this._internalLaunches.getInternalLaunchesByCurrentMonth().subscribe(launches => {
-      if (launches) {
-        this.internalLaunches = launches.reverse();
-        this.internalLaunches.forEach(launch => {
-          const newDate = this._dateFormat.datePtBr(launch.date);
-          launch.date = newDate;
-        });
-      }
-    });
   }
 
   updateInternalLaunchesReloadPage() {

@@ -14,6 +14,10 @@ import { NewCategoryModalComponent } from './new-category-modal/new-category-mod
 import { DeleteCategoryModalComponent } from './delete-category-modal/delete-category-modal.component';
 import { EditCategoryModalComponent } from './edit-category-modal/edit-category-modal.component';
 import { InternalDateService } from 'src/app/shared/internal-values/internal-date/internal-date.service';
+import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';
+import { Launch } from 'src/app/core/interfaces/launch.interface';
+import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
+import { InternalMonthlyCalculationsService } from 'src/app/shared/internal-values/internal-monthly-calculations/internal-monthly-calculations.service';
 
 @Component({
   selector: 'app-monthly-budget',
@@ -25,16 +29,23 @@ export class MonthlyBudgetComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   internalCategories!: Category[];
+  internalLaunchesMonth!: Launch[];
 
   displayedColumns: string[] = ['name', 'budget', 'expense', 'available', 'itens'];
   dataSource = new MatTableDataSource(this.internalCategories);
+
+  totalExpense!: number;
+  totalAvailable!: number;
 
   constructor(
     public _numberFormat: NumberService,
     private _apiCategories: ApiCategoriesService,
     private _internalCategories: InternalCategoriesService,
     private _dialog: MatDialog,
-    public _internalDate: InternalDateService
+    public _internalDate: InternalDateService,
+    private _internalLaunches: InternalLaunchesService,
+    private _apiLaunches: ApiLaunchesService,
+    private _internalMonthlyCalculations: InternalMonthlyCalculationsService
   ) { }
 
   ngOnInit() {
@@ -51,6 +62,22 @@ export class MonthlyBudgetComponent {
         this.internalCategories = categories;
       }
     });
+
+    this._internalLaunches.getInternalLaunchesByCurrentMonth().subscribe(launches => {
+      if (launches) {
+        this.internalLaunchesMonth = launches;
+      } else {
+        this.callApiLaunches();
+      }
+    });
+
+    this._internalMonthlyCalculations.getInternalTotalAvailable().subscribe(total => {
+      this.totalAvailable = total;
+    });
+
+    this._internalMonthlyCalculations.getInternalTotalExpense().subscribe(total => {
+      this.totalExpense = total;
+    });
   }
 
   ngDoCheck() {
@@ -61,24 +88,48 @@ export class MonthlyBudgetComponent {
     this.dataSource.sort = this.sort;
   }
 
-  getTotalTableFoot(propName: string) {
-    if (this.internalCategories && this.internalCategories.length > 0) {
-      return this._numberFormat.inPortToDuo(this.internalCategories
-        .map(obj => {
-          switch (propName) {
-            case 'budget':
-              return obj.budget;
-            case 'expense':
-              return obj.expense;
-            case 'available':
-              return obj.available;
-            default:
-              return 0;
-          }
-        }).reduce((acc, value) => acc + value, 0)
-      );
+  callApiLaunches() {
+    this._apiLaunches.getLaunches().subscribe(
+      (response: HttpResponse<Launch[]>) => {
+        if (response.body) {
+          this._internalLaunches.setInternalLaunches(response.body);
+        }
+      }
+    );
+  }
+
+  calculateExpenseValue(categoryId: string): number {
+    if (this.internalCategories && this.internalCategories.length > 0 && this.internalLaunchesMonth) {
+      const filteredLaunchesByCategory: Launch[] = this.internalLaunchesMonth
+        .filter(launch => launch.categoryId === categoryId);
+
+      const sumMonthExpenses: number = filteredLaunchesByCategory
+        .map(obj => obj.value)
+        .reduce((acc, value) => acc + value, 0);
+
+      return sumMonthExpenses;
     } else {
       return 0;
+    }
+  }
+
+  expenseValue(categoryId: string) {
+    return this._numberFormat.inPortToDuo(this.calculateExpenseValue(categoryId));
+  }
+
+  availableValue(category: Category) {
+    const sumMonthAvailable: number = category.budget - this.calculateExpenseValue(category.id);
+    return this._numberFormat.inPortToDuo(sumMonthAvailable);
+  }
+
+  getTotalTableFootBudget() {
+    if (this.internalCategories && this.internalCategories.length > 0) {
+      return this._numberFormat.inPortToDuo(this.internalCategories
+        .map(obj => obj.budget)
+        .reduce((acc, value) => acc + value, 0)
+      );
+    } else {
+      return this._numberFormat.inPortToDuo(0);
     }
   }
 

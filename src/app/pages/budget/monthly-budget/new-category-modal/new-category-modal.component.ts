@@ -53,9 +53,7 @@ export class NewCategoryModalComponent {
         id: 'Feito na API',
         idOwner: this.internalUser.id,
         name: this.newCategoryName,
-        budget: this.newCategoryBudget,
-        expense: 0,
-        available: 0
+        budget: this.newCategoryBudget
       }
 
       this._loadingBar.setLoadingBar(true);

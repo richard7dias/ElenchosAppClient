@@ -51,6 +51,7 @@ export class EditExpenseModalComponent {
           }
         },
         (response) => {
+          console.log(response)
           this._alert.openSnackBar(response.error.message);
         }
       );

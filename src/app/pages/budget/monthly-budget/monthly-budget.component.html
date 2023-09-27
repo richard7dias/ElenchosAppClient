@@ -29,7 +29,7 @@
                 <div class="values">
                     <div id="container-values">
                         <p class="value-RS">R$</p>
-                        <p class="value-real">{{getTotalTableFoot('budget')}}</p>
+                        <p class="value-real">{{getTotalTableFootBudget()}}</p>
                     </div>
                 </div>
             </td>
@@ -43,7 +43,7 @@
                 <div class="values">
                     <div id="container-values">
                         <p class="value-RS">R$</p>
-                        <p class="value-real">{{ this._numberFormat.inPortToDuo(element.expense) }}</p>
+                        <p class="value-real">{{ expenseValue(element.id) }}</p>
                     </div>
                 </div>
             </td>
@@ -51,7 +51,7 @@
                 <div class="values">
                     <div id="container-values">
                         <p class="value-RS">R$</p>
-                        <p class="value-real">{{getTotalTableFoot('expense')}}</p>
+                        <p class="value-real">{{this._numberFormat.inPortToDuo(totalExpense)}}</p>
                     </div>
                 </div>
             </td>
@@ -65,7 +65,7 @@
                 <div class="values">
                     <div id="container-values">
                         <p class="value-RS">R$</p>
-                        <p class="value-real">{{ this._numberFormat.inPortToDuo(element.available) }}</p>
+                        <p class="value-real">{{ availableValue(element) }}</p>
                     </div>
                 </div>
             </td>
@@ -73,7 +73,7 @@
                 <div class="values">
                     <div id="container-values">
                         <p class="value-RS">R$</p>
-                        <p class="value-real">{{getTotalTableFoot('available')}}</p>
+                        <p class="value-real">{{this._numberFormat.inPortToDuo(totalAvailable)}}</p>
                     </div>
                 </div>
             </td>

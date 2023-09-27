@@ -23,7 +23,7 @@
                 <mat-form-field>
                     <mat-label>Categoria</mat-label>
                     <mat-select [(ngModel)]="categoryInput" name="categoryInput">
-                        <mat-option *ngIf="internalCategories.length === 0" disabled>
+                        <mat-option *ngIf="internalCategories && internalCategories.length === 0" disabled>
                             Adicione categorias em "Orçamento"
                         </mat-option>
                         <mat-option *ngFor="let category of internalCategories"
