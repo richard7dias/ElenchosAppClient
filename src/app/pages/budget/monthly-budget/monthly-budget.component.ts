@@ -18,6 +18,7 @@ import { Launch } from 'src/app/core/interfaces/launch.interface';
 import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
 import { InternalMonthlyCalculationsService } from 'src/app/shared/internal-values/internal-monthly-calculations/internal-monthly-calculations.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
+import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 
 @Component({
   selector: 'app-monthly-budget',
@@ -46,7 +47,8 @@ export class MonthlyBudgetComponent {
     private _internalLaunches: InternalLaunchesService,
     private _apiLaunches: ApiLaunchesService,
     private _internalMonthlyCalculations: InternalMonthlyCalculationsService,
-    private _loadingBar: LoadingService
+    private _loadingBar: LoadingService,
+    private _apiExpenses: ApiSourceExpenseService
   ) { }
 
   ngOnInit() {
