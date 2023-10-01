@@ -11,7 +11,7 @@ import { SourceExpense } from '../../interfaces/sourceExpense.interface';
 })
 export class ApiSourceExpenseService {
 
-  internalUser!: User;
+  private internalUser!: User;
 
   constructor(
     private http: HttpClient,

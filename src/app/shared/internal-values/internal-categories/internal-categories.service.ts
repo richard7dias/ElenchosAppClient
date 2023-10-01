@@ -9,8 +9,6 @@ import { Category } from 'src/app/core/interfaces/category.interface';
 export class InternalCategoriesService {
   private internalCategories: BehaviorSubject<Category[] | null> = new BehaviorSubject<Category[] | null>(null);
 
-  private internalAvailableCurrentMonth: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-
   constructor() { }
 
   setInternalCategories(internalCategories: Category[] | null) {
@@ -19,13 +17,5 @@ export class InternalCategoriesService {
 
   getInternalCategories(): Observable<Category[] | null> {
     return this.internalCategories.asObservable();
-  }
-
-  setInternalAvailableCurrentMonth(internalAvailableCurrentMonth: number) {
-    this.internalAvailableCurrentMonth.next(internalAvailableCurrentMonth);
-  }
-
-  getInternalAvailableCurrentMonth(): Observable<number> {
-    return this.internalAvailableCurrentMonth.asObservable();
   }
 }

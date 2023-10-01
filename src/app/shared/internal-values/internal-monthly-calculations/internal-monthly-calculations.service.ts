@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Category } from 'src/app/core/interfaces/category.interface';
 import { InternalCategoriesService } from '../internal-categories/internal-categories.service';
 import { InternalLaunchesService } from '../internal-launches/internal-launches.service';
 import { Launch } from 'src/app/core/interfaces/launch.interface';
-import { NumberService } from '../../formatting/number/number.service';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { InternalExpensesService } from '../internal-expenses/internal-expenses.service';
+import { SourceExpense } from 'src/app/core/interfaces/sourceExpense.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +23,8 @@ export class InternalMonthlyCalculationsService {
   constructor(
     private _internalCategories: InternalCategoriesService,
     private _internalLaunches: InternalLaunchesService,
-    public _numberFormat: NumberService,
-    private _internalExpenses: InternalExpensesService,
-    private _apiExpenses: ApiSourceExpenseService
+    private _apiExpenses: ApiSourceExpenseService,
+    private _internalExpenses: InternalExpensesService
   ) { }
 
   private subscribeInternalCategories(): void {
@@ -82,8 +80,7 @@ export class InternalMonthlyCalculationsService {
       });
     }
 
-    this._internalCategories.setInternalAvailableCurrentMonth(sumTotal);
-    this.totalAvailable.next(sumTotal);
+    this.setInternalTotalAvailable(sumTotal);
   }
 
   getInternalTotalExpense(): Observable<number> {
@@ -96,5 +93,24 @@ export class InternalMonthlyCalculationsService {
     this.subscribeInternalCategories();
     this.subscribeInternalLaunchesByCurrentMonth();
     return this.totalAvailable.asObservable();
+  }
+
+  private setInternalTotalAvailable(totalAvailable: number) {
+    this.totalAvailable.next(totalAvailable);
+    let sourceExpenses!: SourceExpense[];
+    let index;
+
+    this._internalExpenses.getInternalExpenses().subscribe(expenses => {
+      if (expenses) {
+        sourceExpenses = expenses;
+        index = sourceExpenses.findIndex(expense => expense.id === '9b9f704a-938a-4923-8e63-277ba52007ef');
+      }
+    });
+
+    if (index && sourceExpenses[index].valueExpense !== totalAvailable) {
+      sourceExpenses[index].valueExpense = totalAvailable;
+      this._apiExpenses.patchSourceExpense('9b9f704a-938a-4923-8e63-277ba52007ef', { valueExpense: totalAvailable }).subscribe();
+      this._internalExpenses.setInternalExpenses(sourceExpenses);
+    }
   }
 }
