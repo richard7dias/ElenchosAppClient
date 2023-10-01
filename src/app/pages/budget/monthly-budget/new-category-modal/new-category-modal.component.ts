@@ -48,12 +48,12 @@ export class NewCategoryModalComponent {
   }
 
   submitForm(): void {
-    if (this.newCategoryName && this.newCategoryBudget) {
+    if (this.newCategoryName && this.newCategoryBudget >= 0) {
       let newCategory: Category = {
         id: 'Feito na API',
         idOwner: this.internalUser.id,
         name: this.newCategoryName,
-        budget: this.newCategoryBudget
+        budget: this.newCategoryBudget == null ? 0 : this.newCategoryBudget
       }
 
       this._loadingBar.setLoadingBar(true);

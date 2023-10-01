@@ -34,13 +34,13 @@ export class EditCategoryModalComponent {
   }
 
   submitForm(): void {
-    if (this.categoryNameInput && this.categoryBudgetInput) {
+    if (this.categoryNameInput && this.categoryBudgetInput >= 0) {
 
       let categoryEdited: Category = {
         id: this._data.id,
         idOwner: this._data.idOwner,
         name: this.categoryNameInput,
-        budget: this.categoryBudgetInput
+        budget: this.categoryBudgetInput == null ? 0 : this.categoryBudgetInput
       }
 
       this._loadingBar.setLoadingBar(true);

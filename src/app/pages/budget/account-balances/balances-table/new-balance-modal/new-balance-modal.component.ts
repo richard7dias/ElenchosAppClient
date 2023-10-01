@@ -48,12 +48,12 @@ export class NewBalanceModalComponent {
   }
 
   submitForm(): void {
-    if (this.newAccountName && this.newAccountValue) {
+    if (this.newAccountName && this.newAccountValue >= 0) {
       let newBalance: Balance = {
         id: 'Feito na API',
         idOwner: this.internalUser.id,
         account: this.newAccountName,
-        valueBalance: this.newAccountValue
+        valueBalance: this.newAccountValue == null ? 0 : this.newAccountValue
       }
 
       this._loadingBar.setLoadingBar(true);

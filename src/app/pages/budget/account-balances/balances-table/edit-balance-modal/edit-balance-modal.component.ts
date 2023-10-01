@@ -34,13 +34,13 @@ export class EditBalanceModalComponent {
   }
 
   submitForm(): void {
-    if (this.accountNameInput && this.accountValueInput) {
+    if (this.accountNameInput && this.accountValueInput >= 0) {
 
       let balanceEdited: Balance = {
         id: this._data.id,
         idOwner: this._data.idOwner,
         account: this.accountNameInput,
-        valueBalance: this.accountValueInput
+        valueBalance: this.accountValueInput == null ? 0 : this.accountValueInput
       }
 
       this._loadingBar.setLoadingBar(true);
