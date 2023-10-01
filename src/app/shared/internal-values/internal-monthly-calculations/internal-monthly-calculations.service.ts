@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
 import { Category } from 'src/app/core/interfaces/category.interface';
 import { InternalCategoriesService } from '../internal-categories/internal-categories.service';
 import { InternalLaunchesService } from '../internal-launches/internal-launches.service';
-import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
 import { Launch } from 'src/app/core/interfaces/launch.interface';
 import { NumberService } from '../../formatting/number/number.service';
+import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
+import { InternalExpensesService } from '../internal-expenses/internal-expenses.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,9 @@ export class InternalMonthlyCalculationsService {
   constructor(
     private _internalCategories: InternalCategoriesService,
     private _internalLaunches: InternalLaunchesService,
-    public _numberFormat: NumberService
+    public _numberFormat: NumberService,
+    private _internalExpenses: InternalExpensesService,
+    private _apiExpenses: ApiSourceExpenseService
   ) { }
 
   private subscribeInternalCategories(): void {
@@ -79,6 +81,7 @@ export class InternalMonthlyCalculationsService {
         sumTotal += category.budget - this.calculateExpenseValue(category.id);
       });
     }
+
     this._internalCategories.setInternalAvailableCurrentMonth(sumTotal);
     this.totalAvailable.next(sumTotal);
   }

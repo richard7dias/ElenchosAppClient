@@ -44,14 +44,32 @@ export class TopBarComponent implements OnInit {
     });
   }
 
-  cashCalculate() {
+  cashCalculate(): void {
+    this._internalBalances.getInternalBalances().subscribe(balances => {
+      if (!balances) {
+        this.callApiBalances();
+      }
+    });
+
+    this._internalExpenses.getInternalExpenses().subscribe(expenses => {
+      if (!expenses) {
+        this.callApiExpenses();
+      }
+    });
+  }
+
+  callApiBalances(): void {
     this._loadingBar.setLoadingBar(true);
     this._apiBalances.getBalances().subscribe(
       (response: HttpResponse<any>) => {
         this._internalBalances.setInternalBalances(response.body);
       }
     );
+    this._loadingBar.setLoadingBar(false);
+  }
 
+  callApiExpenses(): void {
+    this._loadingBar.setLoadingBar(true);
     this._apiExpenses.getSourceExpenses().subscribe(
       (response: HttpResponse<any>) => {
         this._internalExpenses.setInternalExpenses(response.body);

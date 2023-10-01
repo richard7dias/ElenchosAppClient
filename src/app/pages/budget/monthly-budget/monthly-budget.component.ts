@@ -19,6 +19,7 @@ import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.servi
 import { InternalMonthlyCalculationsService } from 'src/app/shared/internal-values/internal-monthly-calculations/internal-monthly-calculations.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
+import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 
 @Component({
   selector: 'app-monthly-budget',
@@ -48,7 +49,8 @@ export class MonthlyBudgetComponent {
     private _apiLaunches: ApiLaunchesService,
     private _internalMonthlyCalculations: InternalMonthlyCalculationsService,
     private _loadingBar: LoadingService,
-    private _apiExpenses: ApiSourceExpenseService
+    private _apiExpenses: ApiSourceExpenseService,
+    private _internalExpenses: InternalExpensesService
   ) { }
 
   ngOnInit() {
@@ -86,6 +88,22 @@ export class MonthlyBudgetComponent {
       this.totalExpense = total;
     });
   }
+
+  // let expenseTotalValue;
+  // this._internalExpenses.getInternalExpenses().subscribe(expenses => {
+  //   if (expenses) {
+  //     expenseTotalValue = expenses.find(expense => {
+  //       return expense.id === '9b9f704a-938a-4923-8e63-277ba52007ef'
+  //     })?.valueExpense;
+  //   }
+  // });
+  // if (expenseTotalValue !== total) {
+  //   this._apiExpenses.patchSourceExpense(
+  //     '9b9f704a-938a-4923-8e63-277ba52007ef', { valueExpense: total }
+  //   ).subscribe();
+  //   console.log(total)
+  //   console.log(this.totalAvailable)
+  // }
 
   ngDoCheck() {
     this.dataSource.data = this.internalCategories;

@@ -38,13 +38,7 @@ export class ExpenseTableComponent implements AfterViewInit {
   }
 
   ngOnInit() {
-    this._internalExpenses.getInternalExpenses().subscribe(expenses => {
-      if (expenses) {
-        this.internalExpenses = expenses;
-      } else {
-        this.callApiSourceExpenses();
-      }
-    });
+    this.subscribeInternalExpenses();
   }
 
   ngDoCheck() {
@@ -55,12 +49,23 @@ export class ExpenseTableComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  callApiSourceExpenses(): void {
+  private subscribeInternalExpenses(): void {
+    this._internalExpenses.getInternalExpenses().subscribe(expenses => {
+      if (expenses) {
+        this.internalExpenses = expenses;
+      } else {
+        this.callApiSourceExpenses();
+      }
+    });
+  }
+
+  private callApiSourceExpenses(): void {
     this._loadingBar.setLoadingBar(true);
     this._apiExpenses.getSourceExpenses().subscribe(
       (response: HttpResponse<SourceExpense[]>) => {
         if (response.body) {
           this._internalExpenses.setInternalExpenses(response.body);
+          this.subscribeInternalExpenses();
         }
       }
     );

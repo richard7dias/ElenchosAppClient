@@ -102,7 +102,7 @@ export class ExpensesComponent {
           this._internalLaunches.setInternalLaunches(response.body);
         }
       );
-      
+
       this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
