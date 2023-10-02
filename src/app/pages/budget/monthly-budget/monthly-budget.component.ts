@@ -48,9 +48,7 @@ export class MonthlyBudgetComponent {
     private _internalLaunches: InternalLaunchesService,
     private _apiLaunches: ApiLaunchesService,
     private _internalMonthlyCalculations: InternalMonthlyCalculationsService,
-    private _loadingBar: LoadingService,
-    private _apiExpenses: ApiSourceExpenseService,
-    private _internalExpenses: InternalExpensesService
+    private _loadingBar: LoadingService
   ) { }
 
   ngOnInit() {
@@ -88,22 +86,6 @@ export class MonthlyBudgetComponent {
       this.totalExpense = total;
     });
   }
-
-  // let expenseTotalValue;
-  // this._internalExpenses.getInternalExpenses().subscribe(expenses => {
-  //   if (expenses) {
-  //     expenseTotalValue = expenses.find(expense => {
-  //       return expense.id === '9b9f704a-938a-4923-8e63-277ba52007ef'
-  //     })?.valueExpense;
-  //   }
-  // });
-  // if (expenseTotalValue !== total) {
-  //   this._apiExpenses.patchSourceExpense(
-  //     '9b9f704a-938a-4923-8e63-277ba52007ef', { valueExpense: total }
-  //   ).subscribe();
-  //   console.log(total)
-  //   console.log(this.totalAvailable)
-  // }
 
   ngDoCheck() {
     this.dataSource.data = this.internalCategories;
@@ -146,7 +128,12 @@ export class MonthlyBudgetComponent {
 
   availableValue(category: Category) {
     const sumMonthAvailable: number = category.budget - this.calculateExpenseValue(category.id);
-    return this._numberFormat.inPortToDuo(sumMonthAvailable);
+    if (sumMonthAvailable < 0) {
+      this._internalMonthlyCalculations.setInternalNegativeCategoryWarn(true);
+    } else {
+      this._internalMonthlyCalculations.setInternalNegativeCategoryWarn(false);
+    }
+    return sumMonthAvailable;
   }
 
   getTotalTableFootBudget() {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { InternalCashService } from 'src/app/shared/internal-values/internal-cash/internal-cash.service';
 
 @Component({
@@ -8,11 +9,12 @@ import { InternalCashService } from 'src/app/shared/internal-values/internal-cas
 })
 export class AccountBalancesComponent {
 
-  internalCash: string = '0,00';
+  internalCash: number = 0;
   displayedColumCash: string[] = ['cash'];
 
   constructor(
-    private _internalCash: InternalCashService
+    private _internalCash: InternalCashService,
+    public _numberFormat: NumberService
   ) { }
 
   ngOnInit() {

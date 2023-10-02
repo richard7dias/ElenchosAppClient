@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InternalMonthlyCalculationsService } from 'src/app/shared/internal-values/internal-monthly-calculations/internal-monthly-calculations.service';
 
 import { InternalRouteService } from 'src/app/shared/internal-values/internal-route/internal-route.service';
 
@@ -14,8 +15,12 @@ export class BudgetComponent {
   launchesChecked: boolean = false;
   reportsChecked: boolean = false;
   cashFlowChecked: boolean = false;
+  alert: boolean = false;
 
-  constructor(private _internalRoute: InternalRouteService) {
+  constructor(
+    private _internalRoute: InternalRouteService,
+    private _internalMonthlyCalculationsService: InternalMonthlyCalculationsService
+  ) {
     this._internalRoute.getCustomRoute(2).subscribe(route => {
       this.removeChecked();
       switch (route) {
@@ -35,6 +40,12 @@ export class BudgetComponent {
           this.cashFlowChecked = true;
           break;
       }
+    });
+  }
+
+  ngOnInit() {
+    this._internalMonthlyCalculationsService.getInternalNegativeCategoryWarn().subscribe(value => {
+      this.alert = value;
     });
   }
 

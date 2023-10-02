@@ -8,6 +8,7 @@ import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-sou
 import { InternalBalancesService } from 'src/app/shared/internal-values/internal-balances/internal-balances.service';
 import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
+import { NumberService } from 'src/app/shared/formatting/number/number.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -17,7 +18,7 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
 export class TopBarComponent implements OnInit {
 
   userName?: string;
-  internalCash!: string;
+  internalCash!: number;
 
   constructor(
     private _internalUser: InternalUserService,
@@ -27,7 +28,8 @@ export class TopBarComponent implements OnInit {
     private _apiExpenses: ApiSourceExpenseService,
     private _internalBalances: InternalBalancesService,
     private _internalExpenses: InternalExpensesService,
-    private _loadingBar: LoadingService
+    private _loadingBar: LoadingService,
+    public _numberFormat: NumberService
   ) { }
 
   ngOnInit() {

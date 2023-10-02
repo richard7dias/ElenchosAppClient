@@ -5,7 +5,9 @@
     <div id="container-infos">
         <mat-card id="cash-card">
             <a routerLink="budget/account-balances">
-                <mat-card-content>Caixa: R$ {{internalCash}}</mat-card-content>
+                <mat-card-content [ngStyle]="{'color': internalCash < 0 ? 'red' : '#387876'}">
+                    Caixa: R$ {{_numberFormat.inPortToDuo(internalCash)}}
+                </mat-card-content>
             </a>
         </mat-card>
     </div>

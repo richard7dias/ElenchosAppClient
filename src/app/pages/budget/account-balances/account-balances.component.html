@@ -10,7 +10,9 @@
             </div>
             <table mat-table class="mat-elevation-z8">
                 <ng-container matColumnDef="cash">
-                    <th mat-header-cell *matHeaderCellDef id="th-cash-text"> R$ {{internalCash}} </th>
+                    <th mat-header-cell *matHeaderCellDef id="th-cash-text" [ngStyle]="{'color': internalCash < 0 ? 'red' : 'initial'}">
+                        R$ {{_numberFormat.inPortToDuo(internalCash)}}
+                    </th>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumCash"></tr>
             </table>

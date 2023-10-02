@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { ReportsComponent } from './reports/reports.component';
 import { CashFlowComponent } from './cash-flow/cash-flow.component';
@@ -27,7 +28,8 @@ import { LaunchesModule } from './launches/launches.module';
     MatTabsModule,
     AccountBalancesModule,
     LaunchesModule,
-    MatDividerModule
+    MatDividerModule,
+    MatBadgeModule
   ]
 })
 export class BudgetModule { }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
-import { NumberService } from '../../formatting/number/number.service';
 import { InternalBalancesService } from '../internal-balances/internal-balances.service';
 import { InternalExpensesService } from '../internal-expenses/internal-expenses.service';
 import { Balance } from 'src/app/core/interfaces/balance.interface';
@@ -12,13 +11,12 @@ import { SourceExpense } from 'src/app/core/interfaces/sourceExpense.interface';
 })
 export class InternalCashService {
 
-  private internalCash: BehaviorSubject<string> = new BehaviorSubject<string>('0,00');
+  private internalCash: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   private internalBalances!: Balance[] | null;
   private internalExpenses!: SourceExpense[] | null;
 
   constructor(
-    private _numberFormat: NumberService,
     private _internalBalances: InternalBalancesService,
     private _internalExpenses: InternalExpensesService,
   ) {
@@ -36,10 +34,10 @@ export class InternalCashService {
   }
 
   setInternalCash(sumTotal: number) {
-    this.internalCash.next(this._numberFormat.inPortToDuo(sumTotal));
+    this.internalCash.next(sumTotal);
   }
 
-  getInternalCash(): Observable<string> {
+  getInternalCash(): Observable<number> {
     return this.internalCash.asObservable();
   }
 

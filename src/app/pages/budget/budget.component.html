@@ -4,7 +4,9 @@
             Saldos
         </a>
         <a mat-tab-link routerLink="monthly-budget" [active]="monthlyBudgetChecked">
-            Orçamento
+            <div matBadge="!" matBadgeColor="warn" matBadgeOverlap="false" [matBadgeHidden]="!alert">
+                Orçamento
+            </div>
         </a>
         <a mat-tab-link routerLink="launches" [active]="launchesChecked">
             Lançamentos

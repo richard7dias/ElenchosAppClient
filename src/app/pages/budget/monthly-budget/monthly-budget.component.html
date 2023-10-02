@@ -65,7 +65,7 @@
                 <div class="values">
                     <div id="container-values">
                         <p class="value-RS">R$</p>
-                        <p class="value-real">{{ availableValue(element) }}</p>
+                        <p class="value-real" [ngStyle]="{'color': availableValue(element) < 0 ? 'red' : 'initial'}">{{ this._numberFormat.inPortToDuo(availableValue(element)) }}</p>
                     </div>
                 </div>
             </td>

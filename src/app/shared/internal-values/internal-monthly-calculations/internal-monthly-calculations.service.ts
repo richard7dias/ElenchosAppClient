@@ -14,11 +14,12 @@ import { SourceExpense } from 'src/app/core/interfaces/sourceExpense.interface';
 })
 export class InternalMonthlyCalculationsService {
 
-  internalCategories: Category[] = [];
-  internalLaunchesMonth: Launch[] = [];
+  private internalCategories: Category[] = [];
+  private internalLaunchesMonth: Launch[] = [];
 
   private totalExpense: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private totalAvailable: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  private negativeCategoryWarn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private _internalCategories: InternalCategoriesService,
@@ -83,18 +84,6 @@ export class InternalMonthlyCalculationsService {
     this.setInternalTotalAvailable(sumTotal);
   }
 
-  getInternalTotalExpense(): Observable<number> {
-    this.subscribeInternalCategories();
-    this.subscribeInternalLaunchesByCurrentMonth();
-    return this.totalExpense.asObservable();
-  }
-
-  getInternalTotalAvailable(): Observable<number> {
-    this.subscribeInternalCategories();
-    this.subscribeInternalLaunchesByCurrentMonth();
-    return this.totalAvailable.asObservable();
-  }
-
   private setInternalTotalAvailable(totalAvailable: number) {
     this.totalAvailable.next(totalAvailable);
     let sourceExpenses!: SourceExpense[];
@@ -112,5 +101,25 @@ export class InternalMonthlyCalculationsService {
       this._apiExpenses.patchSourceExpense('9b9f704a-938a-4923-8e63-277ba52007ef', { valueExpense: totalAvailable }).subscribe();
       this._internalExpenses.setInternalExpenses(sourceExpenses);
     }
+  }
+
+  getInternalTotalExpense(): Observable<number> {
+    this.subscribeInternalCategories();
+    this.subscribeInternalLaunchesByCurrentMonth();
+    return this.totalExpense.asObservable();
+  }
+
+  getInternalTotalAvailable(): Observable<number> {
+    this.subscribeInternalCategories();
+    this.subscribeInternalLaunchesByCurrentMonth();
+    return this.totalAvailable.asObservable();
+  }
+
+  getInternalNegativeCategoryWarn(): Observable<boolean> {
+    return this.negativeCategoryWarn.asObservable();
+  }
+
+  setInternalNegativeCategoryWarn(hiddenAlert: boolean): void {
+    this.negativeCategoryWarn.next(hiddenAlert);
   }
 }
