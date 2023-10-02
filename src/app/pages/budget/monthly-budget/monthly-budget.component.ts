@@ -18,8 +18,6 @@ import { Launch } from 'src/app/core/interfaces/launch.interface';
 import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
 import { InternalMonthlyCalculationsService } from 'src/app/shared/internal-values/internal-monthly-calculations/internal-monthly-calculations.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
-import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
-import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 
 @Component({
   selector: 'app-monthly-budget',
@@ -127,13 +125,7 @@ export class MonthlyBudgetComponent {
   }
 
   availableValue(category: Category) {
-    const sumMonthAvailable: number = category.budget - this.calculateExpenseValue(category.id);
-    if (sumMonthAvailable < 0) {
-      this._internalMonthlyCalculations.setInternalNegativeCategoryWarn(true);
-    } else {
-      this._internalMonthlyCalculations.setInternalNegativeCategoryWarn(false);
-    }
-    return sumMonthAvailable;
+    return category.budget - this.calculateExpenseValue(category.id);
   }
 
   getTotalTableFootBudget() {

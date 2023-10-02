@@ -119,7 +119,7 @@ export class InternalMonthlyCalculationsService {
     return this.negativeCategoryWarn.asObservable();
   }
 
-  setInternalNegativeCategoryWarn(hiddenAlert: boolean): void {
-    this.negativeCategoryWarn.next(hiddenAlert);
+  setInternalNegativeCategoryWarn(alert: boolean): void {
+    this.negativeCategoryWarn.next(alert);
   }
 }

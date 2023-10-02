@@ -5,6 +5,15 @@ mat-toolbar {
     justify-content: space-between;
 }
 
+#container-infos {
+    display: flex;
+    align-items: center;
+}
+
+#container-infos mat-icon {
+    padding-right: 10px;
+}
+
 #cash-card {
     font-size: 1rem;
     height: 40px;

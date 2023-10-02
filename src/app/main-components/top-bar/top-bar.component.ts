@@ -9,6 +9,7 @@ import { InternalBalancesService } from 'src/app/shared/internal-values/internal
 import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
+import { InternalMonthlyCalculationsService } from 'src/app/shared/internal-values/internal-monthly-calculations/internal-monthly-calculations.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -19,6 +20,7 @@ export class TopBarComponent implements OnInit {
 
   userName?: string;
   internalCash!: number;
+  alert: boolean = false;
 
   constructor(
     private _internalUser: InternalUserService,
@@ -29,7 +31,8 @@ export class TopBarComponent implements OnInit {
     private _internalBalances: InternalBalancesService,
     private _internalExpenses: InternalExpensesService,
     private _loadingBar: LoadingService,
-    public _numberFormat: NumberService
+    public _numberFormat: NumberService,
+    private _internalMonthlyCalculationsService: InternalMonthlyCalculationsService
   ) { }
 
   ngOnInit() {
@@ -43,6 +46,11 @@ export class TopBarComponent implements OnInit {
     this._internalCash.getInternalCash().subscribe(cash => {
       this.internalCash = cash;
     });
+
+    this._internalMonthlyCalculationsService.getInternalNegativeCategoryWarn().subscribe(value => {
+      this.alert = value;
+    });
+
   }
 
   cashCalculate(): void {

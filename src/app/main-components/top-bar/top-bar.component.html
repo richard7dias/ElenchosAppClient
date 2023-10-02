@@ -3,6 +3,11 @@
     <img src="../../../assets/ElenchosLogoBranco.png" id="logo" alt="Elenchos">
 
     <div id="container-infos">
+        <mat-icon matBadge="15" matBadgeColor="warn"
+            matTooltip="Valor do caixa não está confiável: inconsistências em Orçamento - categoria com valor negativo."
+            [style.display]="alert ? 'inline-block' : 'none'">
+            warning
+        </mat-icon>
         <mat-card id="cash-card">
             <a routerLink="budget/account-balances">
                 <mat-card-content [ngStyle]="{'color': internalCash < 0 ? 'red' : '#387876'}">
