@@ -25,6 +25,9 @@ import { EntriesComponent } from './entries/entries.component';
 import { ExpenseLaunchesTableComponent } from './expenses/expense-launches-table/expense-launches-table.component';
 import { EditLaunchModalComponent } from './expenses/edit-launch-modal/edit-launch-modal.component';
 import { DeleteLaunchModalComponent } from './expenses/delete-launch-modal/delete-launch-modal.component';
+import { EntriesLaunchesTableComponent } from './entries/entries-launches-table/entries-launches-table.component';
+import { DeleteEntriesModalComponent } from './entries/delete-entries-modal/delete-entries-modal.component';
+import { EditEntriesModalComponent } from './entries/edit-entries-modal/edit-entries-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { DeleteLaunchModalComponent } from './expenses/delete-launch-modal/delet
     EntriesComponent,
     ExpenseLaunchesTableComponent,
     EditLaunchModalComponent,
-    DeleteLaunchModalComponent
+    DeleteLaunchModalComponent,
+    EntriesLaunchesTableComponent,
+    DeleteEntriesModalComponent,
+    EditEntriesModalComponent
   ],
   imports: [
     CommonModule,

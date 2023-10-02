@@ -1,0 +1,52 @@
+mat-form-field {
+    padding: 20px 20px 0px 20px;
+}
+
+#container-table {
+    max-height: 400px;
+    overflow: auto;
+}
+
+table {
+    padding: 0px 20px 20px 20px;
+}
+
+.values {
+    width: 110px;
+}
+
+#container-values {
+    display: flex;
+    justify-content: space-between;
+}
+
+.value-real {
+    padding: 20px 0;
+    margin-bottom: 0;
+}
+
+.value-RS {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    margin-bottom: 0;
+}
+
+#container-more-btn {
+    display: grid;
+    place-items: center;
+}
+
+#td-date {
+    width: 100px;
+}
+
+.mat-cell {
+    padding: 20px;
+}
+
+@media (max-width: 600px) {
+    #container-table {
+        overflow-y: auto;
+    }
+}

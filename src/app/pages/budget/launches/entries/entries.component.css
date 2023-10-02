@@ -1,0 +1,23 @@
+mat-card-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+mat-form-field {
+    margin-right: 10px;
+    width: 100%;
+}
+
+app-entries-launches-table {
+    margin: 10px;
+}
+
+@media (max-width: 600px) {
+    mat-card-content {
+        display: block;
+    }
+
+    mat-form-field {
+        margin-right: 0;
+    }
+}

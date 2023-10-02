@@ -1,0 +1,83 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Lançamentos de {{_internalDate.getCurrentMonthName().toLowerCase()}}</mat-card-title>
+    </mat-card-header>
+
+    <mat-form-field>
+        <mat-label>Filtrar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+
+    <div id="container-table">
+        <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="date">
+                <th mat-header-cell id="td-date" *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
+                    Data
+                </th>
+                <td mat-cell *matCellDef="let row"> {{row.date}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
+                    Descrição
+                </th>
+                <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="categoryName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by categoryName">
+                    Categoria
+                </th>
+                <td mat-cell *matCellDef="let row"> {{row.categoryName}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by value">
+                    Valor
+                </th>
+                <td mat-cell class="values" *matCellDef="let row">
+                    <div id="container-values">
+                        <p class="value-RS">R$</p>
+                        <p class="value-real"> {{this._numberFormat.inPortToDuo(row.value)}} </p>
+                    </div>
+                </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="itens">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let row">
+                    <div id="container-more-btn">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openModalEditCategory(row)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Editar</span>
+                        </button>
+                        <button mat-menu-item (click)="openModalDeleteCategory(row)">
+                            <mat-icon color="warn">delete</mat-icon>
+                            <span>Apagar</span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">
+                    Não há lançamentos de {{_internalDate.getCurrentMonthName().toLowerCase()}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</mat-card>

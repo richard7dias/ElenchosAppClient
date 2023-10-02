@@ -1,54 +1,50 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { Renderer2 } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
+
 import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
 import { Category } from 'src/app/core/interfaces/category.interface';
 import { Launch } from 'src/app/core/interfaces/launch.interface';
-import { User } from 'src/app/core/interfaces/user.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
+import { DateService } from 'src/app/shared/formatting/date/date.service';
 import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';
 import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';
-import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({
-  selector: 'app-entries',
-  templateUrl: './entries.component.html',
-  styleUrls: ['./entries.component.css']
+  selector: 'app-edit-entries-modal',
+  templateUrl: './edit-entries-modal.component.html',
+  styleUrls: ['./edit-entries-modal.component.css']
 })
-export class EntriesComponent {
+export class EditEntriesModalComponent {
 
-  internalUser!: User;
   internalCategories!: Category[];
 
-  dateInput: string = new Date().toISOString();
+  dateInput!: string;
   descriptionInput!: string;
-  categoryInput!: Category;
+  categoryInput!: string;
   valueInput!: number;
 
   constructor(
-    private _internalUser: InternalUserService,
-    private _apiCategories: ApiCategoriesService,
-    private _internalCategories: InternalCategoriesService,
-    private _apiLaunches: ApiLaunchesService,
+    @Inject(MAT_DIALOG_DATA) public _data: any,
     private _internalLaunches: InternalLaunchesService,
+    private _apiLaunches: ApiLaunchesService,
     private _loadingBar: LoadingService,
     private _alert: AlertService,
-    private _renderer: Renderer2
+    private _modalRef: MatDialogRef<EditEntriesModalComponent>,
+    private _internalCategories: InternalCategoriesService,
+    private _apiCategories: ApiCategoriesService,
+    private _dateFormat: DateService
   ) { }
 
   ngOnInit() {
     this.searchInternalCategories();
-
-    this._internalUser.getInternalUser().subscribe(user => {
-      if (user) {
-        this.internalUser = user;
-      }
-    });
-
-    this._renderer.selectRootElement('#descriptionInput').focus();
+    this.dateInput = this._dateFormat.stringToDate(this._data.date).toISOString();
+    this.descriptionInput = this._data.description;
+    this.categoryInput = this._data.categoryName;
+    this.valueInput = this._data.value;
   }
 
   searchInternalCategories() {
@@ -72,49 +68,54 @@ export class EntriesComponent {
     this._loadingBar.setLoadingBar(false);
   }
 
-  newExpense() {
+  submitForm(): void {
     if (this.dateInput && this.descriptionInput && this.categoryInput && this.valueInput) {
-      let newLaunch: Launch = {
-        idOwner: this.internalUser.id,
-        id: 'Feito na API',
+
+      let launchEdited: Launch = {
+        idOwner: this._data.idOwner,
+        id: this._data.id,
         date: this.dateInput,
         description: this.descriptionInput,
-        categoryName: this.categoryInput.name,
-        categoryId: this.categoryInput.id,
+        categoryName: this.categoryInput,
+        categoryId: this._data.categoryId,
         value: this.valueInput
       }
 
+      let newCategoryChanged = this.internalCategories.find(category => {
+        return category.name === this.categoryInput;
+      });
+
+      if (newCategoryChanged) {
+        launchEdited.categoryId = newCategoryChanged.id;
+      }
+
       this._loadingBar.setLoadingBar(true);
-      this._apiLaunches.postLaunch(newLaunch).subscribe(
+      this._apiLaunches.patchLaunch(this._data.id, launchEdited).subscribe(
         (response: HttpResponse<any>) => {
-          if (response.status === 201) {
+          if (response.status === 200) {
             this._alert.openSnackBar(response.body.message);
-            this.clearInputs();
+            this.updateLaunches();
+            this._modalRef.close(true);
           }
         },
         (response) => {
-          this._alert.openSnackBar(response.error);
+          this._alert.openSnackBar(response.error.message);
         }
       );
-
-      this._apiLaunches.getLaunches().subscribe(
-        (response: HttpResponse<Launch[]>) => {
-          this._internalLaunches.setInternalLaunches(response.body);
-        }
-      );
-
       this._loadingBar.setLoadingBar(false);
+
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
     }
   }
 
-  clearInputs() {
-    this.dateInput = new Date().toISOString();
-    this.descriptionInput = '';
-    this.categoryInput = null as any;
-    this.valueInput = null as any;
-
-    this._renderer.selectRootElement('#descriptionInput').focus();
+  updateLaunches() {
+    this._apiLaunches.getLaunches().subscribe(
+      (response: HttpResponse<Launch[]>) => {
+        if (response.body) {
+          this._internalLaunches.setInternalLaunches(response.body);
+        }
+      }
+    );
   }
 }
