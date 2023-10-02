@@ -10,6 +10,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { MonthlyBudgetComponent } from './monthly-budget.component';
 import { NewCategoryModalComponent } from './new-category-modal/new-category-modal.component';
@@ -33,7 +34,8 @@ import { DeleteCategoryModalComponent } from './delete-category-modal/delete-cat
     MatFormFieldModule,
     MatDialogModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatTooltipModule
   ]
 })
 export class MonthlyBudgetModule { }

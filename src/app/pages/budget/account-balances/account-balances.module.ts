@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { BalancesTableComponent } from './balances-table/balances-table.component';
 import { ExpenseTableComponent } from './expense-table/expense-table.component';
@@ -47,7 +48,8 @@ import { DeleteExpenseModalComponent } from './expense-table/delete-expense-moda
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatTooltipModule
   ]
 })
 export class AccountBalancesModule { }

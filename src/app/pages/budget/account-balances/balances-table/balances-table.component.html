@@ -33,7 +33,8 @@
     <ng-container matColumnDef="itens">
         <th mat-header-cell *matHeaderCellDef>
             <div id="container-btns">
-                <button mat-icon-button (click)="openModalNewBalance()">
+                <button mat-icon-button matTooltip="Adicione uma conta bancária" matTooltipPosition="above"
+                    (click)="openModalNewBalance()">
                     <mat-icon>add_box</mat-icon>
                 </button>
             </div>

@@ -33,7 +33,8 @@
 
     <ng-container matColumnDef="itens">
         <th mat-header-cell *matHeaderCellDef>
-            <button mat-icon-button (click)="openModalNewExpense()">
+            <button mat-icon-button matTooltip="Adicione uma fonte de gasto" matTooltipPosition="above"
+                (click)="openModalNewExpense()">
                 <mat-icon>add_box</mat-icon>
             </button>
         </th>
