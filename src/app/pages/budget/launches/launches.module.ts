@@ -18,6 +18,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { LaunchesComponent } from './launches.component';
 import { ExpensesComponent } from './expenses/expenses.component';
@@ -59,7 +60,8 @@ import { EditEntriesModalComponent } from './entries/edit-entries-modal/edit-ent
     MatMenuModule,
     MatIconModule,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     DatePipe

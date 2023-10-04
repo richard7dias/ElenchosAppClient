@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MonthlyBudgetComponent } from './monthly-budget.component';
 import { NewCategoryModalComponent } from './new-category-modal/new-category-modal.component';
@@ -35,7 +36,8 @@ import { DeleteCategoryModalComponent } from './delete-category-modal/delete-cat
     MatDialogModule,
     FormsModule,
     MatInputModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MonthlyBudgetModule { }
