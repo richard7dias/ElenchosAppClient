@@ -7,7 +7,7 @@
 
             <mat-card-content>
                 <mat-form-field>
-                    <mat-label>Data</mat-label>
+                    <mat-label>Data da entrada</mat-label>
                     <input matInput [matDatepicker]="picker" type="text" [(ngModel)]="dateInput" name="dateInput"
                         required>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -18,6 +18,11 @@
                     <mat-label>Descrição</mat-label>
                     <input matInput type="text" [(ngModel)]="descriptionInput" name="descriptionInput"
                         id="descriptionInput">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Pagador</mat-label>
+                    <input matInput type="text" [(ngModel)]="payerInput" name="payerInput">
                 </mat-form-field>
 
                 <mat-form-field>

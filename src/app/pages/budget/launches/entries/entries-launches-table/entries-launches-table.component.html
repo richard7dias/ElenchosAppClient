@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-title>Lançamentos de {{_internalDate.getCurrentMonthName().toLowerCase()}}</mat-card-title>
+        <mat-card-title>Entradas futuras</mat-card-title>
     </mat-card-header>
 
     <mat-form-field>
@@ -26,11 +26,11 @@
             </ng-container>
 
 
-            <ng-container matColumnDef="categoryName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by categoryName">
-                    Categoria
+            <ng-container matColumnDef="payer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by payer">
+                    Pagador
                 </th>
-                <td mat-cell *matCellDef="let row"> {{row.categoryName}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.payer}} </td>
             </ng-container>
 
 
@@ -57,11 +57,11 @@
                     </div>
 
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openModalEditCategory(row)">
+                        <button mat-menu-item (click)="openModalEditEntry(row)">
                             <mat-icon>edit</mat-icon>
                             <span>Editar</span>
                         </button>
-                        <button mat-menu-item (click)="openModalDeleteCategory(row)">
+                        <button mat-menu-item (click)="openModalDeleteEntry(row)">
                             <mat-icon color="warn">delete</mat-icon>
                             <span>Apagar</span>
                         </button>

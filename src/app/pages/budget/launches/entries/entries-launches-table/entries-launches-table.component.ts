@@ -5,14 +5,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
-import { Launch } from 'src/app/core/interfaces/launch.interface';
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
-import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';
 import { InternalDateService } from 'src/app/shared/internal-values/internal-date/internal-date.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { EditEntriesModalComponent } from '../edit-entries-modal/edit-entries-modal.component';
 import { DeleteEntriesModalComponent } from '../delete-entries-modal/delete-entries-modal.component';
+import { Entry } from 'src/app/core/interfaces/entry.interface';
+import { ApiEntriesService } from 'src/app/core/api/entries/api-entries.service';
+import { InternalEntriesService } from 'src/app/shared/internal-values/internal-entries/internal-entries.service';
 
 
 @Component({
@@ -24,54 +24,54 @@ export class EntriesLaunchesTableComponent {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  internalLaunches!: Launch[];
+  internalEntries!: Entry[];
 
-  displayedColumns: string[] = ['date', 'description', 'categoryName', 'value', 'itens'];
-  dataSource = new MatTableDataSource(this.internalLaunches);
+  displayedColumns: string[] = ['date', 'description', 'payer', 'value', 'itens'];
+  dataSource = new MatTableDataSource(this.internalEntries);
 
   constructor(
     public _numberFormat: NumberService,
-    private _apiLaunches: ApiLaunchesService,
-    private _internalLaunches: InternalLaunchesService,
+    private _apiEntries: ApiEntriesService,
+    private _internalEntries: InternalEntriesService,
     private _dialog: MatDialog,
     public _internalDate: InternalDateService,
     private _loadingBar: LoadingService
   ) { }
 
   ngOnInit() {
-    this._internalLaunches.getInternalLaunchesByCurrentMonth().subscribe(launches => {
-      if (!launches) {
-        this.callApiLaunches();
+    this._internalEntries.getInternalEntries().subscribe(entries => {
+      if (!entries) {
+        this.callApiEntries();
       }
     });
 
-    this.updateInternalLaunchesReloadPage();
+    this.updateInternalEntriesReloadPage();
   }
 
   ngDoCheck() {
-    this.dataSource.data = this.internalLaunches;
+    this.dataSource.data = this.internalEntries;
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 
-  callApiLaunches() {
+  callApiEntries() {
     this._loadingBar.setLoadingBar(true);
-    this._apiLaunches.getLaunches().subscribe(
-      (response: HttpResponse<Launch[]>) => {
+    this._apiEntries.getEntries().subscribe(
+      (response: HttpResponse<Entry[]>) => {
         if (response.body) {
-          this._internalLaunches.setInternalLaunches(response.body);
+          this._internalEntries.setInternalEntries(response.body);
         }
       }
     );
     this._loadingBar.setLoadingBar(false);
   }
 
-  updateInternalLaunchesReloadPage() {
-    this._internalLaunches.getInternalLaunchesByCurrentMonth().subscribe(launches => {
-      if (launches) {
-        this.internalLaunches = launches;
+  updateInternalEntriesReloadPage() {
+    this._internalEntries.getInternalEntries().subscribe(entries => {
+      if (entries) {
+        this.internalEntries = entries;
       }
     });
   }
@@ -81,19 +81,19 @@ export class EntriesLaunchesTableComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openModalEditCategory(launch: Launch) {
+  openModalEditEntry(entry: Entry) {
     this._dialog.open(EditEntriesModalComponent, {
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
-      data: launch
+      data: entry
     });
   }
 
-  openModalDeleteCategory(launch: Launch) {
+  openModalDeleteEntry(entry: Entry) {
     this._dialog.open(DeleteEntriesModalComponent, {
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
-      data: launch
+      data: entry
     });
   }
 }

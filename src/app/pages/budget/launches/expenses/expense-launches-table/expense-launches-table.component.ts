@@ -81,7 +81,7 @@ export class ExpenseLaunchesTableComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openModalEditCategory(launch: Launch) {
+  openModalEditLaunch(launch: Launch) {
     this._dialog.open(EditLaunchModalComponent, {
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
@@ -89,7 +89,7 @@ export class ExpenseLaunchesTableComponent {
     });
   }
 
-  openModalDeleteCategory(launch: Launch) {
+  openModalDeleteLaunch(launch: Launch) {
     this._dialog.open(DeleteLaunchModalComponent, {
       enterAnimationDuration: "200ms",
       exitAnimationDuration: "200ms",
@@ -97,5 +97,3 @@ export class ExpenseLaunchesTableComponent {
     });
   }
 }
-
-

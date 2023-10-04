@@ -2,14 +2,11 @@ import { HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
-import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
-import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
-import { Category } from 'src/app/core/interfaces/category.interface';
-import { Launch } from 'src/app/core/interfaces/launch.interface';
+import { ApiEntriesService } from 'src/app/core/api/entries/api-entries.service';
+import { Entry } from 'src/app/core/interfaces/entry.interface';
 import { User } from 'src/app/core/interfaces/user.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
-import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';
-import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';
+import { InternalEntriesService } from 'src/app/shared/internal-values/internal-entries/internal-entries.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 
@@ -21,27 +18,23 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
 export class EntriesComponent {
 
   internalUser!: User;
-  internalCategories!: Category[];
+  internalEntries!: Entry[];
 
   dateInput: string = new Date().toISOString();
   descriptionInput!: string;
-  categoryInput!: Category;
+  payerInput!: string;
   valueInput!: number;
 
   constructor(
     private _internalUser: InternalUserService,
-    private _apiCategories: ApiCategoriesService,
-    private _internalCategories: InternalCategoriesService,
-    private _apiLaunches: ApiLaunchesService,
-    private _internalLaunches: InternalLaunchesService,
+    private _apiEntries: ApiEntriesService,
+    private _internalEntries: InternalEntriesService,
     private _loadingBar: LoadingService,
     private _alert: AlertService,
     private _renderer: Renderer2
   ) { }
 
   ngOnInit() {
-    this.searchInternalCategories();
-
     this._internalUser.getInternalUser().subscribe(user => {
       if (user) {
         this.internalUser = user;
@@ -51,41 +44,19 @@ export class EntriesComponent {
     this._renderer.selectRootElement('#descriptionInput').focus();
   }
 
-  searchInternalCategories() {
-    this._internalCategories.getInternalCategories().subscribe(categories => {
-      if (categories) {
-        this.internalCategories = categories;
-      } else {
-        this.callApiCategories();
-      }
-    });
-  }
-
-  callApiCategories() {
-    this._loadingBar.setLoadingBar(true);
-    this._apiCategories.getCategories().subscribe(
-      (response: HttpResponse<Category[]>) => {
-        this._internalCategories.setInternalCategories(response.body);
-        this.searchInternalCategories();
-      }
-    );
-    this._loadingBar.setLoadingBar(false);
-  }
-
   newExpense() {
-    if (this.dateInput && this.descriptionInput && this.categoryInput && this.valueInput) {
-      let newLaunch: Launch = {
+    if (this.dateInput && this.descriptionInput && this.payerInput && this.valueInput) {
+      let newEntry: Entry = {
         idOwner: this.internalUser.id,
         id: 'Feito na API',
         date: this.dateInput,
         description: this.descriptionInput,
-        categoryName: this.categoryInput.name,
-        categoryId: this.categoryInput.id,
+        payer: this.payerInput,
         value: this.valueInput
       }
 
       this._loadingBar.setLoadingBar(true);
-      this._apiLaunches.postLaunch(newLaunch).subscribe(
+      this._apiEntries.postEntry(newEntry).subscribe(
         (response: HttpResponse<any>) => {
           if (response.status === 201) {
             this._alert.openSnackBar(response.body.message);
@@ -97,9 +68,9 @@ export class EntriesComponent {
         }
       );
 
-      this._apiLaunches.getLaunches().subscribe(
-        (response: HttpResponse<Launch[]>) => {
-          this._internalLaunches.setInternalLaunches(response.body);
+      this._apiEntries.getEntries().subscribe(
+        (response: HttpResponse<Entry[]>) => {
+          this._internalEntries.setInternalEntries(response.body);
         }
       );
 
@@ -112,7 +83,7 @@ export class EntriesComponent {
   clearInputs() {
     this.dateInput = new Date().toISOString();
     this.descriptionInput = '';
-    this.categoryInput = null as any;
+    this.payerInput = null as any;
     this.valueInput = null as any;
 
     this._renderer.selectRootElement('#descriptionInput').focus();
