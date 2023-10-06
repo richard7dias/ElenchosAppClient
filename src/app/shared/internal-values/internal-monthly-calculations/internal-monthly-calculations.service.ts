@@ -8,6 +8,7 @@ import { Launch } from 'src/app/core/interfaces/launch.interface';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { InternalExpensesService } from '../internal-expenses/internal-expenses.service';
 import { SourceExpense } from 'src/app/core/interfaces/sourceExpense.interface';
+import { GeneralIdsService } from '../../general-ids/general-ids.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class InternalMonthlyCalculationsService {
     private _internalCategories: InternalCategoriesService,
     private _internalLaunches: InternalLaunchesService,
     private _apiExpenses: ApiSourceExpenseService,
-    private _internalExpenses: InternalExpensesService
+    private _internalExpenses: InternalExpensesService,
+    public _generalIds: GeneralIdsService
   ) { }
 
   private subscribeInternalCategories(): void {
@@ -92,13 +94,13 @@ export class InternalMonthlyCalculationsService {
     this._internalExpenses.getInternalExpenses().subscribe(expenses => {
       if (expenses) {
         sourceExpenses = expenses;
-        index = sourceExpenses.findIndex(expense => expense.id === '9b9f704a-938a-4923-8e63-277ba52007ef');
+        index = sourceExpenses.findIndex(expense => expense.id === this._generalIds.currentMonthId);
       }
     });
 
     if (index && sourceExpenses[index].valueExpense !== totalAvailable) {
       sourceExpenses[index].valueExpense = totalAvailable;
-      this._apiExpenses.patchSourceExpense('9b9f704a-938a-4923-8e63-277ba52007ef', { valueExpense: totalAvailable }).subscribe();
+      this._apiExpenses.patchSourceExpense(this._generalIds.currentMonthId, { valueExpense: totalAvailable }).subscribe();
       this._internalExpenses.setInternalExpenses(sourceExpenses);
     }
   }

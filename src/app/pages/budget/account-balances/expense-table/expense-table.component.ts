@@ -13,6 +13,7 @@ import { DeleteExpenseModalComponent } from './delete-expense-modal/delete-expen
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
+import { GeneralIdsService } from 'src/app/shared/general-ids/general-ids.service';
 
 @Component({
   selector: 'app-expense-table',
@@ -33,12 +34,13 @@ export class ExpenseTableComponent implements AfterViewInit {
     private _apiExpenses: ApiSourceExpenseService,
     private _internalExpenses: InternalExpensesService,
     private _dialog: MatDialog,
-    private _loadingBar: LoadingService
-  ) {
-  }
+    private _loadingBar: LoadingService,
+    public _generalIds: GeneralIdsService
+  ) { }
 
   ngOnInit() {
     this.subscribeInternalExpenses();
+    console.log(this._generalIds.currentMonthId)
   }
 
   ngDoCheck() {

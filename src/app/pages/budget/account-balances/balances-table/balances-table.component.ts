@@ -12,6 +12,7 @@ import { NewBalanceModalComponent } from './new-balance-modal/new-balance-modal.
 import { EditBalanceModalComponent } from './edit-balance-modal/edit-balance-modal.component';
 import { DeleteBalanceModalComponent } from './delete-balance-modal/delete-balance-modal.component';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
+import { GeneralIdsService } from 'src/app/shared/general-ids/general-ids.service';
 
 @Component({
   selector: 'app-balances-table',
@@ -32,7 +33,8 @@ export class BalancesTableComponent implements AfterViewInit {
     private _apiBalances: ApiBalancesService,
     private _internalBalances: InternalBalancesService,
     private _dialog: MatDialog,
-    private _loadingBar: LoadingService
+    private _loadingBar: LoadingService,
+    public _generalIds: GeneralIdsService
   ) { }
 
   ngOnInit() {
