@@ -7,7 +7,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
-import { User } from 'src/app/core/interfaces/user.interface';
+import { User } from 'src/app/core/interfaces/users/user.interface';
 import { HttpResponse } from '@angular/common/http';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 

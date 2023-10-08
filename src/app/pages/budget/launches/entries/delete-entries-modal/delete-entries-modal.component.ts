@@ -3,7 +3,7 @@ import { Component, Inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
-import { Launch } from 'src/app/core/interfaces/launch.interface';
+import { Launch } from 'src/app/core/interfaces/launches/launch.interface';
 
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';

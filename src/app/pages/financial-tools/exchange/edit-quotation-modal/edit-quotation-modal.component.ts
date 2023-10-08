@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 
 import { ApiCurrencyService } from 'src/app/core/api/currency/api-currency.service';
-import { Currency } from 'src/app/core/interfaces/currency.interface';
+import { Currency } from 'src/app/core/interfaces/currencies/currency.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { InternalCurrencyService } from 'src/app/shared/internal-values/internal-currency/currency.service';
 import { DeleteQuotationModalComponent } from '../delete-quotation-modal/delete-quotation-modal.component';

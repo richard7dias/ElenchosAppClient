@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { DateService } from '../../formatting/date/date.service';
 import { InternalDateService } from '../internal-date/internal-date.service';
-import { Entry } from 'src/app/core/interfaces/entry.interface';
+import { Entry } from 'src/app/core/interfaces/entries/entry.interface';
 
 
 @Injectable({

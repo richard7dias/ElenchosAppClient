@@ -5,8 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
 
 import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
-import { Category } from 'src/app/core/interfaces/category.interface';
-import { Launch } from 'src/app/core/interfaces/launch.interface';
+import { Category } from 'src/app/core/interfaces/categories/category.interface';
+import { Launch } from 'src/app/core/interfaces/launches/launch.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { DateService } from 'src/app/shared/formatting/date/date.service';
 import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';

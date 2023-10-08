@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
-import { Launch } from 'src/app/core/interfaces/launch.interface';
+import { Launch } from 'src/app/core/interfaces/launches/launch.interface';
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';
 import { EditLaunchModalComponent } from '../edit-launch-modal/edit-launch-modal.component';

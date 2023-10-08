@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { InternalBalancesService } from '../internal-balances/internal-balances.service';
 import { InternalExpensesService } from '../internal-expenses/internal-expenses.service';
-import { Balance } from 'src/app/core/interfaces/balance.interface';
-import { SourceExpense } from 'src/app/core/interfaces/sourceExpense.interface';
+import { Balance } from 'src/app/core/interfaces/balances/balance.interface';
+import { SourceExpense } from 'src/app/core/interfaces/sourceExpenses/sourceExpense.interface';
 
 
 @Injectable({

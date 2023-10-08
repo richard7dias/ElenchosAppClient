@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
 import { ApiEntriesService } from 'src/app/core/api/entries/api-entries.service';
-import { Entry } from 'src/app/core/interfaces/entry.interface';
-import { User } from 'src/app/core/interfaces/user.interface';
+import { Entry } from 'src/app/core/interfaces/entries/entry.interface';
+import { User } from 'src/app/core/interfaces/users/user.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { InternalEntriesService } from 'src/app/shared/internal-values/internal-entries/internal-entries.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';

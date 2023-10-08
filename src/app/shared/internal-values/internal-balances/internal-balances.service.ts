@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Balance } from 'src/app/core/interfaces/balance.interface';
+import { Balance } from 'src/app/core/interfaces/balances/balance.interface';
 
 @Injectable({
   providedIn: 'root'

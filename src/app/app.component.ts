@@ -3,7 +3,7 @@ import { LoadingService } from './shared/loading/loading.service';
 import { ApiUsersService } from './core/api/users/api-users.service';
 import { InternalUserService } from './shared/internal-values/internal-user/internal-user.service';
 import { Router } from '@angular/router';
-import { User } from './core/interfaces/user.interface';
+import { User } from './core/interfaces/users/user.interface';
 import { HttpResponse } from '@angular/common/http';
 import { ApiBalancesService } from './core/api/balances/api-balances.service';
 

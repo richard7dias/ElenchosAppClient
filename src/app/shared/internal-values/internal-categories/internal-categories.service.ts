@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { Category } from 'src/app/core/interfaces/category.interface';
+import { Category } from 'src/app/core/interfaces/categories/category.interface';
 
 @Injectable({
   providedIn: 'root'

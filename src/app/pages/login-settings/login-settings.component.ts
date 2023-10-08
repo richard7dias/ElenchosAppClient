@@ -4,7 +4,7 @@ import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
 import { ConfirmWindowDeleteComponent } from './confirm-window-delete/confirm-window-delete.component';
 import { MatDialog } from '@angular/material/dialog';
-import { User } from 'src/app/core/interfaces/user.interface';
+import { User } from 'src/app/core/interfaces/users/user.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { HttpResponse } from '@angular/common/http';
 import { LoadingService } from 'src/app/shared/loading/loading.service';

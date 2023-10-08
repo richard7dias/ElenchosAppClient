@@ -3,7 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
-import { SourceExpense } from 'src/app/core/interfaces/sourceExpense.interface';
+import { SourceExpense } from 'src/app/core/interfaces/sourceExpenses/sourceExpense.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';

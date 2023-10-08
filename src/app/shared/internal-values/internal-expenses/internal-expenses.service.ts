@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SourceExpense } from './../../../core/interfaces/sourceExpense.interface';
+import { SourceExpense } from '../../../core/interfaces/sourceExpenses/sourceExpense.interface';
 import { Injectable } from '@angular/core';
 
 @Injectable({

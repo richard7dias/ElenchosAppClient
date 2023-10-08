@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { ApiBalancesService } from 'src/app/core/api/balances/api-balances.service';
-import { Balance } from 'src/app/core/interfaces/balance.interface';
-import { User } from 'src/app/core/interfaces/user.interface';
+import { Balance } from 'src/app/core/interfaces/balances/balance.interface';
+import { User } from 'src/app/core/interfaces/users/user.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { InternalBalancesService } from 'src/app/shared/internal-values/internal-balances/internal-balances.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';

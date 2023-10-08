@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { SourceExpense } from 'src/app/core/interfaces/sourceExpense.interface';
+import { SourceExpense } from 'src/app/core/interfaces/sourceExpenses/sourceExpense.interface';
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { NewExpenseModalComponent } from './new-expense-modal/new-expense-modal.component';
 import { EditExpenseModalComponent } from './edit-expense-modal/edit-expense-modal.component';

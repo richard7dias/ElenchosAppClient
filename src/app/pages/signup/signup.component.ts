@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
-import { User } from 'src/app/core/interfaces/user.interface';
+import { User } from 'src/app/core/interfaces/users/user.interface';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({

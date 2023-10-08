@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { Category } from 'src/app/core/interfaces/category.interface';
+import { Category } from 'src/app/core/interfaces/categories/category.interface';
 import { InternalCategoriesService } from '../internal-categories/internal-categories.service';
 import { InternalLaunchesService } from '../internal-launches/internal-launches.service';
-import { Launch } from 'src/app/core/interfaces/launch.interface';
+import { Launch } from 'src/app/core/interfaces/launches/launch.interface';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { InternalExpensesService } from '../internal-expenses/internal-expenses.service';
-import { SourceExpense } from 'src/app/core/interfaces/sourceExpense.interface';
+import { SourceExpense } from 'src/app/core/interfaces/sourceExpenses/sourceExpense.interface';
 import { GeneralIdsService } from '../../general-ids/general-ids.service';
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { Launch } from 'src/app/core/interfaces/launch.interface';
+import { Launch } from 'src/app/core/interfaces/launches/launch.interface';
 import { DateService } from '../../formatting/date/date.service';
 import { InternalDateService } from '../internal-date/internal-date.service';
 

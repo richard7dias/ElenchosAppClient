@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
-import { Category } from 'src/app/core/interfaces/category.interface';
+import { Category } from 'src/app/core/interfaces/categories/category.interface';
 
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';

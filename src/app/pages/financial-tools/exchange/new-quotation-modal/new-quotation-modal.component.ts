@@ -5,8 +5,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { ApiCurrencyService } from 'src/app/core/api/currency/api-currency.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
-import { Currency } from 'src/app/core/interfaces/currency.interface';
-import { User } from 'src/app/core/interfaces/user.interface';
+import { Currency } from 'src/app/core/interfaces/currencies/currency.interface';
+import { User } from 'src/app/core/interfaces/users/user.interface';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { InternalCurrencyService } from 'src/app/shared/internal-values/internal-currency/currency.service';
 

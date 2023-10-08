@@ -1,10 +1,10 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
-import { User } from '../../interfaces/user.interface';
+import { User } from '../../interfaces/users/user.interface';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
 import { Observable } from 'rxjs';
-import { SourceExpense } from '../../interfaces/sourceExpense.interface';
+import { SourceExpense } from '../../interfaces/sourceExpenses/sourceExpense.interface';
 
 @Injectable({
   providedIn: 'root'

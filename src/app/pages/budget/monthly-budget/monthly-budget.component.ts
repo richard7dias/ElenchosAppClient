@@ -6,7 +6,7 @@ import { HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
-import { Category } from 'src/app/core/interfaces/category.interface';
+import { Category } from 'src/app/core/interfaces/categories/category.interface';
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
 import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';
 import { NewCategoryModalComponent } from './new-category-modal/new-category-modal.component';
@@ -14,7 +14,7 @@ import { DeleteCategoryModalComponent } from './delete-category-modal/delete-cat
 import { EditCategoryModalComponent } from './edit-category-modal/edit-category-modal.component';
 import { InternalDateService } from 'src/app/shared/internal-values/internal-date/internal-date.service';
 import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';
-import { Launch } from 'src/app/core/interfaces/launch.interface';
+import { Launch } from 'src/app/core/interfaces/launches/launch.interface';
 import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
 import { InternalMonthlyCalculationsService } from 'src/app/shared/internal-values/internal-monthly-calculations/internal-monthly-calculations.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';

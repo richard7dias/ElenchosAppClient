@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { User } from '../../../core/interfaces/user.interface';
+import { User } from '../../../core/interfaces/users/user.interface';
 import { AlertService } from '../../alert/alert.service';
 import { InternalCashService } from '../internal-cash/internal-cash.service';
 
@@ -19,17 +19,17 @@ export class InternalUserService {
     let user: User | null = this.internalUser.getValue();
 
     //-----------------------dev----------------
-    // user = {
-    //   email: "1",
-    //   phone: 123,
-    //   password: "1",
-    //   fullName: "Dev Mode",
-    //   firstName: "Dev",
-    //   id: "93dd577d-7ae1-4670-8b20-ac4782a330a1",
-    //   active: true
-    // };
+    user = {
+      email: "1",
+      phone: 123,
+      password: "1",
+      fullName: "Dev Mode",
+      firstName: "Dev",
+      id: "93dd577d-7ae1-4670-8b20-ac4782a330a1",
+      active: true
+    };
 
-    // this.setInternalUser(user);
+    this.setInternalUser(user);
     //-------------------------------------------
 
     return !!user;

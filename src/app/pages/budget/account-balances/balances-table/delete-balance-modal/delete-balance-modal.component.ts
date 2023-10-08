@@ -3,7 +3,7 @@ import { Component, Inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiBalancesService } from 'src/app/core/api/balances/api-balances.service';
-import { Balance } from 'src/app/core/interfaces/balance.interface';
+import { Balance } from 'src/app/core/interfaces/balances/balance.interface';
 
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { InternalBalancesService } from 'src/app/shared/internal-values/internal-balances/internal-balances.service';

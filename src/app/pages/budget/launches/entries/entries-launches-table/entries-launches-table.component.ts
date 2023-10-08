@@ -10,7 +10,7 @@ import { InternalDateService } from 'src/app/shared/internal-values/internal-dat
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { EditEntriesModalComponent } from '../edit-entries-modal/edit-entries-modal.component';
 import { DeleteEntriesModalComponent } from '../delete-entries-modal/delete-entries-modal.component';
-import { Entry } from 'src/app/core/interfaces/entry.interface';
+import { Entry } from 'src/app/core/interfaces/entries/entry.interface';
 import { ApiEntriesService } from 'src/app/core/api/entries/api-entries.service';
 import { InternalEntriesService } from 'src/app/shared/internal-values/internal-entries/internal-entries.service';
 
