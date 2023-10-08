@@ -1,11 +1,14 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Renderer2 } from '@angular/core';
+import { ApiBalancesService } from 'src/app/core/api/balances/api-balances.service';
 
 import { ApiEntriesService } from 'src/app/core/api/entries/api-entries.service';
+import { Balance } from 'src/app/core/interfaces/balances/balance.interface';
 import { Entry } from 'src/app/core/interfaces/entries/entry.interface';
 import { User } from 'src/app/core/interfaces/users/user.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
+import { InternalBalancesService } from 'src/app/shared/internal-values/internal-balances/internal-balances.service';
 import { InternalEntriesService } from 'src/app/shared/internal-values/internal-entries/internal-entries.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
@@ -31,7 +34,9 @@ export class EntriesComponent {
     private _internalEntries: InternalEntriesService,
     private _loadingBar: LoadingService,
     private _alert: AlertService,
-    private _renderer: Renderer2
+    private _renderer: Renderer2,
+    private _apiBalances: ApiBalancesService,
+    private _internalBalances: InternalBalancesService
   ) { }
 
   ngOnInit() {
@@ -74,10 +79,22 @@ export class EntriesComponent {
         }
       );
 
+      this.updateBalances();
+
       this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
     }
+  }
+
+  updateBalances() {
+    this._apiBalances.getBalances().subscribe(
+      (response: HttpResponse<Balance[]>) => {
+        if (response.body) {
+          this._internalBalances.setInternalBalances(response.body);
+        }
+      }
+    );
   }
 
   clearInputs() {

@@ -6,6 +6,7 @@ import { User } from '../../interfaces/users/user.interface';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
 import { Observable } from 'rxjs';
 import { Entry } from '../../interfaces/entries/entry.interface';
+import { EntryTotalValue } from '../../interfaces/entries/entryTotalValue.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -47,8 +48,8 @@ export class ApiEntriesService {
     return this.http.delete<HttpResponse<Object>>(`${this.apiUrl.apiUrl}/entries/${this.internalUser.id}/${id}`, { observe: 'response' });
   }
 
-  getTotalValueEntries(): Observable<HttpResponse<Object>> {
-    return this.http.get<Object>(`${this.apiUrl.apiUrl}/entries-totalValue/${this.internalUser.id}`, { observe: 'response' }
+  getTotalValueEntries(): Observable<HttpResponse<EntryTotalValue>> {
+    return this.http.get<EntryTotalValue>(`${this.apiUrl.apiUrl}/entries-totalValue/${this.internalUser.id}`, { observe: 'response' }
     );
   }
 }

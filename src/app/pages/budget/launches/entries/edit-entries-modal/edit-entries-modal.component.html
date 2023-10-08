@@ -1,5 +1,5 @@
 <main>
-    <h2 mat-dialog-title>Editar lançamento de gasto</h2>
+    <h2 mat-dialog-title>Editar lançamento de entrada</h2>
     <form (submit)="submitForm()">
 
         <mat-dialog-content>
@@ -17,11 +17,8 @@
             </mat-form-field>
 
             <mat-form-field>
-                <mat-label>Categoria</mat-label>
-                <mat-select [(ngModel)]="categoryInput" name="categoryInput" required>
-                    <mat-option *ngFor="let category of internalCategories"
-                        [value]="category.name">{{category.name}}</mat-option>
-                </mat-select>
+                <mat-label>Pagador</mat-label>
+                <input matInput type="text" [(ngModel)]="payerInput" name="payerInput" required>
             </mat-form-field>
 
             <mat-form-field>

@@ -2,11 +2,14 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
-import { Launch } from 'src/app/core/interfaces/launches/launch.interface';
 
+import { ApiBalancesService } from 'src/app/core/api/balances/api-balances.service';
+import { ApiEntriesService } from 'src/app/core/api/entries/api-entries.service';
+import { Balance } from 'src/app/core/interfaces/balances/balance.interface';
+import { Entry } from 'src/app/core/interfaces/entries/entry.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
-import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';
+import { InternalBalancesService } from 'src/app/shared/internal-values/internal-balances/internal-balances.service';
+import { InternalEntriesService } from 'src/app/shared/internal-values/internal-entries/internal-entries.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({
@@ -21,16 +24,19 @@ export class DeleteEntriesModalComponent {
     private _alert: AlertService,
     private _modalRef: MatDialogRef<DeleteEntriesModalComponent>,
     private _loadingBar: LoadingService,
-    private _apiLaunches: ApiLaunchesService,
-    private _internalLaunches: InternalLaunchesService
+    private _apiEntries: ApiEntriesService,
+    private _internalEntries: InternalEntriesService,
+    private _apiBalances: ApiBalancesService,
+    private _internalBalances: InternalBalancesService
   ) { }
 
   deleteLaunch() {
     this._loadingBar.setLoadingBar(true);
-    this._apiLaunches.deleteLaunch(this._data.id).subscribe(
+    this._apiEntries.deleteEntry(this._data.id).subscribe(
       (response: HttpResponse<any>) => {
         this._alert.openSnackBar(response.body.message);
-        this.updateLaunches();
+        this.updateEntries();
+        this.updateBalances();
       },
       (response) => {
         this._alert.openSnackBar(response.error.message);
@@ -40,11 +46,21 @@ export class DeleteEntriesModalComponent {
     this._modalRef.close(true);
   }
 
-  updateLaunches() {
-    this._apiLaunches.getLaunches().subscribe(
-      (response: HttpResponse<Launch[]>) => {
+  updateEntries() {
+    this._apiEntries.getEntries().subscribe(
+      (response: HttpResponse<Entry[]>) => {
         if (response.body) {
-          this._internalLaunches.setInternalLaunches(response.body);
+          this._internalEntries.setInternalEntries(response.body);
+        }
+      }
+    );
+  }
+
+  updateBalances() {
+    this._apiBalances.getBalances().subscribe(
+      (response: HttpResponse<Balance[]>) => {
+        if (response.body) {
+          this._internalBalances.setInternalBalances(response.body);
         }
       }
     );
