@@ -13,6 +13,7 @@ import { DeleteEntriesModalComponent } from '../delete-entries-modal/delete-entr
 import { Entry } from 'src/app/core/interfaces/entries/entry.interface';
 import { ApiEntriesService } from 'src/app/core/api/entries/api-entries.service';
 import { InternalEntriesService } from 'src/app/shared/internal-values/internal-entries/internal-entries.service';
+import { PayedEntryModalComponent } from '../payed-entry-modal/payed-entry-modal.component';
 
 
 @Component({
@@ -49,7 +50,9 @@ export class EntriesLaunchesTableComponent {
   }
 
   ngDoCheck() {
-    this.dataSource.data = this.internalEntries;
+    if (this.internalEntries) {
+      this.dataSource.data = this.internalEntries.filter(entry => entry.payed === false);
+    }
   }
 
   ngAfterViewInit() {
@@ -79,6 +82,14 @@ export class EntriesLaunchesTableComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  openModalPayedEntry(entry: Entry) {
+    this._dialog.open(PayedEntryModalComponent, {
+      enterAnimationDuration: "200ms",
+      exitAnimationDuration: "200ms",
+      data: entry
+    });
   }
 
   openModalEditEntry(entry: Entry) {

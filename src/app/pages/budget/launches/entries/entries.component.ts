@@ -57,7 +57,8 @@ export class EntriesComponent {
         date: this.dateInput,
         description: this.descriptionInput,
         payer: this.payerInput,
-        value: this.valueInput
+        value: this.valueInput,
+        payed: false
       }
 
       this._loadingBar.setLoadingBar(true);

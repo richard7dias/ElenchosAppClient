@@ -1,0 +1,13 @@
+<main>
+    <h1 mat-dialog-title>Confirmação</h1>
+    <div mat-dialog-content>
+        <p id="subtitle">
+            Confirmar pagamento {{_data.description}} de {{_data.payer}}?
+        </p>
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancelar</button>
+        <button mat-button (click)="payedEntry()">Sim</button>
+    </div>
+</main>

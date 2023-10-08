@@ -29,6 +29,7 @@ import { DeleteLaunchModalComponent } from './expenses/delete-launch-modal/delet
 import { EntriesLaunchesTableComponent } from './entries/entries-launches-table/entries-launches-table.component';
 import { DeleteEntriesModalComponent } from './entries/delete-entries-modal/delete-entries-modal.component';
 import { EditEntriesModalComponent } from './entries/edit-entries-modal/edit-entries-modal.component';
+import { PayedEntryModalComponent } from './entries/payed-entry-modal/payed-entry-modal.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { EditEntriesModalComponent } from './entries/edit-entries-modal/edit-ent
     DeleteLaunchModalComponent,
     EntriesLaunchesTableComponent,
     DeleteEntriesModalComponent,
-    EditEntriesModalComponent
+    EditEntriesModalComponent,
+    PayedEntryModalComponent
   ],
   imports: [
     CommonModule,

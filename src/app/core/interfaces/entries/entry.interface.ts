@@ -5,4 +5,5 @@ export interface Entry {
     description: string;
     payer: string;
     value: number;
+    payed: boolean;
 }

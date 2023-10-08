@@ -57,6 +57,10 @@
                     </div>
 
                     <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openModalPayedEntry(row)">
+                            <mat-icon>price_check</mat-icon>
+                            <span>Pago</span>
+                        </button>
                         <button mat-menu-item (click)="openModalEditEntry(row)">
                             <mat-icon>edit</mat-icon>
                             <span>Editar</span>
