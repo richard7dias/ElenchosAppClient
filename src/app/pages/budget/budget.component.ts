@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { InternalMonthlyCalculationsService } from 'src/app/shared/internal-values/internal-monthly-calculations/internal-monthly-calculations.service';
 
 import { InternalRouteService } from 'src/app/shared/internal-values/internal-route/internal-route.service';
+import { NegativeCategoryWarnService } from 'src/app/shared/negative-category-warn/negative-category-warn.service';
 
 @Component({
   selector: 'app-budget',
@@ -19,7 +19,7 @@ export class BudgetComponent {
 
   constructor(
     private _internalRoute: InternalRouteService,
-    private _internalMonthlyCalculationsService: InternalMonthlyCalculationsService
+    private _negativeCategoryWarn: NegativeCategoryWarnService
   ) {
     this._internalRoute.getCustomRoute(2).subscribe(route => {
       this.removeChecked();
@@ -44,7 +44,7 @@ export class BudgetComponent {
   }
 
   ngOnInit() {
-    this._internalMonthlyCalculationsService.getInternalNegativeCategoryWarn().subscribe(value => {
+    this._negativeCategoryWarn.getInternalNegativeCategoryWarn().subscribe(value => {
       this.alert = value;
     });
   }

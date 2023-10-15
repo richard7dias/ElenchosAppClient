@@ -3,10 +3,12 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
+import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { Category } from 'src/app/core/interfaces/categories/category.interface';
 import { User } from 'src/app/core/interfaces/users/user.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';
+import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 
@@ -30,6 +32,8 @@ export class NewCategoryModalComponent {
     private _alert: AlertService,
     private _internalUser: InternalUserService,
     private _modalRef: MatDialogRef<NewCategoryModalComponent>,
+    private _apiExpenses: ApiSourceExpenseService,
+    private _internalExpenses: InternalExpensesService
   ) { }
 
   ngOnInit() {
@@ -53,7 +57,9 @@ export class NewCategoryModalComponent {
         id: 'Feito na API',
         idOwner: this.internalUser.id,
         name: this.newCategoryName,
-        budget: this.newCategoryBudget == null ? 0 : this.newCategoryBudget
+        budget: this.newCategoryBudget == null ? 0 : this.newCategoryBudget,
+        expense: 0,
+        available: this.newCategoryBudget == null ? 0 : this.newCategoryBudget,
       }
 
       this._loadingBar.setLoadingBar(true);
@@ -72,6 +78,12 @@ export class NewCategoryModalComponent {
       this._apiCategories.getCategories().subscribe(
         (response: HttpResponse<Category[]>) => {
           this._internalCategories.setInternalCategories(response.body);
+        }
+      );
+
+      this._apiExpenses.getSourceExpenses().subscribe(
+        (response: HttpResponse<any>) => {
+          this._internalExpenses.setInternalExpenses(response.body);
         }
       );
 

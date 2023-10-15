@@ -15,6 +15,9 @@ import { EditCategoryModalComponent } from './edit-category-modal/edit-category-
 import { InternalDateService } from 'src/app/shared/internal-values/internal-date/internal-date.service';
 import { Launch } from 'src/app/core/interfaces/launches/launch.interface';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
+import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
+import { GeneralIdsService } from 'src/app/shared/general-ids/general-ids.service';
+import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 
 @Component({
   selector: 'app-monthly-budget',
@@ -37,7 +40,10 @@ export class MonthlyBudgetComponent {
     private _internalCategories: InternalCategoriesService,
     private _dialog: MatDialog,
     public _internalDate: InternalDateService,
-    private _loadingBar: LoadingService
+    private _loadingBar: LoadingService,
+    private _apiExpenses: ApiSourceExpenseService,
+    private _generalIds: GeneralIdsService,
+    private _internalExpenses: InternalExpensesService
   ) { }
 
   ngOnInit() {
@@ -91,10 +97,10 @@ export class MonthlyBudgetComponent {
 
   getTotalTableFootAvailable(): string {
     if (this.internalCategories && this.internalCategories.length > 0) {
-      return this._numberFormat.inPortToDuo(this.internalCategories
+      const sum: number = this.internalCategories
         .map(obj => obj.available ? obj.available : 0)
-        .reduce((acc, value) => acc + value, 0)
-      );
+        .reduce((acc, value) => acc + value, 0);
+      return this._numberFormat.inPortToDuo(sum);
     } else {
       return this._numberFormat.inPortToDuo(0);
     }

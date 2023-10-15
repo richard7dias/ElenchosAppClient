@@ -2,10 +2,12 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
+import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { Category } from 'src/app/core/interfaces/categories/category.interface';
 
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';
+import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 
 @Component({
@@ -21,7 +23,9 @@ export class DeleteCategoryModalComponent {
     private _modalRef: MatDialogRef<DeleteCategoryModalComponent>,
     private _loadingBar: LoadingService,
     private _apiCategories: ApiCategoriesService,
-    private _internalCategories: InternalCategoriesService
+    private _internalCategories: InternalCategoriesService,
+    private _apiExpenses: ApiSourceExpenseService,
+    private _internalExpenses: InternalExpensesService
   ) { }
 
   deleteCategory() {
@@ -35,6 +39,13 @@ export class DeleteCategoryModalComponent {
         this._alert.openSnackBar(response.error.message);
       }
     );
+
+    this._apiExpenses.getSourceExpenses().subscribe(
+      (response: HttpResponse<any>) => {
+        this._internalExpenses.setInternalExpenses(response.body);
+      }
+    );
+
     this._loadingBar.setLoadingBar(false);
     this._modalRef.close(true);
   }
