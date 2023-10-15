@@ -103,6 +103,8 @@ export class ExpensesComponent {
         }
       );
 
+      this.callApiCategories();
+
       this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')

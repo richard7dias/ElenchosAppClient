@@ -95,6 +95,7 @@ export class EditLaunchModalComponent {
           if (response.status === 200) {
             this._alert.openSnackBar(response.body.message);
             this.updateLaunches();
+            this.callApiCategories();
             this._modalRef.close(true);
           }
         },
