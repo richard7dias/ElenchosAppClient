@@ -18,6 +18,7 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { GeneralIdsService } from 'src/app/shared/general-ids/general-ids.service';
 import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
+import { AlertService } from 'src/app/shared/alert/alert.service';
 
 @Component({
   selector: 'app-monthly-budget',
@@ -41,28 +42,13 @@ export class MonthlyBudgetComponent {
     private _dialog: MatDialog,
     public _internalDate: InternalDateService,
     private _loadingBar: LoadingService,
+    private _alert: AlertService,
     private _apiExpenses: ApiSourceExpenseService,
-    private _generalIds: GeneralIdsService,
     private _internalExpenses: InternalExpensesService
   ) { }
 
   ngOnInit() {
-    this._loadingBar.setLoadingBar(true);
-    this._internalCategories.getInternalCategories().subscribe(categories => {
-      if (categories) {
-        this.internalCategories = categories;
-      } else {
-        this._apiCategories.getCategories().subscribe(
-          (response: HttpResponse<Category[]>) => {
-            if (response.body) {
-              this._internalCategories.setInternalCategories(response.body);
-              this.internalCategories = response.body;
-            }
-          }
-        );
-      }
-    });
-    this._loadingBar.setLoadingBar(false);
+    this.searchCategories();
   }
 
   ngDoCheck() {
@@ -71,6 +57,29 @@ export class MonthlyBudgetComponent {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  searchCategories() {
+    this._internalCategories.getInternalCategories().subscribe(categories => {
+      if (categories) {
+        this.internalCategories = categories;
+      } else {
+        this.callApiCategories();
+      }
+    });
+  }
+
+  callApiCategories() {
+    this._loadingBar.setLoadingBar(true);
+    this._apiCategories.getCategories().subscribe(
+      (response: HttpResponse<Category[]>) => {
+        if (response.body) {
+          this._internalCategories.setInternalCategories(response.body);
+          this.searchCategories();
+        }
+      }
+    );
+    this._loadingBar.setLoadingBar(false);
   }
 
   getTotalTableFootBudget(): string {
@@ -127,5 +136,25 @@ export class MonthlyBudgetComponent {
       exitAnimationDuration: "200ms",
       data: category
     });
+  }
+
+  resetAvailable(category: Category) {
+    let body = {
+      budget: category.expense,
+      available: 0
+    }
+    this._loadingBar.setLoadingBar(true);
+    this._apiCategories.patchCategory(category.id, body).subscribe(
+      (response: HttpResponse<any>) => {
+        this._alert.openSnackBar(`Disponível de "${category.name}" foi zerado!`);
+        this.callApiCategories();
+        this._apiExpenses.getSourceExpenses().subscribe(
+          (response: HttpResponse<any>) => {
+            this._internalExpenses.setInternalExpenses(response.body);
+          }
+        );
+      }
+    );
+    this._loadingBar.setLoadingBar(false);
   }
 }
