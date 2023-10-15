@@ -42,7 +42,7 @@
                 <div class="values">
                     <div id="container-values">
                         <p class="value-RS">R$</p>
-                        <p class="value-real">{{ expenseValue(element.id) }}</p>
+                        <p class="value-real">{{ this._numberFormat.inPortToDuo(element.expense) }}</p>
                     </div>
                 </div>
             </td>
@@ -50,7 +50,7 @@
                 <div class="values">
                     <div id="container-values">
                         <p class="value-RS">R$</p>
-                        <p class="value-real">{{this._numberFormat.inPortToDuo(totalExpense)}}</p>
+                        <p class="value-real">{{getTotalTableFootExpense()}}</p>
                     </div>
                 </div>
             </td>
@@ -64,8 +64,8 @@
                 <div class="values">
                     <div id="container-values">
                         <p class="value-RS">R$</p>
-                        <p class="value-real" [ngStyle]="{'color': availableValue(element) < 0 ? 'red' : 'initial'}">{{
-                            this._numberFormat.inPortToDuo(availableValue(element)) }}</p>
+                        <p class="value-real" [ngStyle]="{'color': element.available < 0 ? 'red' : 'initial'}">{{
+                            this._numberFormat.inPortToDuo(element.available) }}</p>
                     </div>
                 </div>
             </td>
@@ -73,7 +73,7 @@
                 <div class="values">
                     <div id="container-values">
                         <p class="value-RS">R$</p>
-                        <p class="value-real">{{this._numberFormat.inPortToDuo(totalAvailable)}}</p>
+                        <p class="value-real">{{getTotalTableFootAvailable()}}</p>
                     </div>
                 </div>
             </td>

@@ -40,7 +40,6 @@ export class ExpenseTableComponent implements AfterViewInit {
 
   ngOnInit() {
     this.subscribeInternalExpenses();
-    console.log(this._generalIds.currentMonthId)
   }
 
   ngDoCheck() {
