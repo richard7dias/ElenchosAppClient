@@ -61,3 +61,10 @@ body {
 .mat-sort-header-container {
     justify-content: center !important;
 }
+
+.mat-mdc-checkbox.mat-primary {
+    --mdc-checkbox-selected-focus-icon-color: #387876;
+    --mdc-checkbox-selected-hover-icon-color: #387876;
+    --mdc-checkbox-selected-icon-color: #387876;
+    --mdc-checkbox-selected-pressed-icon-color: #387876;
+}

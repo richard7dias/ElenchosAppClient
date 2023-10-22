@@ -10,9 +10,7 @@ import { NewAnnualCategoryModalComponent } from './new-annual-category-modal/new
 import { EditAnnualCategoryModalComponent } from './edit-annual-category-modal/edit-annual-category-modal.component';
 import { DeleteAnnualCategoryModalComponent } from './delete-annual-category-modal/delete-annual-category-modal.component';
 import { InternalDateService } from 'src/app/shared/internal-values/internal-date/internal-date.service';
-import { Launch } from 'src/app/core/interfaces/launches/launch.interface';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
-import { AlertService } from 'src/app/shared/alert/alert.service';
 import { AnnualCategory } from 'src/app/core/interfaces/annualCategory/annualCategory.interface';
 import { ApiAnnualCategoriesService } from 'src/app/core/api/annual-categories/api-annual-categories.service';
 import { InternalAnnualCategoriesService } from 'src/app/shared/internal-values/internal-annual-categories/internal-annual-categories.service';
@@ -37,8 +35,7 @@ export class AnnualCategoriesComponent {
     private _internalAnnualCategories: InternalAnnualCategoriesService,
     private _dialog: MatDialog,
     public _internalDate: InternalDateService,
-    private _loadingBar: LoadingService,
-    private _alert: AlertService
+    private _loadingBar: LoadingService
   ) { }
 
   ngOnInit() {

@@ -12,6 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 
 import { MonthlyBudgetComponent } from './monthly-budget.component';
 import { NewCategoryModalComponent } from './monthly-categories/new-category-modal/new-category-modal.component';
@@ -47,7 +49,9 @@ import { NewAnnualCategoryModalComponent } from './annual-categories/new-annual-
     FormsModule,
     MatInputModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
+    MatSelectModule
   ]
 })
 export class MonthlyBudgetModule { }

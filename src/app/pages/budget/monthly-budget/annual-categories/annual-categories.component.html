@@ -31,7 +31,7 @@
                 Débito automático
             </th>
             <td mat-cell *matCellDef="let element">
-                {{ this._numberFormat.inPortToDuo(element.automaticDebit) }}
+                {{ element.automaticDebit === true ? 'Sim' : 'Não' }}
             </td>
         </ng-container>
 

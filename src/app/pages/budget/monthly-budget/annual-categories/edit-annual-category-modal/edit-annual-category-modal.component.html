@@ -1,1 +1,40 @@
-<p>edit-annual-category-modal works!</p>
+<main>
+    <h2 mat-dialog-title>Editar categoria anual</h2>
+    <form (submit)="submitForm()">
+
+        <mat-dialog-content>
+
+            <mat-form-field>
+                <mat-label>Nome da categoria anual:</mat-label>
+                <input matInput type="text" [(ngModel)]="categoryDescriptionInput" name="categoryDescriptionInput"
+                    required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Valor anual:</mat-label>
+                <input matInput type="number" [(ngModel)]="categoryValueInput" name="categoryValueInput" required>
+            </mat-form-field>
+
+            <section id="checkbox-container">
+                <mat-checkbox class="example-margin" [(ngModel)]="categoryAutomaticDebitInput"
+                    name="categoryAutomaticDebitInput" color="primary">
+                    Está como débito automático
+                </mat-checkbox>
+            </section>
+
+            <mat-form-field>
+                <mat-label>Mês de pagamento</mat-label>
+                <mat-select [(ngModel)]="categoryMonthOfPaymentInput" name="categoryMonthOfPaymentInput">
+                    <mat-option *ngFor="let monthArray of monthNames"
+                        [value]="monthArray.monthValue">{{monthArray.monthName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>Cancelar</button>
+            <button mat-button type="submit">Editar</button>
+        </mat-dialog-actions>
+
+    </form>
+</main>

@@ -1,1 +1,13 @@
-<p>delete-annual-category-modal works!</p>
+<main>
+    <h1 mat-dialog-title>Confirmação</h1>
+    <div mat-dialog-content>
+        <p id="subtitle">
+            Você tem certeza que gostaria de apagar a categoria "{{_data.description}}"?
+        </p>
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancelar</button>
+        <button mat-button color="warn" (click)="deleteCategory()">Sim</button>
+    </div>
+</main>
