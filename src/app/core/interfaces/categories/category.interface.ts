@@ -4,6 +4,5 @@ export interface Category {
     name: string;
     budget: number;
     expense: number,
-    available: number,
-    isAnnualCategory: boolean
+    available: number
 }

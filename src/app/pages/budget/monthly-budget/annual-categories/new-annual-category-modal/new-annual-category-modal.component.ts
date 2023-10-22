@@ -29,7 +29,7 @@ export class NewAnnualCategoryModalComponent {
   internalUser!: User;
   categoryDescriptionInput!: string;
   categoryValueInput!: number;
-  categoryAutomaticDebitInput!: boolean;
+  categoryAutomaticDebitInput: boolean = false;
   categoryMonthOfPaymentInput!: number;
   monthNames!: MonthNames[];
 

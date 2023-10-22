@@ -7,5 +7,6 @@ export class GeneralIdsService {
 
   currentMonthId: string = '9b9f704a-938a-4923-8e63-277ba52007ef';
   entryLaunchId: string = '1f66c7c6-7a4a-4673-bae8-22233f674848';
+  annualCategoryId: string = '80280f52-61d8-4b36-869b-2030d0e176fq';
 
 }

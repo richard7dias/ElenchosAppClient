@@ -87,7 +87,11 @@
                 </button>
             </th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button [matMenuTriggerFor]="menu">
+                <button mat-icon-button *ngIf="element.id === _generalIds.annualCategoryId"
+                    matTooltip="Categoria anual para ser paga este mês, conforme a tabela abaixo">
+                    <mat-icon>info</mat-icon>
+                </button>
+                <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="element.id !== _generalIds.annualCategoryId">
                     <mat-icon>more_vert</mat-icon>
                 </button>
 

@@ -18,6 +18,7 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 import { AlertService } from 'src/app/shared/alert/alert.service';
+import { GeneralIdsService } from 'src/app/shared/general-ids/general-ids.service';
 
 @Component({
   selector: 'app-monthly-categories',
@@ -43,7 +44,8 @@ export class MonthlyCategoriesComponent {
     private _loadingBar: LoadingService,
     private _alert: AlertService,
     private _apiExpenses: ApiSourceExpenseService,
-    private _internalExpenses: InternalExpensesService
+    private _internalExpenses: InternalExpensesService,
+    public _generalIds: GeneralIdsService
   ) { }
 
   ngOnInit() {
