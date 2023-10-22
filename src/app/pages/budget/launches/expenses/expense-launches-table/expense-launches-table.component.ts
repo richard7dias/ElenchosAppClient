@@ -62,10 +62,10 @@ export class ExpenseLaunchesTableComponent {
       (response: HttpResponse<Launch[]>) => {
         if (response.body) {
           this._internalLaunches.setInternalLaunches(response.body);
+          this._loadingBar.setLoadingBar(false);
         }
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 
   updateInternalLaunchesReloadPage() {

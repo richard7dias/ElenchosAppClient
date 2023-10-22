@@ -61,20 +61,22 @@ export class NewExpenseModalComponent {
           if (response.status === 201) {
             this._alert.openSnackBar(response.body.message);
             this._modalRef.close(true);
+            this._loadingBar.setLoadingBar(false);
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error);
+          this._loadingBar.setLoadingBar(false);
         }
       );
 
       this._apiExpenses.getSourceExpenses().subscribe(
         (response: HttpResponse<SourceExpense[]>) => {
           this._internalExpenses.setInternalExpenses(response.body);
+          this._loadingBar.setLoadingBar(false);
         }
       );
 
-      this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
     }

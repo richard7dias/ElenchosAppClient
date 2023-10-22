@@ -76,10 +76,10 @@ export class MonthlyBudgetComponent {
         if (response.body) {
           this._internalCategories.setInternalCategories(response.body);
           this.searchCategories();
+          this._loadingBar.setLoadingBar(false);
         }
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 
   getTotalTableFootBudget(): string {
@@ -151,10 +151,10 @@ export class MonthlyBudgetComponent {
         this._apiExpenses.getSourceExpenses().subscribe(
           (response: HttpResponse<any>) => {
             this._internalExpenses.setInternalExpenses(response.body);
+            this._loadingBar.setLoadingBar(false);
           }
         );
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 }

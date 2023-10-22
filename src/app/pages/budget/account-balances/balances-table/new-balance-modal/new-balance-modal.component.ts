@@ -61,21 +61,23 @@ export class NewBalanceModalComponent {
         (response: HttpResponse<any>) => {
           if (response.status === 201) {
             this._alert.openSnackBar(response.body.message);
+            this._loadingBar.setLoadingBar(false);
             this._modalRef.close(true);
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error);
+          this._loadingBar.setLoadingBar(false);
         }
       );
 
       this._apiBalances.getBalances().subscribe(
         (response: HttpResponse<Balance[]>) => {
           this._internalBalances.setInternalBalances(response.body);
+          this._loadingBar.setLoadingBar(false);
         }
       );
 
-      this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
     }

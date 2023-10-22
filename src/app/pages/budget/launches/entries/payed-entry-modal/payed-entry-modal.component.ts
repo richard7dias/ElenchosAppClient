@@ -41,12 +41,13 @@ export class PayedEntryModalComponent {
         this._alert.openSnackBar(`${this._data.description} pago com sucesso!`);
         this.updateEntries();
         this.updateBalances();
+        this._loadingBar.setLoadingBar(false);
       },
       (response) => {
         this._alert.openSnackBar(response.error.message);
+        this._loadingBar.setLoadingBar(false);
       }
     );
-    this._loadingBar.setLoadingBar(false);
     this._modalRef.close(true);
   }
 

@@ -67,10 +67,10 @@ export class ExpenseTableComponent implements AfterViewInit {
         if (response.body) {
           this._internalExpenses.setInternalExpenses(response.body);
           this.subscribeInternalExpenses();
+          this._loadingBar.setLoadingBar(false);
         }
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 
   getTotalValue() {

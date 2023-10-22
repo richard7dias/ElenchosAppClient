@@ -37,12 +37,13 @@ export class DeleteEntriesModalComponent {
         this._alert.openSnackBar(response.body.message);
         this.updateEntries();
         this.updateBalances();
+        this._loadingBar.setLoadingBar(false);
       },
       (response) => {
         this._alert.openSnackBar(response.error.message);
+        this._loadingBar.setLoadingBar(false);
       }
     );
-    this._loadingBar.setLoadingBar(false);
     this._modalRef.close(true);
   }
 

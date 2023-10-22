@@ -48,10 +48,10 @@ export class BalancesTableComponent implements AfterViewInit {
             if (response.body) {
               this._internalBalances.setInternalBalances(response.body);
               this.internalBalances = response.body;
+              this._loadingBar.setLoadingBar(false);
             }
           }
         );
-        this._loadingBar.setLoadingBar(false);
       }
     });
   }

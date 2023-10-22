@@ -67,9 +67,9 @@ export class EditLaunchModalComponent {
       (response: HttpResponse<Category[]>) => {
         this._internalCategories.setInternalCategories(response.body);
         this.searchInternalCategories();
+        this._loadingBar.setLoadingBar(false);
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 
   submitForm(): void {
@@ -101,19 +101,21 @@ export class EditLaunchModalComponent {
             this.updateLaunches();
             this.callApiCategories();
             this._modalRef.close(true);
+            this._loadingBar.setLoadingBar(false);
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error.message);
+          this._loadingBar.setLoadingBar(false);
         }
       );
 
       this._apiExpenses.getSourceExpenses().subscribe(
         (response: HttpResponse<any>) => {
           this._internalExpenses.setInternalExpenses(response.body);
+          this._loadingBar.setLoadingBar(false);
         }
       );
-      this._loadingBar.setLoadingBar(false);
 
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')

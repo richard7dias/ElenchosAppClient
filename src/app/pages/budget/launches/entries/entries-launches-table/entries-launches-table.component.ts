@@ -65,10 +65,10 @@ export class EntriesLaunchesTableComponent {
       (response: HttpResponse<Entry[]>) => {
         if (response.body) {
           this._internalEntries.setInternalEntries(response.body);
+          this._loadingBar.setLoadingBar(false);
         }
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 
   updateInternalEntriesReloadPage() {

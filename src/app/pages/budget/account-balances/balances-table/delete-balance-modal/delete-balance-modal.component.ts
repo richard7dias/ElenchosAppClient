@@ -31,12 +31,13 @@ export class DeleteBalanceModalComponent {
       (response: HttpResponse<any>) => {
         this._alert.openSnackBar(response.body.message);
         this.updateBalances();
+        this._loadingBar.setLoadingBar(false);
       },
       (response) => {
         this._alert.openSnackBar(response.error.message);
+        this._loadingBar.setLoadingBar(false);
       }
     );
-    this._loadingBar.setLoadingBar(false);
     this._modalRef.close(true);
   }
 

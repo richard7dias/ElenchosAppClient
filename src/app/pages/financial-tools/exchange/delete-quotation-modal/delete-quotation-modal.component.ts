@@ -50,21 +50,21 @@ export class DeleteQuotationModalComponent {
           if (this.isIdOrName === 'name') {
             newCurrenciesList = this.currenciesList.filter(
               c => c.quoteFor !== this.currencyNameOrId && c.quoteFrom !== this.currencyNameOrId
-            );
-          } else if (this.isIdOrName === 'id') {
+              );
+            } else if (this.isIdOrName === 'id') {
             newCurrenciesList = this.currenciesList.filter(
               c => c.id !== this.currencyNameOrId
             );
           }
         }
-
+        
         this._internalCurrency.setInternalCurrency(newCurrenciesList);
         this._modalRef.close(true);
+        this._loadingBar.setLoadingBar(false);
       }, (response) => {
         this._alert.openSnackBar(response.error.message);
         this._loadingBar.setLoadingBar(false);
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 }

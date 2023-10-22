@@ -72,9 +72,9 @@ export class TopBarComponent implements OnInit {
     this._apiBalances.getBalances().subscribe(
       (response: HttpResponse<any>) => {
         this._internalBalances.setInternalBalances(response.body);
+        this._loadingBar.setLoadingBar(false);
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 
   callApiExpenses(): void {
@@ -82,9 +82,9 @@ export class TopBarComponent implements OnInit {
     this._apiExpenses.getSourceExpenses().subscribe(
       (response: HttpResponse<any>) => {
         this._internalExpenses.setInternalExpenses(response.body);
+        this._loadingBar.setLoadingBar(false);
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 
   logout() {

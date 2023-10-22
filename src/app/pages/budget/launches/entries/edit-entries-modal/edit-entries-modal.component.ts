@@ -67,13 +67,14 @@ export class EditEntriesModalComponent {
             this.updateEntries();
             this.updateBalances();
             this._modalRef.close(true);
+            this._loadingBar.setLoadingBar(false);
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error.message);
+          this._loadingBar.setLoadingBar(false);
         }
       );
-      this._loadingBar.setLoadingBar(false);
 
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')

@@ -71,9 +71,9 @@ export class ExpensesComponent {
       (response: HttpResponse<Category[]>) => {
         this._internalCategories.setInternalCategories(response.body);
         this.searchInternalCategories();
+        this._loadingBar.setLoadingBar(false);
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 
   newExpense() {
@@ -111,10 +111,10 @@ export class ExpensesComponent {
       this._apiExpenses.getSourceExpenses().subscribe(
         (response: HttpResponse<any>) => {
           this._internalExpenses.setInternalExpenses(response.body);
+          this._loadingBar.setLoadingBar(false);
         }
       );
 
-      this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
     }

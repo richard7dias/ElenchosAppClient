@@ -40,9 +40,9 @@ export class NegativeCategoryWarnService {
       (response: HttpResponse<Category[]>) => {
         this._internalCategories.setInternalCategories(response.body);
         this.searchInternalCategories();
+        this._loadingBar.setLoadingBar(false);
       }
     );
-    this._loadingBar.setLoadingBar(false);
   }
 
   checkNegativeCategory() {

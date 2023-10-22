@@ -67,22 +67,24 @@ export class EntriesComponent {
           if (response.status === 201) {
             this._alert.openSnackBar(response.body.message);
             this.clearInputs();
+            this._loadingBar.setLoadingBar(false);
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error);
+          this._loadingBar.setLoadingBar(false);
         }
       );
 
       this._apiEntries.getEntries().subscribe(
         (response: HttpResponse<Entry[]>) => {
           this._internalEntries.setInternalEntries(response.body);
+          this._loadingBar.setLoadingBar(false);
         }
       );
 
       this.updateBalances();
 
-      this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')
     }

@@ -49,14 +49,15 @@ export class EditBalanceModalComponent {
           if (response.status === 200) {
             this._alert.openSnackBar(response.body.message);
             this.updateBalances();
+            this._loadingBar.setLoadingBar(false);
             this._modalRef.close(true);
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error.message);
+          this._loadingBar.setLoadingBar(false);
         }
       );
-      this._loadingBar.setLoadingBar(false);
 
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')

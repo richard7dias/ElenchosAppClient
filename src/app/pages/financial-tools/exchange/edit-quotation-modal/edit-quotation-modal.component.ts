@@ -67,11 +67,11 @@ export class EditQuotationModalComponent {
         (response: HttpResponse<any>) => {
           this._alert.openSnackBar(response.body.message);
           panel.close();
+          this._loadingBar.setLoadingBar(false);
         }
       );
       this.refreshCurrencies();
       this._currencies.setInternalCurrency(this.internalCurrency);
-      this._loadingBar.setLoadingBar(false);
     } else {
       this._alert.openSnackBar('Erro! Digite todos os campos de forma correta.');
     }
