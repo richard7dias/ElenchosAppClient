@@ -1,0 +1,84 @@
+<main>
+    <div>
+        <h4>Categorias anuais de {{_internalDate.getCurrentYearNumber()}}</h4>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
+                Descrição
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            <td mat-footer-cell class="tfoot" *matFooterCellDef> Total </td>
+        </ng-container>
+
+        <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by value">
+                Valor
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="values">
+                    <div id="container-values">
+                        <p class="value-RS">R$</p>
+                        <p class="value-real">{{ this._numberFormat.inPortToDuo(element.value) }}</p>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="automaticDebit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by automaticDebit">
+                Débito automático
+            </th>
+            <td mat-cell *matCellDef="let element">
+                {{ this._numberFormat.inPortToDuo(element.automaticDebit) }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="monthOfPayment">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by monthOfPayment">
+                Mês de pagamento
+            </th>
+            <td mat-cell *matCellDef="let element">{{
+                this._internalDate.getMonthNameByNumber(element.monthOfPayment) }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="itens">
+            <th mat-header-cell *matHeaderCellDef>
+                <button mat-icon-button
+                    matTooltip="Adicione uma categoria anual, aquilo que você gasta uma vez por ano."
+                    matTooltipPosition="above" (click)="openModalNewCategory()">
+                    <mat-icon>add_box</mat-icon>
+                </button>
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="openModalEditCategory(element)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Editar</span>
+                    </button>
+                    <button mat-menu-item (click)="openModalDeleteCategory(element)">
+                        <mat-icon color="warn">delete</mat-icon>
+                        <span>Apagar</span>
+                    </button>
+                </mat-menu>
+
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">
+                Não há categorias de {{_internalDate.getCurrentYearNumber()}}. Adicione novas categorias no
+                "+" acima.
+            </td>
+        </tr>
+    </table>
+</main>

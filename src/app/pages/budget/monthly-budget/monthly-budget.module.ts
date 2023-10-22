@@ -14,16 +14,26 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MonthlyBudgetComponent } from './monthly-budget.component';
-import { NewCategoryModalComponent } from './new-category-modal/new-category-modal.component';
-import { EditCategoryModalComponent } from './edit-category-modal/edit-category-modal.component';
-import { DeleteCategoryModalComponent } from './delete-category-modal/delete-category-modal.component';
+import { NewCategoryModalComponent } from './monthly-categories/new-category-modal/new-category-modal.component';
+import { EditCategoryModalComponent } from './monthly-categories/edit-category-modal/edit-category-modal.component';
+import { DeleteCategoryModalComponent } from './monthly-categories/delete-category-modal/delete-category-modal.component';
+import { MonthlyCategoriesComponent } from './monthly-categories/monthly-categories.component';
+import { AnnualCategoriesComponent } from './annual-categories/annual-categories.component';
+import { DeleteAnnualCategoryModalComponent } from './annual-categories/delete-annual-category-modal/delete-annual-category-modal.component';
+import { EditAnnualCategoryModalComponent } from './annual-categories/edit-annual-category-modal/edit-annual-category-modal.component';
+import { NewAnnualCategoryModalComponent } from './annual-categories/new-annual-category-modal/new-annual-category-modal.component';
 
 @NgModule({
   declarations: [
     MonthlyBudgetComponent,
     NewCategoryModalComponent,
     EditCategoryModalComponent,
-    DeleteCategoryModalComponent
+    DeleteCategoryModalComponent,
+    MonthlyCategoriesComponent,
+    AnnualCategoriesComponent,
+    DeleteAnnualCategoryModalComponent,
+    EditAnnualCategoryModalComponent,
+    NewAnnualCategoryModalComponent
   ],
   imports: [
     CommonModule,
