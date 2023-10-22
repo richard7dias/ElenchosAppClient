@@ -47,6 +47,7 @@ export class EditCategoryModalComponent {
         budget: this.categoryBudgetInput == null ? 0 : this.categoryBudgetInput,
         expense: this._data.expense,
         available: this.categoryBudgetInput - this._data.expense,
+        isAnnualCategory: false
       }
 
       this._loadingBar.setLoadingBar(true);

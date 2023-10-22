@@ -60,6 +60,7 @@ export class NewCategoryModalComponent {
         budget: this.newCategoryBudget == null ? 0 : this.newCategoryBudget,
         expense: 0,
         available: this.newCategoryBudget == null ? 0 : this.newCategoryBudget,
+        isAnnualCategory: false
       }
 
       this._loadingBar.setLoadingBar(true);
