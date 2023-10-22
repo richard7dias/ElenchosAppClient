@@ -10,6 +10,12 @@ import { AlertService } from 'src/app/shared/alert/alert.service';
 import { InternalAnnualCategoriesService } from 'src/app/shared/internal-values/internal-annual-categories/internal-annual-categories.service';
 import { InternalDateService } from 'src/app/shared/internal-values/internal-date/internal-date.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
+import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
+import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
+import { Category } from 'src/app/core/interfaces/categories/category.interface';
+import { SourceExpense } from 'src/app/core/interfaces/sourceExpenses/sourceExpense.interface';
+import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';
+import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
 
 @Component({
   selector: 'app-edit-annual-category-modal',
@@ -32,7 +38,11 @@ export class EditAnnualCategoryModalComponent {
     private _loadingBar: LoadingService,
     private _alert: AlertService,
     private _modalRef: MatDialogRef<EditAnnualCategoryModalComponent>,
-    private _internalDate: InternalDateService
+    private _internalDate: InternalDateService,
+    private _apiCategories: ApiCategoriesService,
+    private _internalCategories: InternalCategoriesService,
+    private _apiExpenses: ApiSourceExpenseService,
+    private _internalExpenses: InternalExpensesService
   ) { }
 
   ngOnInit() {
@@ -83,6 +93,8 @@ export class EditAnnualCategoryModalComponent {
           if (response.status === 200) {
             this._alert.openSnackBar(response.body.message);
             this.updateAnnualCategories();
+            this.updateCategories();
+            this.updateExpenses();
             this._modalRef.close(true);
             this._loadingBar.setLoadingBar(false);
           }
@@ -103,6 +115,26 @@ export class EditAnnualCategoryModalComponent {
       (response: HttpResponse<AnnualCategory[]>) => {
         if (response.body) {
           this._internalAnnualCategories.setInternalAnnualCategories(response.body);
+        }
+      }
+    );
+  }
+
+  updateCategories() {
+    this._apiCategories.getCategories().subscribe(
+      (response: HttpResponse<Category[]>) => {
+        if (response.body) {
+          this._internalCategories.setInternalCategories(response.body);
+        }
+      }
+    );
+  }
+
+  updateExpenses() {
+    this._apiExpenses.getSourceExpenses().subscribe(
+      (response: HttpResponse<SourceExpense[]>) => {
+        if (response.body) {
+          this._internalExpenses.setInternalExpenses(response.body);
         }
       }
     );
