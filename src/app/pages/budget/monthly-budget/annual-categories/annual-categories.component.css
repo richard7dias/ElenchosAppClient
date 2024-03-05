@@ -44,6 +44,10 @@ th mat-icon {
     border-top: 1px solid #d6d6d6;
 }
 
+.text-center {
+    text-align: center;
+}
+
 @media (max-width: 600px) {
     main {
         margin: 0 auto;

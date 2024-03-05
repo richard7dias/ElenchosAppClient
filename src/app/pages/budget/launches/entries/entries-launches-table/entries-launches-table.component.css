@@ -33,8 +33,9 @@ table {
 }
 
 #container-more-btn {
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #td-date {
