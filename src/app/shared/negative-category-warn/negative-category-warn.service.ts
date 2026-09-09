@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
 import { InternalCategoriesService } from '../internal-values/internal-categories/internal-categories.service';
@@ -26,11 +26,14 @@ export class NegativeCategoryWarnService {
   }
 
   private searchInternalCategories() {
-    this._internalCategories.getInternalCategories().subscribe(categories => {
+    combineLatest([
+      this._internalCategories.getInternalCategories(),
+      this._internalUser.getInternalUser()
+    ]).subscribe(([categories, user]) => {
       if (categories) {
         this.internalCategories = categories;
         this.checkNegativeCategory();
-      } else if (this._internalUser.isAuthenticated()) {
+      } else if (user) {
         this.callApiCategories();
       } else {
         this.setInternalNegativeCategoryWarn(false);
