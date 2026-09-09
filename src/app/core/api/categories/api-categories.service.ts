@@ -27,7 +27,7 @@ export class ApiCategoriesService {
   }
 
   getCategories(): Observable<HttpResponse<Category[]>> {
-    return this.http.get<Category[]>(`${this.apiUrl.apiUrl}/categories/${this.internalUser.id}`, { observe: 'response' }
+    return this.http.get<Category[]>(`${this.apiUrl.apiUrl}/categories/${this.internalUser?.id}`, { observe: 'response' }
     );
   }
 
