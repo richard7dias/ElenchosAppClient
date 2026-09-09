@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
 import { ConfirmWindowDeleteComponent } from './confirm-window-delete/confirm-window-delete.component';
@@ -14,7 +16,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './login-settings.component.html',
   styleUrls: ['./login-settings.component.css']
 })
-export class LoginSettingsComponent {
+export class LoginSettingsComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   internalUser!: User;
 
@@ -40,7 +44,7 @@ export class LoginSettingsComponent {
   ) { }
 
   ngOnInit() {
-    this.user.getInternalUser().subscribe(user => {
+    this.user.getInternalUser().pipe(takeUntil(this._destroy$)).subscribe(user => {
       if (user) {
         this.internalUser = user;
       }
@@ -52,6 +56,11 @@ export class LoginSettingsComponent {
     this.firstName = this.internalUser.firstName;
     this.email = this.internalUser.email;
     this.phone = this.internalUser.phone;
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   openModal() {

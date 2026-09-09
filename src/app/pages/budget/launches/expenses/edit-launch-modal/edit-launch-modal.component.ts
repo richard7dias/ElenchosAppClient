@@ -66,7 +66,6 @@ export class EditLaunchModalComponent {
     this._apiCategories.getCategories().subscribe(
       (response: HttpResponse<Category[]>) => {
         this._internalCategories.setInternalCategories(response.body);
-        this.searchInternalCategories();
         this._loadingBar.setLoadingBar(false);
       }
     );
@@ -101,18 +100,17 @@ export class EditLaunchModalComponent {
             this.updateLaunches();
             this.callApiCategories();
             this._modalRef.close(true);
-            this._loadingBar.setLoadingBar(false);
+
+            this._apiExpenses.getSourceExpenses().subscribe(
+              (expensesResponse: HttpResponse<any>) => {
+                this._internalExpenses.setInternalExpenses(expensesResponse.body);
+                this._loadingBar.setLoadingBar(false);
+              }
+            );
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error.message);
-          this._loadingBar.setLoadingBar(false);
-        }
-      );
-
-      this._apiExpenses.getSourceExpenses().subscribe(
-        (response: HttpResponse<any>) => {
-          this._internalExpenses.setInternalExpenses(response.body);
           this._loadingBar.setLoadingBar(false);
         }
       );

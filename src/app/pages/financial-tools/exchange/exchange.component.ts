@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { ApiCurrencyService } from 'src/app/core/api/currency/api-currency.service';
@@ -16,7 +18,9 @@ import { NewQuotationModalComponent } from './new-quotation-modal/new-quotation-
   templateUrl: './exchange.component.html',
   styleUrls: ['./exchange.component.css']
 })
-export class ExchangeComponent {
+export class ExchangeComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   currenciesList: Currency[] | null = null;
 
@@ -59,8 +63,13 @@ export class ExchangeComponent {
     }
   }
 
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
   updateCoinsList() {
-    this.internalCurrency.getInternalCurrency().subscribe(currencies => {
+    this.internalCurrency.getInternalCurrency().pipe(takeUntil(this._destroy$)).subscribe(currencies => {
       const currenciesList: Currency[] = currencies || [];
       const uniqueCoins = new Set<string>();
 

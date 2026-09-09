@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { InternalRouteService } from 'src/app/shared/internal-values/internal-route/internal-route.service';
 import { NegativeCategoryWarnService } from 'src/app/shared/negative-category-warn/negative-category-warn.service';
@@ -8,7 +10,9 @@ import { NegativeCategoryWarnService } from 'src/app/shared/negative-category-wa
   templateUrl: './budget.component.html',
   styleUrls: ['./budget.component.css']
 })
-export class BudgetComponent {
+export class BudgetComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   accountBalancesChecked: boolean = false;
   monthlyBudgetChecked: boolean = false;
@@ -21,7 +25,7 @@ export class BudgetComponent {
     private _internalRoute: InternalRouteService,
     private _negativeCategoryWarn: NegativeCategoryWarnService
   ) {
-    this._internalRoute.getCustomRoute(2).subscribe(route => {
+    this._internalRoute.getCustomRoute(2).pipe(takeUntil(this._destroy$)).subscribe(route => {
       this.removeChecked();
       switch (route) {
         case 'account-balances':
@@ -44,9 +48,14 @@ export class BudgetComponent {
   }
 
   ngOnInit() {
-    this._negativeCategoryWarn.getInternalNegativeCategoryWarn().subscribe(value => {
+    this._negativeCategoryWarn.getInternalNegativeCategoryWarn().pipe(takeUntil(this._destroy$)).subscribe(value => {
       this.alert = value;
     });
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   removeChecked() {

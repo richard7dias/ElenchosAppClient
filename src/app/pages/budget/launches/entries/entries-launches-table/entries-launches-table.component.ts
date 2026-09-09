@@ -1,9 +1,11 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { InternalDateService } from 'src/app/shared/internal-values/internal-date/internal-date.service';
@@ -21,7 +23,9 @@ import { PayedEntryModalComponent } from '../payed-entry-modal/payed-entry-modal
   templateUrl: './entries-launches-table.component.html',
   styleUrls: ['./entries-launches-table.component.css']
 })
-export class EntriesLaunchesTableComponent {
+export class EntriesLaunchesTableComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -40,13 +44,18 @@ export class EntriesLaunchesTableComponent {
   ) { }
 
   ngOnInit() {
-    this._internalEntries.getInternalEntries().subscribe(entries => {
+    this._internalEntries.getInternalEntries().pipe(takeUntil(this._destroy$)).subscribe(entries => {
       if (!entries) {
         this.callApiEntries();
       }
     });
 
     this.updateInternalEntriesReloadPage();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   ngDoCheck() {
@@ -72,7 +81,7 @@ export class EntriesLaunchesTableComponent {
   }
 
   updateInternalEntriesReloadPage() {
-    this._internalEntries.getInternalEntries().subscribe(entries => {
+    this._internalEntries.getInternalEntries().pipe(takeUntil(this._destroy$)).subscribe(entries => {
       if (entries) {
         this.internalEntries = entries;
       }

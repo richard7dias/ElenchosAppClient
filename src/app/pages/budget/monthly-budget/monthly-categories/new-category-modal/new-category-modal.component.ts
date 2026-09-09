@@ -1,6 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
@@ -17,7 +19,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './new-category-modal.component.html',
   styleUrls: ['./new-category-modal.component.css']
 })
-export class NewCategoryModalComponent {
+export class NewCategoryModalComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   internalUser!: User;
   internalCategories!: Category[];
@@ -37,18 +41,23 @@ export class NewCategoryModalComponent {
   ) { }
 
   ngOnInit() {
-    this._internalUser.getInternalUser().subscribe(internalUser => {
+    this._internalUser.getInternalUser().pipe(takeUntil(this._destroy$)).subscribe(internalUser => {
       if (internalUser) {
         this.internalUser = internalUser;
       }
     });
 
-    this._internalCategories.getInternalCategories().subscribe(categories => {
+    this._internalCategories.getInternalCategories().pipe(takeUntil(this._destroy$)).subscribe(categories => {
       if (categories) {
         this.internalCategories = categories;
       }
     }
     );
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   submitForm(): void {
@@ -68,25 +77,24 @@ export class NewCategoryModalComponent {
           if (response.status === 201) {
             this._alert.openSnackBar(response.body.message);
             this._modalRef.close(true);
-            this._loadingBar.setLoadingBar(false);
+
+            this._apiCategories.getCategories().subscribe(
+              (categoriesResponse: HttpResponse<Category[]>) => {
+                this._internalCategories.setInternalCategories(categoriesResponse.body);
+                this._loadingBar.setLoadingBar(false);
+              }
+            );
+
+            this._apiExpenses.getSourceExpenses().subscribe(
+              (expensesResponse: HttpResponse<any>) => {
+                this._internalExpenses.setInternalExpenses(expensesResponse.body);
+                this._loadingBar.setLoadingBar(false);
+              }
+            );
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error);
-          this._loadingBar.setLoadingBar(false);
-        }
-      );
-
-      this._apiCategories.getCategories().subscribe(
-        (response: HttpResponse<Category[]>) => {
-          this._internalCategories.setInternalCategories(response.body);
-          this._loadingBar.setLoadingBar(false);
-        }
-      );
-
-      this._apiExpenses.getSourceExpenses().subscribe(
-        (response: HttpResponse<any>) => {
-          this._internalExpenses.setInternalExpenses(response.body);
           this._loadingBar.setLoadingBar(false);
         }
       );

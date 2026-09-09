@@ -20,8 +20,6 @@ export class InternalCashService {
     private _internalBalances: InternalBalancesService,
     private _internalExpenses: InternalExpensesService,
   ) {
-    this.subscribeBalancesAndExpenses();
-
     combineLatest([this._internalBalances.getInternalBalances(), this._internalExpenses.getInternalExpenses()])
       .pipe(
         map(([balances, expenses]) => ({ balances, expenses }))
@@ -39,16 +37,6 @@ export class InternalCashService {
 
   getInternalCash(): Observable<number> {
     return this.internalCash.asObservable();
-  }
-
-  private subscribeBalancesAndExpenses(): void {
-    this._internalBalances.getInternalBalances().subscribe(balances => {
-      this.internalBalances = balances;
-    });
-
-    this._internalExpenses.getInternalExpenses().subscribe(expenses => {
-      this.internalExpenses = expenses;
-    });
   }
 
   private addTotal(): void {

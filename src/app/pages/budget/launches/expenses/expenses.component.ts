@@ -1,6 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Renderer2 } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
 import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
@@ -20,7 +22,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.css']
 })
-export class ExpensesComponent {
+export class ExpensesComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   internalUser!: User;
   internalCategories!: Category[];
@@ -46,7 +50,7 @@ export class ExpensesComponent {
   ngOnInit() {
     this.searchInternalCategories();
 
-    this._internalUser.getInternalUser().subscribe(user => {
+    this._internalUser.getInternalUser().pipe(takeUntil(this._destroy$)).subscribe(user => {
       if (user) {
         this.internalUser = user;
       }
@@ -55,8 +59,13 @@ export class ExpensesComponent {
     this._renderer.selectRootElement('#descriptionInput').focus();
   }
 
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
   searchInternalCategories() {
-    this._internalCategories.getInternalCategories().subscribe(categories => {
+    this._internalCategories.getInternalCategories().pipe(takeUntil(this._destroy$)).subscribe(categories => {
       if (categories) {
         this.internalCategories = categories;
       } else {
@@ -70,7 +79,6 @@ export class ExpensesComponent {
     this._apiCategories.getCategories().subscribe(
       (response: HttpResponse<Category[]>) => {
         this._internalCategories.setInternalCategories(response.body);
-        this.searchInternalCategories();
         this._loadingBar.setLoadingBar(false);
       }
     );
@@ -94,23 +102,24 @@ export class ExpensesComponent {
           if (response.status === 201) {
             this._alert.openSnackBar(response.body.message);
             this.clearInputs();
+
+            this._apiLaunches.getLaunches().subscribe(
+              (launchesResponse: HttpResponse<Launch[]>) => {
+                this._internalLaunches.setInternalLaunches(launchesResponse.body);
+              }
+            );
+
+            this.callApiCategories();
+            this._apiExpenses.getSourceExpenses().subscribe(
+              (expensesResponse: HttpResponse<any>) => {
+                this._internalExpenses.setInternalExpenses(expensesResponse.body);
+                this._loadingBar.setLoadingBar(false);
+              }
+            );
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error);
-        }
-      );
-
-      this._apiLaunches.getLaunches().subscribe(
-        (response: HttpResponse<Launch[]>) => {
-          this._internalLaunches.setInternalLaunches(response.body);
-        }
-      );
-
-      this.callApiCategories();
-      this._apiExpenses.getSourceExpenses().subscribe(
-        (response: HttpResponse<any>) => {
-          this._internalExpenses.setInternalExpenses(response.body);
           this._loadingBar.setLoadingBar(false);
         }
       );

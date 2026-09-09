@@ -1,9 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { NewAnnualCategoryModalComponent } from './new-annual-category-modal/new-annual-category-modal.component';
@@ -20,7 +22,9 @@ import { InternalAnnualCategoriesService } from 'src/app/shared/internal-values/
   templateUrl: './annual-categories.component.html',
   styleUrls: ['./annual-categories.component.css']
 })
-export class AnnualCategoriesComponent {
+export class AnnualCategoriesComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -50,8 +54,13 @@ export class AnnualCategoriesComponent {
     this.dataSource.sort = this.sort;
   }
 
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
   searchAnnualCategories() {
-    this._internalAnnualCategories.getInternalAnnualCategories().subscribe(categories => {
+    this._internalAnnualCategories.getInternalAnnualCategories().pipe(takeUntil(this._destroy$)).subscribe(categories => {
       if (categories) {
         this.internalAnnualCategories = categories;
       } else {
@@ -66,7 +75,6 @@ export class AnnualCategoriesComponent {
       (response: HttpResponse<AnnualCategory[]>) => {
         if (response.body) {
           this._internalAnnualCategories.setInternalAnnualCategories(response.body);
-          this.searchAnnualCategories();
           this._loadingBar.setLoadingBar(false);
         }
       }

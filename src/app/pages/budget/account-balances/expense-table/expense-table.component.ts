@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { SourceExpense } from 'src/app/core/interfaces/sourceExpenses/sourceExpense.interface';
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
@@ -20,7 +22,9 @@ import { GeneralIdsService } from 'src/app/shared/general-ids/general-ids.servic
   templateUrl: './expense-table.component.html',
   styleUrls: ['./expense-table.component.css']
 })
-export class ExpenseTableComponent implements AfterViewInit {
+export class ExpenseTableComponent implements AfterViewInit, OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -50,8 +54,13 @@ export class ExpenseTableComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
   private subscribeInternalExpenses(): void {
-    this._internalExpenses.getInternalExpenses().subscribe(expenses => {
+    this._internalExpenses.getInternalExpenses().pipe(takeUntil(this._destroy$)).subscribe(expenses => {
       if (expenses) {
         this.internalExpenses = expenses;
       } else {
@@ -66,7 +75,6 @@ export class ExpenseTableComponent implements AfterViewInit {
       (response: HttpResponse<SourceExpense[]>) => {
         if (response.body) {
           this._internalExpenses.setInternalExpenses(response.body);
-          this.subscribeInternalExpenses();
           this._loadingBar.setLoadingBar(false);
         }
       }

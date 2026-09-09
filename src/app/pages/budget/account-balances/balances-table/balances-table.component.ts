@@ -1,6 +1,8 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Balance } from 'src/app/core/interfaces/balances/balance.interface';
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
@@ -19,7 +21,9 @@ import { GeneralIdsService } from 'src/app/shared/general-ids/general-ids.servic
   templateUrl: './balances-table.component.html',
   styleUrls: ['./balances-table.component.css']
 })
-export class BalancesTableComponent implements AfterViewInit {
+export class BalancesTableComponent implements AfterViewInit, OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -38,7 +42,7 @@ export class BalancesTableComponent implements AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this._internalBalances.getInternalBalances().subscribe(balances => {
+    this._internalBalances.getInternalBalances().pipe(takeUntil(this._destroy$)).subscribe(balances => {
       if (balances) {
         this.internalBalances = balances;
       } else {
@@ -62,6 +66,11 @@ export class BalancesTableComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   getTotalValue() {

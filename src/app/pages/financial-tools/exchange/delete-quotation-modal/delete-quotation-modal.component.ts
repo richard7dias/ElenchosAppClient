@@ -1,6 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ApiCurrencyService } from 'src/app/core/api/currency/api-currency.service';
 import { Currency } from 'src/app/core/interfaces/currencies/currency.interface';
 import { AlertService } from 'src/app/shared/alert/alert.service';
@@ -12,7 +14,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './delete-quotation-modal.component.html',
   styleUrls: ['./delete-quotation-modal.component.css']
 })
-export class DeleteQuotationModalComponent {
+export class DeleteQuotationModalComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   currenciesList: Currency[] | null = null;
 
@@ -31,11 +35,16 @@ export class DeleteQuotationModalComponent {
   ngOnInit() {
     this.isIdOrName = this._data.isIdOrName;
     this.currencyNameOrId = this._data.coin;
-    this._internalCurrency.getInternalCurrency().subscribe(currency => {
+    this._internalCurrency.getInternalCurrency().pipe(takeUntil(this._destroy$)).subscribe(currency => {
       if (currency) {
         this.currenciesList = currency;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   deleteQuotation() {

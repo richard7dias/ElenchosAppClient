@@ -1,9 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { Category } from 'src/app/core/interfaces/categories/category.interface';
@@ -25,7 +27,9 @@ import { GeneralIdsService } from 'src/app/shared/general-ids/general-ids.servic
   templateUrl: './monthly-categories.component.html',
   styleUrls: ['./monthly-categories.component.css']
 })
-export class MonthlyCategoriesComponent {
+export class MonthlyCategoriesComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -60,8 +64,13 @@ export class MonthlyCategoriesComponent {
     this.dataSource.sort = this.sort;
   }
 
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
   searchCategories() {
-    this._internalCategories.getInternalCategories().subscribe(categories => {
+    this._internalCategories.getInternalCategories().pipe(takeUntil(this._destroy$)).subscribe(categories => {
       if (categories) {
         this.internalCategories = categories;
       } else {
@@ -76,7 +85,6 @@ export class MonthlyCategoriesComponent {
       (response: HttpResponse<Category[]>) => {
         if (response.body) {
           this._internalCategories.setInternalCategories(response.body);
-          this.searchCategories();
           this._loadingBar.setLoadingBar(false);
         }
       }

@@ -1,6 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ApiBalancesService } from 'src/app/core/api/balances/api-balances.service';
 import { Balance } from 'src/app/core/interfaces/balances/balance.interface';
@@ -15,7 +17,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './new-balance-modal.component.html',
   styleUrls: ['./new-balance-modal.component.css']
 })
-export class NewBalanceModalComponent {
+export class NewBalanceModalComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   internalUser!: User;
   internalBalances!: Balance[];
@@ -33,18 +37,23 @@ export class NewBalanceModalComponent {
   ) { }
 
   ngOnInit() {
-    this._internalUser.getInternalUser().subscribe(internalUser => {
+    this._internalUser.getInternalUser().pipe(takeUntil(this._destroy$)).subscribe(internalUser => {
       if (internalUser) {
         this.internalUser = internalUser;
       }
     });
 
-    this._internalBalances.getInternalBalances().subscribe(internalBalances => {
+    this._internalBalances.getInternalBalances().pipe(takeUntil(this._destroy$)).subscribe(internalBalances => {
       if (internalBalances) {
         this.internalBalances = internalBalances;
       }
     }
     );
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   submitForm(): void {
@@ -61,19 +70,18 @@ export class NewBalanceModalComponent {
         (response: HttpResponse<any>) => {
           if (response.status === 201) {
             this._alert.openSnackBar(response.body.message);
-            this._loadingBar.setLoadingBar(false);
             this._modalRef.close(true);
+
+            this._apiBalances.getBalances().subscribe(
+              (balancesResponse: HttpResponse<Balance[]>) => {
+                this._internalBalances.setInternalBalances(balancesResponse.body);
+                this._loadingBar.setLoadingBar(false);
+              }
+            );
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error);
-          this._loadingBar.setLoadingBar(false);
-        }
-      );
-
-      this._apiBalances.getBalances().subscribe(
-        (response: HttpResponse<Balance[]>) => {
-          this._internalBalances.setInternalBalances(response.body);
           this._loadingBar.setLoadingBar(false);
         }
       );

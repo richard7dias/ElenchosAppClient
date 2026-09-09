@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { InternalCashService } from 'src/app/shared/internal-values/internal-cash/internal-cash.service';
 
@@ -7,7 +9,9 @@ import { InternalCashService } from 'src/app/shared/internal-values/internal-cas
   templateUrl: './account-balances.component.html',
   styleUrls: ['./account-balances.component.css']
 })
-export class AccountBalancesComponent {
+export class AccountBalancesComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   internalCash: number = 0;
   displayedColumCash: string[] = ['cash'];
@@ -18,8 +22,13 @@ export class AccountBalancesComponent {
   ) { }
 
   ngOnInit() {
-    this._internalCash.getInternalCash().subscribe(cash => {
+    this._internalCash.getInternalCash().pipe(takeUntil(this._destroy$)).subscribe(cash => {
       this.internalCash = cash;
     });
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 }

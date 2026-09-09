@@ -1,6 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ApiAnnualCategoriesService } from 'src/app/core/api/annual-categories/api-annual-categories.service';
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
@@ -24,7 +26,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './new-annual-category-modal.component.html',
   styleUrls: ['./new-annual-category-modal.component.css']
 })
-export class NewAnnualCategoryModalComponent {
+export class NewAnnualCategoryModalComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   internalUser!: User;
   categoryDescriptionInput!: string;
@@ -50,11 +54,16 @@ export class NewAnnualCategoryModalComponent {
   ngOnInit() {
     this.createMonthNames();
 
-    this._internalUser.getInternalUser().subscribe(internalUser => {
+    this._internalUser.getInternalUser().pipe(takeUntil(this._destroy$)).subscribe(internalUser => {
       if (internalUser) {
         this.internalUser = internalUser;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   createMonthNames(): void {

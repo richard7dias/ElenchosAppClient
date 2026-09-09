@@ -1,6 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Renderer2 } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ApiBalancesService } from 'src/app/core/api/balances/api-balances.service';
 
 import { ApiEntriesService } from 'src/app/core/api/entries/api-entries.service';
@@ -18,7 +20,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './entries.component.html',
   styleUrls: ['./entries.component.css']
 })
-export class EntriesComponent {
+export class EntriesComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   internalUser!: User;
   internalEntries!: Entry[];
@@ -40,13 +44,18 @@ export class EntriesComponent {
   ) { }
 
   ngOnInit() {
-    this._internalUser.getInternalUser().subscribe(user => {
+    this._internalUser.getInternalUser().pipe(takeUntil(this._destroy$)).subscribe(user => {
       if (user) {
         this.internalUser = user;
       }
     });
 
     this._renderer.selectRootElement('#descriptionInput').focus();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   newExpense() {
@@ -67,7 +76,15 @@ export class EntriesComponent {
           if (response.status === 201) {
             this._alert.openSnackBar(response.body.message);
             this.clearInputs();
-            this._loadingBar.setLoadingBar(false);
+
+            this._apiEntries.getEntries().subscribe(
+              (entriesResponse: HttpResponse<Entry[]>) => {
+                this._internalEntries.setInternalEntries(entriesResponse.body);
+                this._loadingBar.setLoadingBar(false);
+              }
+            );
+
+            this.updateBalances();
           }
         },
         (response) => {
@@ -75,15 +92,6 @@ export class EntriesComponent {
           this._loadingBar.setLoadingBar(false);
         }
       );
-
-      this._apiEntries.getEntries().subscribe(
-        (response: HttpResponse<Entry[]>) => {
-          this._internalEntries.setInternalEntries(response.body);
-          this._loadingBar.setLoadingBar(false);
-        }
-      );
-
-      this.updateBalances();
 
     } else {
       this._alert.openSnackBar('Preencha todos os campos necessários!')

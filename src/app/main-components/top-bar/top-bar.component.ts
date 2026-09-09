@@ -7,6 +7,11 @@ import { HttpResponse } from '@angular/common/http';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { InternalBalancesService } from 'src/app/shared/internal-values/internal-balances/internal-balances.service';
 import { InternalExpensesService } from 'src/app/shared/internal-values/internal-expenses/internal-expenses.service';
+import { InternalCategoriesService } from 'src/app/shared/internal-values/internal-categories/internal-categories.service';
+import { InternalAnnualCategoriesService } from 'src/app/shared/internal-values/internal-annual-categories/internal-annual-categories.service';
+import { InternalLaunchesService } from 'src/app/shared/internal-values/internal-launches/internal-launches.service';
+import { InternalEntriesService } from 'src/app/shared/internal-values/internal-entries/internal-entries.service';
+import { InternalCurrencyService } from 'src/app/shared/internal-values/internal-currency/currency.service';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
 import { NumberService } from 'src/app/shared/formatting/number/number.service';
 import { NegativeCategoryWarnService } from 'src/app/shared/negative-category-warn/negative-category-warn.service';
@@ -30,6 +35,11 @@ export class TopBarComponent implements OnInit {
     private _apiExpenses: ApiSourceExpenseService,
     private _internalBalances: InternalBalancesService,
     private _internalExpenses: InternalExpensesService,
+    private _internalCategories: InternalCategoriesService,
+    private _internalAnnualCategories: InternalAnnualCategoriesService,
+    private _internalLaunches: InternalLaunchesService,
+    private _internalEntries: InternalEntriesService,
+    private _internalCurrency: InternalCurrencyService,
     private _loadingBar: LoadingService,
     public _numberFormat: NumberService,
     private _negativeCategoryWarn: NegativeCategoryWarnService
@@ -89,6 +99,16 @@ export class TopBarComponent implements OnInit {
 
   logout() {
     this._internalUser.setInternalUser(null);
+
+    this._internalBalances.setInternalBalances(null);
+    this._internalExpenses.setInternalExpenses(null);
+    this._internalCategories.setInternalCategories(null);
+    this._internalAnnualCategories.setInternalAnnualCategories(null);
+    this._internalLaunches.setInternalLaunches(null);
+    this._internalEntries.setInternalEntries(null);
+    this._internalCurrency.setInternalCurrency(null);
+    this._negativeCategoryWarn.setInternalNegativeCategoryWarn(false);
+
     this._router.navigate(['/login']);
     localStorage.removeItem('authToken');
   }

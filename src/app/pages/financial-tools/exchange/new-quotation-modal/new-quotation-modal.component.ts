@@ -1,6 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import { ApiCurrencyService } from 'src/app/core/api/currency/api-currency.service';
@@ -15,7 +17,9 @@ import { InternalCurrencyService } from 'src/app/shared/internal-values/internal
   templateUrl: './new-quotation-modal.component.html',
   styleUrls: ['./new-quotation-modal.component.css']
 })
-export class NewQuotationModalComponent {
+export class NewQuotationModalComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   internalUser!: User;
 
@@ -35,11 +39,16 @@ export class NewQuotationModalComponent {
   ) { }
 
   ngOnInit() {
-    this.user.getInternalUser().subscribe(user => {
+    this.user.getInternalUser().pipe(takeUntil(this._destroy$)).subscribe(user => {
       if (user) {
         this.internalUser = user;
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   ngDoCheck() {
@@ -64,24 +73,24 @@ export class NewQuotationModalComponent {
         (response: HttpResponse<any>) => {
           if (response.status === 201) {
             this.alert.openSnackBar(response.body.message);
+            this.modalRef.close(true);
+
+            this.currencies.getCurrencies().subscribe(
+              (currenciesResponse: HttpResponse<Currency[]>) => {
+                this.updatedCurrenciesList = currenciesResponse.body;
+                if (this.updatedCurrenciesList) {
+                  this.internalCurrency.setInternalCurrency(this.updatedCurrenciesList);
+                }
+                this.loadingBar.setLoadingBar(false);
+              }
+            );
           }
         },
         (response) => {
           this.alert.openSnackBar(response.error);
+          this.loadingBar.setLoadingBar(false);
         }
       );
-
-      this.currencies.getCurrencies().subscribe(
-        (response: HttpResponse<Currency[]>) => {
-          this.updatedCurrenciesList = response.body;
-          if (this.updatedCurrenciesList) {
-            this.internalCurrency.setInternalCurrency(this.updatedCurrenciesList);
-          }
-        }
-      );
-
-      this.loadingBar.setLoadingBar(false);
-      this.modalRef.close(true);
     } else {
       this.alert.openSnackBar('Erro! Digite todos os campos de forma correta.');
     }

@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ApiCategoriesService } from 'src/app/core/api/categories/api-categories.service';
 import { InternalCategoriesService } from '../internal-values/internal-categories/internal-categories.service';
+import { InternalUserService } from '../internal-values/internal-user/internal-user.service';
 import { LoadingService } from '../loading/loading.service';
 import { Category } from 'src/app/core/interfaces/categories/category.interface';
 import { HttpResponse } from '@angular/common/http';
@@ -18,6 +19,7 @@ export class NegativeCategoryWarnService {
   constructor(
     private _apiCategories: ApiCategoriesService,
     private _internalCategories: InternalCategoriesService,
+    private _internalUser: InternalUserService,
     private _loadingBar: LoadingService,
   ) {
     this.searchInternalCategories();
@@ -28,8 +30,10 @@ export class NegativeCategoryWarnService {
       if (categories) {
         this.internalCategories = categories;
         this.checkNegativeCategory();
-      } else {
+      } else if (this._internalUser.isAuthenticated()) {
         this.callApiCategories();
+      } else {
+        this.setInternalNegativeCategoryWarn(false);
       }
     });
   }
@@ -39,7 +43,6 @@ export class NegativeCategoryWarnService {
     this._apiCategories.getCategories().subscribe(
       (response: HttpResponse<Category[]>) => {
         this._internalCategories.setInternalCategories(response.body);
-        this.searchInternalCategories();
         this._loadingBar.setLoadingBar(false);
       }
     );

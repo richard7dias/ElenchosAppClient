@@ -1,8 +1,10 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ApiCurrencyService } from 'src/app/core/api/currency/api-currency.service';
 import { Currency } from 'src/app/core/interfaces/currencies/currency.interface';
@@ -17,7 +19,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './edit-quotation-modal.component.html',
   styleUrls: ['./edit-quotation-modal.component.css']
 })
-export class EditQuotationModalComponent {
+export class EditQuotationModalComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   @ViewChild(MatAccordion) accordion: MatAccordion | undefined;
 
@@ -37,8 +41,13 @@ export class EditQuotationModalComponent {
     this.refreshCurrencies();
   }
 
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
   refreshCurrencies() {
-    this._currencies.getInternalCurrency().subscribe(currencies => {
+    this._currencies.getInternalCurrency().pipe(takeUntil(this._destroy$)).subscribe(currencies => {
       if (currencies) {
         this.internalCurrency = currencies;
         currencies.forEach(currency => {

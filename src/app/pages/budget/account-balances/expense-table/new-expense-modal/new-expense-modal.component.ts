@@ -1,6 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ApiSourceExpenseService } from 'src/app/core/api/source-expense/api-source-expense.service';
 import { SourceExpense } from 'src/app/core/interfaces/sourceExpenses/sourceExpense.interface';
 import { User } from 'src/app/core/interfaces/users/user.interface';
@@ -14,7 +16,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './new-expense-modal.component.html',
   styleUrls: ['./new-expense-modal.component.css']
 })
-export class NewExpenseModalComponent {
+export class NewExpenseModalComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   internalUser!: User;
   internalExpenses!: SourceExpense[];
@@ -32,18 +36,23 @@ export class NewExpenseModalComponent {
   ) { }
 
   ngOnInit() {
-    this._internalUser.getInternalUser().subscribe(internalUser => {
+    this._internalUser.getInternalUser().pipe(takeUntil(this._destroy$)).subscribe(internalUser => {
       if (internalUser) {
         this.internalUser = internalUser;
       }
     });
 
-    this._internalExpenses.getInternalExpenses().subscribe(internalExpenses => {
+    this._internalExpenses.getInternalExpenses().pipe(takeUntil(this._destroy$)).subscribe(internalExpenses => {
       if (internalExpenses) {
         this.internalExpenses = internalExpenses;
       }
     }
     );
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   submitForm(): void {
@@ -61,18 +70,17 @@ export class NewExpenseModalComponent {
           if (response.status === 201) {
             this._alert.openSnackBar(response.body.message);
             this._modalRef.close(true);
-            this._loadingBar.setLoadingBar(false);
+
+            this._apiExpenses.getSourceExpenses().subscribe(
+              (expensesResponse: HttpResponse<SourceExpense[]>) => {
+                this._internalExpenses.setInternalExpenses(expensesResponse.body);
+                this._loadingBar.setLoadingBar(false);
+              }
+            );
           }
         },
         (response) => {
           this._alert.openSnackBar(response.error);
-          this._loadingBar.setLoadingBar(false);
-        }
-      );
-
-      this._apiExpenses.getSourceExpenses().subscribe(
-        (response: HttpResponse<SourceExpense[]>) => {
-          this._internalExpenses.setInternalExpenses(response.body);
           this._loadingBar.setLoadingBar(false);
         }
       );

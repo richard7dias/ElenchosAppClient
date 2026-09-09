@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, take } from 'rxjs';
+import { Observable, Subject, take } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -16,7 +17,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './confirm-window-delete.component.html',
   styleUrls: ['./confirm-window-delete.component.css']
 })
-export class ConfirmWindowDeleteComponent {
+export class ConfirmWindowDeleteComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   internalUser!: User;
   hidePassword: boolean = true;
@@ -34,11 +37,16 @@ export class ConfirmWindowDeleteComponent {
   ) { }
 
   ngOnInit() {
-    this.user.getInternalUser().subscribe(user => {
+    this.user.getInternalUser().pipe(takeUntil(this._destroy$)).subscribe(user => {
       if (user) {
         this.internalUser = user;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   protected deleteUser() {

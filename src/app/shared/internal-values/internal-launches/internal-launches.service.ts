@@ -25,6 +25,7 @@ export class InternalLaunchesService {
       this.setInternalLaunchesByCurrentMonth(launchesWithFormatedDate);
     } else {
       this.internalLaunches.next(null);
+      this.internalLaunchesByCurrentMonth.next(null);
     }
   }
 
@@ -36,12 +37,10 @@ export class InternalLaunchesService {
   }
 
   private formatDate(launches: Launch[]): Launch[] {
-    const formatedLaunches = launches.reverse();
-    formatedLaunches.forEach(launch => {
-      const newDate = this._dateFormat.datePtBr(launch.date);
-      launch.date = newDate;
-    });
-    return formatedLaunches;
+    return [...launches].reverse().map(launch => ({
+      ...launch,
+      date: this._dateFormat.datePtBr(launch.date)
+    }));
   }
 
   getInternalLaunchesByCurrentMonth(): Observable<Launch[] | null> {

@@ -32,11 +32,9 @@ export class InternalEntriesService {
   }
 
   private formatDate(entries: Entry[]): Entry[] {
-    const formatedEntries = entries.reverse();
-    formatedEntries.forEach(entry => {
-      const newDate = this._dateFormat.datePtBr(entry.date);
-      entry.date = newDate;
-    });
-    return formatedEntries;
+    return [...entries].reverse().map(entry => ({
+      ...entry,
+      date: this._dateFormat.datePtBr(entry.date)
+    }));
   }
 }

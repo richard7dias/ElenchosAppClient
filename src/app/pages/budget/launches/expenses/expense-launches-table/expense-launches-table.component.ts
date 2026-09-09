@@ -1,9 +1,11 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ApiLaunchesService } from 'src/app/core/api/launches/api-launches.service';
 import { Launch } from 'src/app/core/interfaces/launches/launch.interface';
@@ -20,7 +22,9 @@ import { LoadingService } from 'src/app/shared/loading/loading.service';
   templateUrl: './expense-launches-table.component.html',
   styleUrls: ['./expense-launches-table.component.css']
 })
-export class ExpenseLaunchesTableComponent {
+export class ExpenseLaunchesTableComponent implements OnDestroy {
+
+  private _destroy$ = new Subject<void>();
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -39,13 +43,18 @@ export class ExpenseLaunchesTableComponent {
   ) { }
 
   ngOnInit() {
-    this._internalLaunches.getInternalLaunchesByCurrentMonth().subscribe(launches => {
+    this._internalLaunches.getInternalLaunchesByCurrentMonth().pipe(takeUntil(this._destroy$)).subscribe(launches => {
       if (!launches) {
         this.callApiLaunches();
       }
     });
 
     this.updateInternalLaunchesReloadPage();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   ngDoCheck() {
@@ -69,7 +78,7 @@ export class ExpenseLaunchesTableComponent {
   }
 
   updateInternalLaunchesReloadPage() {
-    this._internalLaunches.getInternalLaunchesByCurrentMonth().subscribe(launches => {
+    this._internalLaunches.getInternalLaunchesByCurrentMonth().pipe(takeUntil(this._destroy$)).subscribe(launches => {
       if (launches) {
         this.internalLaunches = launches;
       }

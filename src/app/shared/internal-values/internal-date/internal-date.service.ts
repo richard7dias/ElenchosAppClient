@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class InternalDateService {
 
-  private currentDate = new Date();
   private monthNames = [
     'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
@@ -14,15 +13,15 @@ export class InternalDateService {
   constructor() { }
 
   getCurrentMonthNumber(): number {
-    return this.currentDate.getMonth() + 1;
+    return new Date().getMonth() + 1;
   }
 
   getCurrentMonthName(): string {
-    return this.monthNames[this.currentDate.getMonth()]
+    return this.monthNames[new Date().getMonth()]
   }
 
   getCurrentYearNumber(): number {
-    return this.currentDate.getFullYear();
+    return new Date().getFullYear();
   }
 
   getMonthNameByNumber(monthNumber: number): string {
