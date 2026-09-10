@@ -6,6 +6,7 @@ import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
 import { InternalUserService } from 'src/app/shared/internal-values/internal-user/internal-user.service';
 import { User } from 'src/app/core/interfaces/users/user.interface';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
+import { SessionCacheService } from 'src/app/shared/session/session-cache.service';
 
 @Component({
   selector: 'app-signup',
@@ -28,7 +29,8 @@ export class SignupComponent {
     private users: ApiUsersService,
     private router: Router,
     private authenticator: InternalUserService,
-    private loadingBar: LoadingService
+    private loadingBar: LoadingService,
+    private sessionCache: SessionCacheService
   ) { }
 
   addNewUser() {
@@ -52,6 +54,7 @@ export class SignupComponent {
       this.users.postUser(newUser).subscribe(
         (response: HttpResponse<any>) => {
           if (response.status === 201) {
+            this.sessionCache.clearUserData();
             this.authenticator.setInternalUser(newUser);
             this.router.navigate(['/dashboard']);
             this.alert.openSnackBar(response.body.message);

@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/shared/alert/alert.service';
 import { ApiUsersService } from 'src/app/core/api/users/api-users.service';
 import { User } from 'src/app/core/interfaces/users/user.interface';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
+import { SessionCacheService } from 'src/app/shared/session/session-cache.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent {
     private users: ApiUsersService,
     private user: InternalUserService,
     private router: Router,
-    public loadingBar: LoadingService
+    public loadingBar: LoadingService,
+    private sessionCache: SessionCacheService
   ) { }
 
   login() {
@@ -35,6 +37,7 @@ export class LoginComponent {
 
           if (response.status === 200) {
 
+            this.sessionCache.clearUserData();
             this.user.setInternalUser(response.body);
 
             if (this.remember) {

@@ -11,6 +11,7 @@ import { InternalUserService } from 'src/app/shared/internal-values/internal-use
 import { User } from 'src/app/core/interfaces/users/user.interface';
 import { HttpResponse } from '@angular/common/http';
 import { LoadingService } from 'src/app/shared/loading/loading.service';
+import { SessionCacheService } from 'src/app/shared/session/session-cache.service';
 
 @Component({
   selector: 'app-confirm-window-delete',
@@ -33,7 +34,8 @@ export class ConfirmWindowDeleteComponent implements OnDestroy {
     private router: Router,
     private alert: AlertService,
     private loadingBar: LoadingService,
-    private modalRef: MatDialogRef<ConfirmWindowDeleteComponent>
+    private modalRef: MatDialogRef<ConfirmWindowDeleteComponent>,
+    private sessionCache: SessionCacheService
   ) { }
 
   ngOnInit() {
@@ -60,6 +62,7 @@ export class ConfirmWindowDeleteComponent implements OnDestroy {
         }
       );
       this.user.setInternalUser(null);
+      this.sessionCache.clearUserData();
       this.router.navigate(['/login']);
     } else {
       this.alert.openSnackBar('Senha incorreta.');

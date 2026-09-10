@@ -33,11 +33,13 @@ export class InternalExpensesService {
         const currentMonthAvailable: SourceExpense = {
           id: this._generalIds.currentMonthId,
           idOwner: '',
-          description: 'Disponível do mês atual',
+          description: 'Mês atual',
           valueExpense: this.getCurrentMonthAvailableTotal(categories)
         };
 
-        return [currentMonthAvailable, ...expenses];
+        const otherExpenses = expenses.filter(expense => expense.id !== this._generalIds.currentMonthId);
+
+        return [currentMonthAvailable, ...otherExpenses];
       })
     );
   }
