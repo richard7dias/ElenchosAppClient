@@ -1,1 +1,109 @@
-<p>dashboard works!</p>
+<main>
+    <h4>Visão geral · {{_internalDate.getCurrentMonthName()}}</h4>
+
+    <div id="container-charts">
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Orçamento do mês</mat-card-title>
+                <mat-card-subtitle>Gasto x disponível</mat-card-subtitle>
+            </mat-card-header>
+
+            <div class="card-body">
+                <ng-container *ngIf="hasCategories; else emptyBudget">
+                    <div class="meter-track" [class.meter-track-over]="isOverBudget">
+                        <div class="meter-fill" [class.meter-fill-over]="isOverBudget" [style.width.%]="budgetUsedPercent"></div>
+                    </div>
+
+                    <div class="meter-caption">
+                        <span>{{budgetUsedPercent | number:'1.0-0'}}% do orçamento de R$ {{_numberFormat.inPortToDuo(budgetTotal)}}</span>
+                        <span *ngIf="isOverBudget" class="status-critical">
+                            estourou em R$ {{_numberFormat.inPortToDuo(overBudgetValue)}}
+                        </span>
+                    </div>
+
+                    <div class="legend-row">
+                        <div class="legend-item">
+                            <span class="swatch swatch-expense"></span>
+                            <span class="legend-label">Gasto</span>
+                            <span class="legend-value">R$ {{_numberFormat.inPortToDuo(expenseTotal)}}</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="swatch swatch-available"></span>
+                            <span class="legend-label">Disponível</span>
+                            <span class="legend-value" [class.status-critical]="isOverBudget">
+                                R$ {{_numberFormat.inPortToDuo(availableTotal)}}
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-template #emptyBudget>
+                    <p class="empty-state">Nenhuma categoria de orçamento cadastrada este mês.</p>
+                </ng-template>
+            </div>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Entradas x saídas</mat-card-title>
+                <mat-card-subtitle>Fluxo de caixa do mês</mat-card-subtitle>
+            </mat-card-header>
+
+            <div class="card-body">
+                <ng-container *ngIf="hasCashFlowData; else emptyCashFlow">
+                    <div class="bar-row">
+                        <span class="bar-label">Entradas</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bar-fill-entries" [style.width.%]="barWidthPercent(entriesTotal, cashFlowMaxValue)"></div>
+                        </div>
+                        <span class="bar-value">R$ {{_numberFormat.inPortToDuo(entriesTotal)}}</span>
+                    </div>
+
+                    <div class="bar-row">
+                        <span class="bar-label">Saídas</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bar-fill-expense" [style.width.%]="barWidthPercent(launchesTotal, cashFlowMaxValue)"></div>
+                        </div>
+                        <span class="bar-value">R$ {{_numberFormat.inPortToDuo(launchesTotal)}}</span>
+                    </div>
+
+                    <div class="net-balance" [class.status-good]="monthBalance >= 0" [class.status-critical]="monthBalance < 0">
+                        <mat-icon class="small-icon">{{monthBalance >= 0 ? 'trending_up' : 'trending_down'}}</mat-icon>
+                        <span>
+                            Saldo do mês: {{monthBalance >= 0 ? '+' : '-'}} R$ {{_numberFormat.inPortToDuo(monthBalance < 0 ? -monthBalance : monthBalance)}}
+                        </span>
+                    </div>
+                </ng-container>
+
+                <ng-template #emptyCashFlow>
+                    <p class="empty-state">Nenhuma entrada ou saída registrada este mês.</p>
+                </ng-template>
+            </div>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Gastos por categoria</mat-card-title>
+                <mat-card-subtitle>Maiores gastos do mês</mat-card-subtitle>
+            </mat-card-header>
+
+            <div class="card-body">
+                <ng-container *ngIf="hasCategorySpend; else emptyCategorySpend">
+                    <div class="bar-row" *ngFor="let item of categorySpend">
+                        <span class="bar-label" [attr.title]="item.name">{{item.name}}</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bar-fill-expense" [style.width.%]="barWidthPercent(item.value, categorySpendMax)"></div>
+                        </div>
+                        <span class="bar-value">R$ {{_numberFormat.inPortToDuo(item.value)}}</span>
+                    </div>
+                </ng-container>
+
+                <ng-template #emptyCategorySpend>
+                    <p class="empty-state">Nenhum gasto lançado este mês.</p>
+                </ng-template>
+            </div>
+        </mat-card>
+
+    </div>
+</main>

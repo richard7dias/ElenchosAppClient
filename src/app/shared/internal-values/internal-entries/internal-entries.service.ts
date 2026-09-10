@@ -13,6 +13,8 @@ export class InternalEntriesService {
 
   private internalEntries: BehaviorSubject<Entry[] | null> = new BehaviorSubject<Entry[] | null>(null);
 
+  private internalEntriesByCurrentMonth: BehaviorSubject<Entry[] | null> = new BehaviorSubject<Entry[] | null>(null);
+
   constructor(
     private _dateFormat: DateService,
     public _internalDate: InternalDateService
@@ -22,9 +24,22 @@ export class InternalEntriesService {
     if (entries) {
       const entriesWithFormatedDate: Entry[] = this.formatDate(entries);
       this.internalEntries.next(entriesWithFormatedDate);
+      this.setInternalEntriesByCurrentMonth(entriesWithFormatedDate);
     } else {
       this.internalEntries.next(null);
+      this.internalEntriesByCurrentMonth.next(null);
     }
+  }
+
+  private setInternalEntriesByCurrentMonth(entries: Entry[]) {
+    this.internalEntriesByCurrentMonth.next(entries.filter(entry => {
+      const entryMonth = parseInt(entry.date.split('/')[1]);
+      return entryMonth === this._internalDate.getCurrentMonthNumber();
+    }));
+  }
+
+  getInternalEntriesByCurrentMonth(): Observable<Entry[] | null> {
+    return this.internalEntriesByCurrentMonth.asObservable();
   }
 
   getInternalEntries(): Observable<Entry[] | null> {
